@@ -1,5 +1,6 @@
 import React from 'react'
 import ProfileLeft from '../../components/ProfileLeft/ProfileLeft'
+import RightSide from '../../components/RightSide/RightSide'
 import './Profile.css'
 const Profile = () => {
   return (
@@ -11,7 +12,7 @@ const Profile = () => {
             <PostSide/>
         </div> */}
 
-      {/* <RightSide /> */}
+      <RightSide />
     </div>
   )
 }

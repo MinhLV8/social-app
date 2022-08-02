@@ -8,15 +8,15 @@ export const TrendData = [
     shares: 80500,
   },
   {
-    name: "ThànhHS cập với hot tiktoker chuyên review nội thất sang chảnh Thái công",
+    name: "ThànhHS lộ thông tin hẹn hò với hot tiktoker chuyên review nội thất sang chảnh Thái Công",
     shares: 75500,
   },
   {
-    name: "Toom sara",
+    name: "Đại gia ViệtDP vừa tậu siêu xe Lamborghini Aventador S (LP740-4) 462 ngàn USD",
     shares: 72,
   },
   {
-    name: "Unitech",
+    name: "CEO Trọng Linh vừa đầu tư 2tỷ đô để lên kế hoạch xây dựng sân bay riêng tại bang Texas ",
     shares: 71100,
   },
   {

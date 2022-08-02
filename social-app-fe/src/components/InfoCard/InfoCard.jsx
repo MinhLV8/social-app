@@ -21,20 +21,15 @@ const InfoCard = () => {
           />
         </div>
       </div>
+      <div className="bio">
+        <span>The world is dull, but it has you 🍃</span>
+      </div>
       <div className="info">
         <span>
           <b>Làm việc tại</b>
         </span>
         <span> Unitech@</span>
       </div>
-
-      <div className="info">
-        <span>
-          <b> </b>
-        </span>
-        <span> Độc thân</span>
-      </div>
-
       <div className="info">
         <span>
           <b>Sống tại </b>
@@ -47,10 +42,13 @@ const InfoCard = () => {
         </span>
         <span> Quảng Ngãi</span>
       </div>
-
-
-      <button className="button logout-button">
-        Đăng xuất</button>
+      <div className="info">
+        <span>
+          <b> </b>
+        </span>
+        <span> Độc thân</span>
+      </div>
+      <button className="button logout-button">Đăng xuất</button>
     </div>
   );
 };

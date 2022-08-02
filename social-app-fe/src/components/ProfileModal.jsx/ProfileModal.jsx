@@ -81,5 +81,4 @@ function ProfileModal({ modalOpened, setModalOpened }) {
     </Modal>
   );
 }
-
 export default ProfileModal;
