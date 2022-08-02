@@ -6,6 +6,7 @@
   padding: 1rem;
   border-radius: 1rem;
   width: 90%;
+  height: 60%;
   max-height: 35%;
 }
 
@@ -35,9 +36,12 @@
   width: 1.25rem;
   height: 1.25rem;
 }
-
+.info span b {
+  font-weight: normal;
+}
 .info span {
   font-size: 0.9rem;
+  font-weight: bold;
 }
 
 .bio span {

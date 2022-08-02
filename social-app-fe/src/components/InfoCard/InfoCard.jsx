@@ -47,7 +47,9 @@ const InfoCard = () => {
       </div>
       <div className="info">
         <img src="./assets/icons/icons8-love-24.png" alt="" />
-        <span> Muốn một mình nhưng sợ cô đơn</span>
+        <span>
+          <b> Muốn một mình nhưng sợ cô đơn</b>
+        </span>
       </div>
       <button className="button logout-button">Đăng xuất</button>
     </div>

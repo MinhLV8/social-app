@@ -7,7 +7,7 @@ const ProfileCard = () => {
     <div className="ProfileCard">
       <div className="ProfileImages">
         <img src="../../assets/person/DSC05373.jpg" alt="" />
-        <img src="../../assets/person/avt-6.jpg" alt="" />
+        <img src="../../assets/person/avt-10.jpg" alt="" />
       </div>
 
       <div className="ProfileName">
