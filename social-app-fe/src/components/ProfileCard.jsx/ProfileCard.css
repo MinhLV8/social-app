@@ -17,9 +17,11 @@
 }
 
 .ProfileImages > img:nth-of-type(1) {
+  top: 0;
   width: 100%;
   height: 26.875rem;
   object-fit: cover;
+  position: relative;
 }
 
 .ProfileImages > img:nth-of-type(2) {
