@@ -6,6 +6,7 @@
   padding: 1rem;
   border-radius: 1rem;
   width: 90%;
+  height: 35%;
 }
 
 .infoHead {
@@ -23,6 +24,16 @@
   height: 2rem;
   margin-top: 6rem;
   align-self: flex-end;
+}
+.info {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 0.3rem;
+}
+.info img {
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .info span {

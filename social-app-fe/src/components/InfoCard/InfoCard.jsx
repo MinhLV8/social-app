@@ -25,28 +25,29 @@ const InfoCard = () => {
         <span>The world is dull, but it has you 🍃</span>
       </div>
       <div className="info">
+        <img src="./assets/icons/icons8-briefcase-24.png" alt="" />
         <span>
           <b>Làm việc tại</b>
         </span>
         <span> Unitech@</span>
       </div>
       <div className="info">
+        <img src="./assets/icons/icons8-location-24.png" alt="" />
         <span>
           <b>Sống tại </b>
         </span>
         <span> Đà Nẵng</span>
       </div>
       <div className="info">
+        <img src="./assets/icons/icons8-home-24.png" alt="" />
         <span>
           <b>Đến từ </b>
         </span>
         <span> Quảng Ngãi</span>
       </div>
       <div className="info">
-        <span>
-          <b> </b>
-        </span>
-        <span> Độc thân</span>
+        <img src="./assets/icons/icons8-love-24.png" alt="" />
+        <span> Muốn một mình nhưng sợ cô đơn</span>
       </div>
       <button className="button logout-button">Đăng xuất</button>
     </div>

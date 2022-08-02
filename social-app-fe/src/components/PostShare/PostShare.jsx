@@ -17,9 +17,9 @@ const PostShare = () => {
   };
   return (
     <div className="PostShare">
-      <img src="../../assets/icons/avt-6.jpg" alt="" />
+      <img src="../../assets/person/avt-10.jpg" alt="" />
       <div>
-        <input type="text" placeholder="What's happening" />
+        <input type="text" placeholder="Minh ơi, bạn đang nghĩ gì thế?" />
         <div className="postOptions">
           <div className="option" style={{ color: "var(--photo)" }}
             onClick={() => imageRef.current.click()}
