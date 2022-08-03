@@ -1,5 +1,3 @@
-
-
 export const PostsData = [
     {
         img: "/assets/post/post-1.jpg",

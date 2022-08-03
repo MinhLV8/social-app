@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d08a2ea8-8630-4330-b4e3-9ff4d1df5522" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/social-app-fe/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/public/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/App.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/Data/FollowersData.js" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/Data/FollowersData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/Data/PostsData.js" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/Data/PostsData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/Data/TrendData.js" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/Data/TrendData.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/FollowersCard/FollowersCard.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/FollowersCard/FollowersCard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/FollowersCard/FollowersCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/FollowersCard/FollowersCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/InfoCard/InfoCard.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/InfoCard/InfoCard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/InfoCard/InfoCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/InfoCard/InfoCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/LogoSearch/LogoSearch.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/LogoSearch/LogoSearch.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/LogoSearch/LogoSearch.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/LogoSearch/LogoSearch.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/Post/Post.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/Post/Post.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/Post/Post.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/Post/Post.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/PostShare/PostShare.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/PostShare/PostShare.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/PostShare/PostShare.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/PostShare/PostShare.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/PostSide/PostSide.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/PostSide/PostSide.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/PostSide/PostSide.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/PostSide/PostSide.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/Posts/Posts.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/Posts/Posts.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/Posts/Posts.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/Posts/Posts.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/ProfileCard.jsx/ProfileCard.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/ProfileCard.jsx/ProfileCard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/ProfileCard.jsx/ProfileCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/ProfileCard.jsx/ProfileCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/ProfileLeft/ProfileLeft.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/ProfileLeft/ProfileLeft.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/ProfileModal.jsx/ProfileModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/ProfileModal.jsx/ProfileModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/RightSide/RightSide.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/RightSide/RightSide.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/RightSide/RightSide.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/RightSide/RightSide.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/ShareModal/ShareModal.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/ShareModal/ShareModal.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/TrendCard/TrendCard.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/TrendCard/TrendCard.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/TrendCard/TrendCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/TrendCard/TrendCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/profileSide/ProfileSide.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/profileSide/ProfileSide.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/components/profileSide/ProfileSide.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/components/profileSide/ProfileSide.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/pages/Auth/Auth.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/pages/Auth/Auth.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/pages/Auth/Auth.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/pages/Auth/Auth.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/pages/Profile/Profile.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/pages/Profile/Profile.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/pages/Profile/Profile.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/pages/Profile/Profile.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/pages/home/Home.css" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/pages/home/Home.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/pages/home/Home.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/pages/home/Home.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/social-app-fe/src/utils/Utils.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/social-app-fe/src/utils/Utils.jsx" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2CpKdxdr5HfGmRHzJgdJEcL5hgx" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d08a2ea8-8630-4330-b4e3-9ff4d1df5522" name="Default Changelist" comment="" />
+      <created>1659494176486</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1659494176486</updated>
+      <workItem from="1659494228870" duration="272000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="342" y="181" key="new project wizard" timestamp="1659494506194">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="342" y="181" key="new project wizard/0.0.1920.1040@0.0.1920.1040" timestamp="1659494506194" />
+  </component>
+</project>
