@@ -6,8 +6,8 @@ const ProfileCard = () => {
     return (
         <div className="ProfileCard">
             <div className="ProfileImages">
-                <img src="../../assets/person/DSC05373.jpg" alt=""/>
-                <img src="../../assets/person/avt-10.jpg" alt=""/>
+                <img src="../../assets/person/DSC05373.jpg" alt="" />
+                <img src="../../assets/person/avt-10.jpg" alt="" />
             </div>
 
             <div className="ProfileName">
@@ -16,7 +16,7 @@ const ProfileCard = () => {
             </div>
 
             <div className="followStatus">
-                <hr/>
+                <hr />
                 <div>
                     <div className="follow">
                         <span>6,890</span>
@@ -38,7 +38,7 @@ const ProfileCard = () => {
                         </>
                     )}
                 </div>
-                <hr/>
+                <hr />
             </div>
             {ProfilePage ? "" : <span>Trang cá nhân</span>}
         </div>

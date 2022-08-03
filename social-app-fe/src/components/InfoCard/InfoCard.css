@@ -1,61 +1,62 @@
 .InfoCard {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    background-color: var(--cardColor);
-    padding: 1rem;
-    border-radius: 1rem;
-    width: 90%;
-    height: 60%;
-    max-height: 35%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background-color: var(--cardColor);
+  padding: 1rem;
+  border-radius: 1rem;
+  width: 90%;
+  min-width: 200px;
+  height: min-content;
+  max-height: 38%;
 }
 
 .infoHead {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .infoHead > div:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .logout-button {
-    width: 7rem;
-    height: 2rem;
-    margin-top: 1.25rem;
-    align-self: flex-end;
+  width: 7rem;
+  height: 2rem;
+  margin-top: 1.25rem;
+  align-self: flex-end;
 }
 
 .info {
-    display: flex;
-    align-items: center;
-    flex-direction: row;
-    gap: 0.3rem;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 0.3rem;
 }
 
 .info img {
-    width: 1.25rem;
-    height: 1.25rem;
+  width: 1.25rem;
+  height: 1.25rem;
 }
 
 .info span b {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 .info span {
-    font-size: 0.9rem;
-    font-weight: bold;
+  font-size: 0.9rem;
+  font-weight: bold;
 }
 
 .bio span {
-    font-size: 0.9rem;
-    align-items: center;
-    justify-content: center;
-    word-break: break-word;
-    width: 100%;
-    display: flex;
-    margin: 0 0.25rem;
-    line-height: 1.6rem;
-    border-bottom: 0.06rem solid var(--inputColor);
+  font-size: 0.9rem;
+  align-items: center;
+  justify-content: center;
+  word-break: break-word;
+  width: 100%;
+  display: flex;
+  margin: 0 0.25rem;
+  line-height: 1.6rem;
+  border-bottom: 0.06rem solid var(--inputColor);
 }

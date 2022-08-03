@@ -48,7 +48,7 @@ const InfoCard = () => {
       <div className="info">
         <img src="./assets/icons/icons8-love-24.png" alt="" />
         <span>
-          <b> Muốn một mình nhưng sợ cô đơn. Lê Văn Minh</b>
+          <b> Muốn một mình nhưng sợ cô đơn.</b>
         </span>
       </div>
       <button className="button logout-button">Đăng xuất</button>

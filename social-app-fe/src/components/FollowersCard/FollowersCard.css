@@ -1,44 +1,71 @@
 .FollowersCard {
-    width: 100%;
-    border-radius: 0.7rem;
-    gap: 1rem;
-    display: flex;
-    flex-direction: column;
-    font-size: 13px;
+  width: 100%;
+  border-radius: 0.7rem;
+  gap: 1rem;
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
 }
 
 .follower {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .follower > div {
-    display: flex;
-    gap: 10px;
+  display: flex;
+  gap: 10px;
 }
 
 .followerImage {
-    width: 3.2rem;
-    height: 3.2rem;
-    border-radius: 50%;
-    object-fit: cover;
-    cursor: pointer;
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  background-size: cover;
+  /* background-position: top center; */
+  cursor: pointer;
+  vertical-align: middle;
+  border: 0.06rem solid #eeeeee;
 }
 
 .name {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .name > span:nth-of-type(1) {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 .fc-button {
-    height: 2rem;
-    padding-left: 20px;
-    padding-right: 20px;
+  height: 2rem;
+  padding-left: 20px;
+  padding-right: 20px;
 }
+
+.follower__avt {
+  position: relative;
+}
+.follower__indicator {
+  position: absolute;
+  bottom: 0.5rem;
+  right: 0.5rem;
+  transform: translate(50%, 50%);
+  border-radius: 50%;
+  height: 0.7rem;
+  width: 0.7rem;
+  box-shadow: 0 0 0 0.1rem #fff;
+}
+
+.online {
+  background-color: rgb(9, 168, 9);
+}
+
+/* .notonline {
+  /* background-image: url("/assets/icons/icons8-clock-24.png"); 
+} */
