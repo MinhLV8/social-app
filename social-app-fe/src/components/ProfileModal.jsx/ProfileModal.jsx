@@ -1,6 +1,6 @@
-import {Modal, useMantineTheme} from "@mantine/core";
+import { Modal, useMantineTheme } from "@mantine/core";
 
-function ProfileModal({modalOpened, setModalOpened}) {
+function ProfileModal({ modalOpened, setModalOpened }) {
     const theme = useMantineTheme();
 
     return (
@@ -17,7 +17,7 @@ function ProfileModal({modalOpened, setModalOpened}) {
             onClose={() => setModalOpened(false)}
         >
             <form className="infoForm">
-                <h3>Thông tin của cưng</h3>
+                <h3>Thông tin của bạn</h3>
 
                 <div>
                     <input
@@ -71,9 +71,9 @@ function ProfileModal({modalOpened, setModalOpened}) {
 
                 <div>
                     Ảnh đại diện
-                    <input type="file" name='profileImg'/>
+                    <input type="file" name='profileImg' />
                     Ảnh bìa
-                    <input type="file" name="coverImg"/>
+                    <input type="file" name="coverImg" />
                 </div>
 
                 <button className="button infoButton">Cập nhật</button>
