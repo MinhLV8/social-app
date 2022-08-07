@@ -6,6 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +17,9 @@ import java.util.Set;
 @EqualsAndHashCode
 @Entity
 @Table(name = "system_group", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "group_code"))
-public class SystemGroupEntity {
+public class SystemGroupEntity implements Serializable {
+
+	private static final long serialVersionUID = -473760650709037196L;
 	@Id
 	@GeneratedValue(generator = "bigid")
 	@GenericGenerator(name = "bigid", strategy = "com.minhlv.socialappapi.utils.IDGenerator")
