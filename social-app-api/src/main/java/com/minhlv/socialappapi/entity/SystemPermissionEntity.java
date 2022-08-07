@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,8 +16,9 @@ import java.util.Set;
 @ToString
 @EqualsAndHashCode
 @Table(name = "system_permission")
-public class SystemPermissionEntity {
+public class SystemPermissionEntity implements Serializable {
 
+	private static final long serialVersionUID = -3332282666145514411L;
 	@Id
 	@GeneratedValue(generator = "bigid")
 	@GenericGenerator(name = "bigid", strategy = "com.minhlv.socialappapi.utils.IDGenerator")
@@ -49,7 +51,7 @@ public class SystemPermissionEntity {
 	@Column(name = "icon")
 	private String icon;
 
-	@Column(name = "menuTop")
+	@Column(name = "menu_top")
 	private boolean menuTop;
 
 	@Column(name = "invisible")

@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -50,8 +51,11 @@ public class SystemUserServiceImpl implements UserService {
 			CustomUserDetailsImpl userDetails = (CustomUserDetailsImpl) authentication.getPrincipal();
 			List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
 			APIResult result = new APIResult();
-			result.setMessage("thành công");
-			result.setData(userDetails);
+			result.setMessage("Thành công.");
+			Map<String, Object> re = new HashMap<>();
+			re.put("jwt", jwt);
+			re.put("roles", roles);
+			result.setData(re);
 			return result;
 		} catch (AuthenticationException e) {
 			throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);

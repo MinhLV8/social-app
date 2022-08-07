@@ -1,9 +1,7 @@
 package com.minhlv.socialappapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -11,15 +9,20 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Entity
 @Table(name = "system_user", schema = "public", uniqueConstraints = @UniqueConstraint(columnNames = "username"))
-public class SystemUserEntity {
+public class SystemUserEntity implements Serializable {
+
+	private static final long serialVersionUID = -510681648851438653L;
 	@Id
 	@GeneratedValue(generator = "bigid")
 	@GenericGenerator(name = "bigid", strategy = "com.minhlv.socialappapi.utils.IDGenerator")

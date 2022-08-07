@@ -6,9 +6,9 @@
   <session-factory>
     <property name="connection.url"/>
     <property name="connection.driver_class"/>
+
     <!-- <property name="connection.username"/> -->
     <!-- <property name="connection.password"/> -->
-
     <!-- DB schema will be updated if needed -->
     <!-- <property name="hibernate.hbm2ddl.auto">update</property> -->
   </session-factory>

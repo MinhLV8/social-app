@@ -1,13 +1,11 @@
 package com.minhlv.socialappapi.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.HashSet;
-import java.util.Set;
+import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
@@ -16,7 +14,9 @@ import java.util.Set;
 @EqualsAndHashCode
 @Entity
 @Table(name = "system_role", schema = "public")
-public class SystemRoleEntity {
+public class SystemRoleEntity implements Serializable {
+
+	private static final long serialVersionUID = -46519118286926122L;
 	@Id
 	@GeneratedValue(generator = "bigid")
 	@GenericGenerator(name = "bigid",
@@ -26,12 +26,5 @@ public class SystemRoleEntity {
 	@NotNull
 	@Column(name = "role", length = 25)
 	private String role;
-
-	@JsonBackReference
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "system_userrole", schema = "public", joinColumns = {
-			@JoinColumn(name = "role_id", nullable = false, updatable = false)}, inverseJoinColumns = {
-			@JoinColumn(name = "user_id", nullable = false, updatable = false)})
-	private Set<SystemUserEntity> systemUserEntities = new HashSet<>(0);
 
 }
