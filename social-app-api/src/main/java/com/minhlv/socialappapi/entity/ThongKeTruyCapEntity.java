@@ -1,17 +1,15 @@
 package com.minhlv.socialappapi.entity;
 
-import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-
-import org.hibernate.annotations.GenericGenerator;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -21,7 +19,7 @@ public class ThongKeTruyCapEntity {
 
     @Id
     @GeneratedValue(generator = "bigid")
-    @GenericGenerator(name = "bigid", strategy = "com.minhlv.socialappapi.util.IDGenerator")
+    @GenericGenerator(name = "bigid", strategy = "com.minhlv.socialappapi.utils.IDGenerator")
     private long id;
 
     @Column(name = "nam")

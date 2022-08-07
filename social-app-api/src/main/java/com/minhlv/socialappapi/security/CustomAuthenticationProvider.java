@@ -1,7 +1,4 @@
-package com.minhlv.socialappapi.secury;
-
-import java.util.ArrayList;
-import java.util.List;
+package com.minhlv.socialappapi.security;
 
 import org.springframework.context.support.MessageSourceAccessor;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -15,6 +12,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {

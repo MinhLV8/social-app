@@ -1,20 +1,32 @@
 package com.minhlv.socialappapi.service;
 
-import java.util.Map;
-
+import com.minhlv.socialappapi.entity.SystemUserEntity;
 import org.springframework.stereotype.Service;
 
-import com.minhlv.socialappapi.entity.SystemUser;
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @Service
 public interface UserService {
 
-    SystemUser saveChangePass(SystemUser userEntity, String oldPassword, String newPassword, String repeatPassword);
+    String signin(String username, String password);
+
+    String signup(SystemUserEntity appUser);
+
+    void delete(String username);
+
+    SystemUserEntity whoami(HttpServletRequest req);
+
+    SystemUserEntity search(String username);
+
+    String refresh(String username);
+
+    SystemUserEntity saveChangePass(SystemUserEntity userEntity, String oldPassword, String newPassword, String repeatPassword);
 
     Map<String, Object> saveChangePassUser(String username, String newPassword);
 
-    SystemUser findByUsername(String username);
+    SystemUserEntity findByUsername(String username);
 
-    SystemUser saveUser(SystemUser userEntity);
+    SystemUserEntity saveUser(SystemUserEntity userEntity);
 
 }
