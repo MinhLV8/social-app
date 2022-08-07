@@ -5,6 +5,7 @@ import com.minhlv.socialappapi.exception.CustomException;
 import com.minhlv.socialappapi.repository.UserRepository;
 import com.minhlv.socialappapi.security.JwtTokenProvider;
 import com.minhlv.socialappapi.service.UserService;
+import com.minhlv.socialappapi.utils.APIResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class SystemUserServiceImpl implements UserService {
 	private AuthenticationManager authenticationManager;
 
 	@Override
-	public String signin(String username, String password) {
+	public APIResult signin(String username, String password) {
 		try {
 			Authentication authentication = authenticationManager
 					.authenticate(new UsernamePasswordAuthenticationToken(username, password));
@@ -48,7 +49,10 @@ public class SystemUserServiceImpl implements UserService {
 			String jwt = jwtTokenProvider.generateJwtToken(authentication);
 			CustomUserDetailsImpl userDetails = (CustomUserDetailsImpl) authentication.getPrincipal();
 			List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList());
-			return jwt;
+			APIResult result = new APIResult();
+			result.setMessage("thành công");
+			result.setData(userDetails);
+			return result;
 		} catch (AuthenticationException e) {
 			throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
 		}
@@ -82,7 +86,7 @@ public class SystemUserServiceImpl implements UserService {
 
 	@Override
 	public SystemUserEntity whoami(HttpServletRequest req) {
-			return userRepository.findByUsername(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)));
+		return userRepository.findByUsername(jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)));
 	}
 
 	@Override

@@ -5,6 +5,7 @@ import com.minhlv.socialappapi.dto.UserResponseDTO;
 import com.minhlv.socialappapi.dto.requestDTO.SigninDTO;
 import com.minhlv.socialappapi.entity.SystemUserEntity;
 import com.minhlv.socialappapi.service.UserService;
+import com.minhlv.socialappapi.utils.APIResult;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,7 @@ public class UserController {
 	@ApiResponses(value = {
 			@ApiResponse(code = 400, message = "Something went wrong"),
 			@ApiResponse(code = 422, message = "Invalid username/password supplied")})
-	public String login(@RequestBody SigninDTO signinDTO) {
+	public APIResult login(@RequestBody SigninDTO signinDTO) {
 		return userService.signin(signinDTO.getUsername(), signinDTO.getPassword());
 	}
 
