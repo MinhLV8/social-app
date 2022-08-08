@@ -18,3 +18,9 @@ spring:
       max-request-size: 50MB
 server:
   port: 8080
+  
+elasticsearch:
+  port: 9200
+  clustername: socialapp-cluster
+  host: localhost
+  server: http://localhost:9200

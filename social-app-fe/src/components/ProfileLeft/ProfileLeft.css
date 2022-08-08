@@ -1,6 +1,5 @@
 .ProfileSide {
   width: 15%;
-  position: fixed;
   display: flex;
   flex-direction: column;
   flex: 1.8;

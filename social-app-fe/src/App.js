@@ -1,11 +1,12 @@
 import "./App.css";
-import Profile from "./pages/Profile/Profile";
 
+// import Home from "./pages/home/Home";
+import Profile from "./pages/Profile/Profile";
 function App() {
     return (
         <div
             className="App" >
-            < div
+            <div
                 className="blur"
                 style={
                     {
@@ -14,7 +15,7 @@ function App() {
                             '0'
                     }
                 }></div>
-            < div
+            <div
                 className="blur"
                 style={
                     {
@@ -23,10 +24,10 @@ function App() {
                             '-8rem'
                     }
                 }></div>
-            {/* <Home/> */
-            }
+            {/* <Home /> */}
+
             <Profile />
-            {/* <Auth/> */}
+            {/* <Auth /> */}
         </div>
     )
         ;

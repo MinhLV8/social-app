@@ -18,6 +18,8 @@
   overflow: hidden;
   color: var(--black);
   background: #f3f3f3;
+  /* padding: 1rem 1rem; */
+
   padding: 1rem 1rem;
 }
 
@@ -47,44 +49,11 @@
   background: transparent;
   border: 2px solid var(--orange);
 }
-
-::-webkit-scrollbar {
-  display: none;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-* {
-  margin: 0;
-  padding: 0;
-  font: inherit;
-}
+html,
 body {
-  line-height: 1.5;
+  margin: 0;
+  height: 100%;
 }
-img,
-picture,
-video,
-canvas,
-svg {
-  display: block;
-  max-width: 100%;
-}
-input,
-button,
-textarea,
-select {
-  outline: none;
-}
-p,
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  overflow-wrap: break-word;
+a {
+  text-decoration: none;
 }

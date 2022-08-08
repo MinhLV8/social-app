@@ -1,19 +1,18 @@
 import React from "react";
-import Logo from "../../img/logo.png";
 import "./Auth.css";
 
 const Auth = () => {
     return (
         <div className="Auth">
             <div className="a-left">
-                <img src={Logo} alt=""/>
+                <img src="../../assets/icons/care-2387662-1991058.png" alt="" />
                 <div className="Webname">
-                    <h1>Face</h1>
+                    <h1>Unitech Social Media</h1>
                     <h6>Khám phá những ý tưởng trên khắp thế giới "động vật".</h6>
                 </div>
             </div>
 
-            <LogIn/>
+            <LogIn />
         </div>
     );
 };
@@ -27,7 +26,7 @@ function LogIn() {
                 <div>
                     <input
                         type="text"
-                        placeholder="Username"
+                        placeholder="Username/Sđt/Email"
                         className="infoInput"
                         name="username"
                     />
@@ -43,10 +42,10 @@ function LogIn() {
                 </div>
 
                 <div>
-          <span style={{fontSize: "12px"}}>
-            Em không có tài khoản, cho em đăng ký cái tài khoản với :((
-          </span>
-                    <button className="button infoButton">Đăng ký</button>
+                    <a href="/"><span style={{ fontSize: "12px" }}>
+                        Chưa có tài khoản? Đăng ký ngay.
+                    </span></a>
+                    <button className="button infoButton">Đăng nhập</button>
                 </div>
             </form>
         </div>
@@ -99,7 +98,7 @@ function SignUp() {
                 </div>
 
                 <div>
-                    <span style={{fontSize: '12px'}}>Đã có tài khoản. Đăng nhập!</span>
+                    <span style={{ fontSize: '12px' }}>Đã có tài khoản. Đăng nhập!</span>
                 </div>
                 <button className="button infoButton" type="submit">Đăng nhập</button>
             </form>
