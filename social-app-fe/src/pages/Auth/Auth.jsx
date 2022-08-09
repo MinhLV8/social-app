@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Auth.css";
 
 const Auth = () => {
+    const [isLogin, setIsLogin] = useState(true);
+    const [data, setData] = useState({ username: "", password: "", confirmpass: "" })
+    const handlerChange = () => {
+        setIsLogin(!isLogin)
+    }
+
+    const handlerSubmit = () => {
+
+    }
     return (
         <div className="Auth">
             <div className="a-left">
@@ -11,99 +20,58 @@ const Auth = () => {
                     <h6>Khám phá những ý tưởng trên khắp thế giới "động vật".</h6>
                 </div>
             </div>
-
-            <LogIn />
+            <div className="a-right">
+                <form className="infoForm authForm">
+                    <h3>{isLogin ? "Đăng nhập" : "Đăng ký tài khoản"}</h3>
+                    {!isLogin && (
+                        <div>
+                            <input
+                                type="text"
+                                className="infoInput"
+                                placeholder="First Name"
+                                name="firstname"
+                            />
+                            <input
+                                type="text"
+                                className="infoInput"
+                                name="lastname"
+                                placeholder="Last Name"
+                            />
+                        </div>
+                    )}
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="Username/Sđt/Email"
+                            className="infoInput"
+                            name="username"
+                        />
+                    </div>
+                    <div>
+                        <input
+                            type="password"
+                            className="infoInput"
+                            placeholder="Password"
+                            name="password"
+                        />
+                        {!isLogin && (
+                            <input
+                                type="text"
+                                className="infoInput"
+                                name="confirmpass"
+                                placeholder="Confirm Password"
+                            />
+                        )}
+                    </div>
+                    <div>
+                        <span style={{ fontSize: "12px", cursor: "pointer" }} onClick={handlerChange}>
+                            {isLogin ? "Chưa có tài khoản? Đăng ký ngay" : "Đã có tài khoản. Đăng nhập!"}
+                        </span>
+                        <button onClick={handlerSubmit} className="button infoButton">{isLogin ? "Đăng nhập" : "Đăng ký"}</button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };
-
-function LogIn() {
-    return (
-        <div className="a-right">
-            <form className="infoForm authForm">
-                <h3>Đăng nhập</h3>
-
-                <div>
-                    <input
-                        type="text"
-                        placeholder="Username/Sđt/Email"
-                        className="infoInput"
-                        name="username"
-                    />
-                </div>
-
-                <div>
-                    <input
-                        type="password"
-                        className="infoInput"
-                        placeholder="Password"
-                        name="password"
-                    />
-                </div>
-
-                <div>
-                    <a href="/"><span style={{ fontSize: "12px" }}>
-                        Chưa có tài khoản? Đăng ký ngay.
-                    </span></a>
-                    <button className="button infoButton">Đăng nhập</button>
-                </div>
-            </form>
-        </div>
-    );
-}
-
-function SignUp() {
-    return (
-        <div className="a-right">
-            <form className="infoForm authForm">
-                <h3>Đăng ký tài khoản.</h3>
-
-                <div>
-                    <input
-                        type="text"
-                        placeholder="First Name"
-                        className="infoInput"
-                        name="firstname"
-                    />
-                    <input
-                        type="text"
-                        placeholder="Last Name"
-                        className="infoInput"
-                        name="lastname"
-                    />
-                </div>
-
-                <div>
-                    <input
-                        type="text"
-                        className="infoInput"
-                        name="username"
-                        placeholder="Usernames"
-                    />
-                </div>
-
-                <div>
-                    <input
-                        type="text"
-                        className="infoInput"
-                        name="password"
-                        placeholder="Password"
-                    />
-                    <input
-                        type="text"
-                        className="infoInput"
-                        name="confirmpass"
-                        placeholder="Confirm Password"
-                    />
-                </div>
-
-                <div>
-                    <span style={{ fontSize: '12px' }}>Đã có tài khoản. Đăng nhập!</span>
-                </div>
-                <button className="button infoButton" type="submit">Đăng nhập</button>
-            </form>
-        </div>
-    );
-}
-
 export default Auth;
