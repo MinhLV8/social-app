@@ -12,7 +12,7 @@ const ProfileCard = () => {
 
             <div className="ProfileName">
                 <span>MinhLV</span>
-                <span>Chuyên gia tư vấn tình cảm lứa đôi</span>
+                <span>The world is dull, but it has you 🍃</span>
             </div>
 
             <div className="followStatus">
@@ -27,6 +27,7 @@ const ProfileCard = () => {
                         <span>1</span>
                         <span>Followers</span>
                     </div>
+
 
                     {ProfilePage && (
                         <>

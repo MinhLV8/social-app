@@ -1,7 +1,7 @@
 import "./App.css";
-import Auth from "./pages/Auth/Auth";
+//import Auth from "./pages/Auth/Auth";
 // import Home from "./pages/home/Home";
-// import Profile from "./pages/Profile/Profile";
+import Profile from "./pages/Profile/Profile";
 function App() {
     return (
         <div
@@ -26,8 +26,8 @@ function App() {
                 }></div>
             {/* <Home /> */}
 
-            {/* <Profile /> */}
-            <Auth />
+            <Profile />
+            {/*   <Auth /> */}
         </div>
     )
         ;
