@@ -1,13 +1,13 @@
 import React, { useRef, useState } from "react";
 import { IconContext } from "react-icons";
 import { BiWorld } from "react-icons/bi";
-import { BsDot } from "react-icons/bs";
+import { BsDot, BsFillBookmarkCheckFill } from "react-icons/bs";
 import { FaTimes, FaUserFriends } from "react-icons/fa";
 import {
   MdChevronRight,
   MdMoreHoriz,
   MdOutlineImage,
-  MdSentimentVerySatisfied
+  MdSentimentVerySatisfied,
 } from "react-icons/md";
 import doneTick from "../../assets/icons/1618816460_tich_xanh_facebook.png";
 import comment from "../../assets/icons/comment.png";
@@ -42,6 +42,14 @@ const Post = ({ data }) => {
   const handleBtnCommentClick = () => {
     commentsButton.current.focus();
   };
+  const porstOptionsHide = {
+    visibility: "hidden",
+    opacity: 0,
+  };
+  const porstOptions = {
+    visibility: "visible",
+    opacity: 1,
+  };
 
   return (
     <div className="Post">
@@ -74,62 +82,62 @@ const Post = ({ data }) => {
           onClick={handlePostOptionsClick}
         />
         <div
-          className={`postShare ${isActive.postOption ? "postTopRightSettingsHeight" : ""
-            }`}
+          className={`postShare ${
+            isActive.postOptions ? "postTopRightSettingsHeight" : ""
+          }`}
+          style={isActive.postOptions ? porstOptions : porstOptionsHide}
         >
-          <div className="settingsTooltip">
-            <div className="settings-post-options">
-              <ul className="settings-post-items">
-                <li className="settings-post-item">
-                  <MdChevronRight />
-                  <div>
-                    <a href="/"> Lưu bài viết</a>
-                    <span>Thêm vào danh sách mục đã lưu.</span>
-                  </div>
-                </li>
-                <hr />
-                <li className="settings-post-item">
-                  <MdChevronRight />
-                  <a href="/">Bật thông báo về bài viết này</a>
-                </li>
-                <li className="settings-post-item">
-                  <MdChevronRight />
-                  <a href="/"> Nhúng</a>
-                </li>
-                <hr />
-                <li className="settings-post-item">
-                  <MdChevronRight />
-                  <div>
-                    <a href="/"> Ẩn bài viết </a>
-                    <span>Ẩn bớt các bài viết tương tự.</span>
-                  </div>
-                </li>
-                <li className="settings-post-item">
-                  <MdChevronRight />
-                  <div>
-                    <a href="/">
-                      Tạm ẩn {data.name.split(" ")[0]} trong 30 ngày
-                    </a>
-                    <span>Tạm dừng xem bài viết.</span>
-                  </div>
-                </li>
-                <li className="settings-post-item">
-                  <MdChevronRight />
-                  <div>
-                    <a href="/">Bỏ theo dõi {data.name.split(" ")[0]}</a>
-                    <span>Dừng xem bài viết nhưng vẫn bạn bè.</span>
-                  </div>
-                </li>
-                <li className="settings-post-item">
-                  <MdChevronRight />
-                  <div>
-                    <a href="/">Báo cáo bài viết</a>
-                    <span>Tôi lo ngại về bài viết này.</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
+          {/* <div className="settingsTooltip"> */}
+          {/* <div className="settings-post-options"> */}
+          <ul className="settings-post-items">
+            <li className="settings-post-item">
+              <BsFillBookmarkCheckFill size={24} />
+              <div>
+                <a href="/"> Lưu bài viết</a>
+                <span>Thêm vào danh sách mục đã lưu.</span>
+              </div>
+            </li>
+            <hr />
+            <li className="settings-post-item">
+              <MdChevronRight />
+              <a href="/">Bật thông báo về bài viết này</a>
+            </li>
+            <li className="settings-post-item">
+              <MdChevronRight />
+              <a href="/"> Nhúng</a>
+            </li>
+            <hr />
+            <li className="settings-post-item">
+              <MdChevronRight />
+              <div>
+                <a href="/"> Ẩn bài viết </a>
+                <span>Ẩn bớt các bài viết tương tự.</span>
+              </div>
+            </li>
+            <li className="settings-post-item">
+              <MdChevronRight />
+              <div>
+                <a href="/">Tạm ẩn {data.name.split(" ")[0]} trong 30 ngày</a>
+                <span>Tạm dừng xem bài viết.</span>
+              </div>
+            </li>
+            <li className="settings-post-item">
+              <MdChevronRight />
+              <div>
+                <a href="/">Bỏ theo dõi {data.name.split(" ")[0]}</a>
+                <span>Dừng xem bài viết nhưng vẫn bạn bè.</span>
+              </div>
+            </li>
+            <li className="settings-post-item">
+              <MdChevronRight />
+              <div>
+                <a href="/">Báo cáo bài viết</a>
+                <span>Tôi lo ngại về bài viết này.</span>
+              </div>
+            </li>
+          </ul>
+          {/* </div> */}
+          {/* </div> */}
         </div>
       </div>
       <div className="detail">
@@ -173,6 +181,7 @@ const Post = ({ data }) => {
           <img src={image.image} alt="" />
         </div>
       )}
+
       {/* <span style={{ color: "var(--gray)", fontSize: '12px' }}>{data.likes} thích</span> */}
     </div>
   );
