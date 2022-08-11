@@ -1,19 +1,19 @@
-import {UilSearch} from '@iconscout/react-unicons'
-import React from 'react'
-import './LogoSearch.css'
-
+import React from "react";
+import { BiSearch } from 'react-icons/bi';
+import logo from "../../assets/icons/care-2387662-1991058.png";
+import "./LogoSearch.css";
 const LogoSearch = () => {
-    return (
-        <div className="LogoSearch">
-            <img src="../../assets/icons/care-2387662-1991058.png" alt=""/>
-            <div className="Search">
-                <input type="text" placeholder='Tìm kiếm ở đây...'/>
-                <div className="s-icon">
-                    <UilSearch/>
-                </div>
-            </div>
+  return (
+    <div className="LogoSearch">
+      <img src={logo} alt="" />
+      <div className="Search">
+        <input type="text" placeholder="Tìm kiếm ở đây..." />
+        <div className="s-icon">
+          <BiSearch size={24} />
         </div>
-    )
-}
+      </div>
+    </div>
+  );
+};
 
-export default LogoSearch
+export default LogoSearch;

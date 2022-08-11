@@ -22,3 +22,8 @@
   width: 80%;
   align-self: center;
 }
+@media (max-width: 900px) {
+  .RightSide {
+    display: none;
+  }
+}

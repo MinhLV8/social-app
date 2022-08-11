@@ -1,5 +1,9 @@
 import { UilPen } from "@iconscout/react-unicons";
 import React, { useState } from "react";
+import briefcase from "../../assets/icons/icons8-briefcase-24.png";
+import home from "../../assets/icons/icons8-home-24.png";
+import location from "../../assets/icons/icons8-location-24.png";
+import love from "../../assets/icons/icons8-love-24.png";
 import ProfileModal from "../ProfileModal.jsx/ProfileModal";
 import "./InfoCard.css";
 
@@ -25,28 +29,28 @@ const InfoCard = () => {
         <span>The world is dull, but it has you 🍃</span>
       </div>
       <div className="info">
-        <img src="./assets/icons/icons8-briefcase-24.png" alt="" />
+        <img src={briefcase} alt="" />
         <span>
           <b>Làm việc tại</b>
         </span>
         <span> Unitech@</span>
       </div>
       <div className="info">
-        <img src="./assets/icons/icons8-location-24.png" alt="" />
+        <img src={location} alt="" />
         <span>
           <b>Sống tại </b>
         </span>
         <span> Đà Nẵng</span>
       </div>
       <div className="info">
-        <img src="./assets/icons/icons8-home-24.png" alt="" />
+        <img src={home} alt="" />
         <span>
           <b>Đến từ </b>
         </span>
         <span> Quảng Ngãi</span>
       </div>
       <div className="info">
-        <img src="./assets/icons/icons8-love-24.png" alt="" />
+        <img src={love} alt="" />
         <span>
           <b> Muốn một mình nhưng sợ cô đơn.</b>
         </span>

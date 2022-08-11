@@ -1,21 +1,185 @@
 .Post {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    background-color: var(--cardColor);
-    border-radius: 1rem;
-    gap: 1rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  background-color: var(--cardColor);
+  border-radius: 1rem;
+  gap: 1rem;
 }
 
 .Post > img {
-    width: 100%;
-    max-height: 20rem;
-    object-fit: cover;
-    border-radius: 0.5rem;
+  width: 100%;
+  max-height: 40rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
 }
 
 .postReact {
-    display: flex;
-    align-items: flex-start;
-    gap: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  justify-content: space-around;
+  gap: 0.5rem;
+}
+
+.postReact > img {
+  cursor: pointer;
+}
+
+.postReact-comment {
+  background-color: var(--inputColor);
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  width: 60%;
+  gap: 0.5rem;
+}
+
+.postReact-comment > input {
+  background-color: transparent;
+  width: 100%;
+  font-size: 15px;
+  border: none;
+  outline: none;
+}
+
+.postReact > input:focus {
+  outline: none;
+}
+
+.postReact-user {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 10px 10px 10px 10px;
+}
+.Post-user {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+}
+.Post-user > div {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+}
+.Post-user > div > img {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 10px 10px 10px 10px;
+}
+
+.Post-user > svg:hover {
+  background-color: #e0e0e0;
+  border-radius: 50%;
+}
+
+.Post-user-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.Post-user-detail > span > img {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+.Post-user-detail > span:nth-of-type(2) {
+  display: flex;
+  align-items: center;
+  font-size: 0.8rem;
+  white-space: pre-wrap;
+}
+.previewImageComment {
+  width: 20%;
+  position: relative;
+}
+.previewImageComment > svg {
+  position: absolute;
+  right: -1.5rem;
+  top: 0rem;
+  cursor: pointer;
+}
+.previewImageComment > img {
+  width: 100%;
+  max-height: 20rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.settingsTooltip {
+  margin: 10px 0 10px 0px;
+  border-radius: 5px;
+  z-index: 9999;
+}
+.settings-post-options {
+  background-color: #ffffff;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  -webkit-box-shadow: 5px 5px 14px 5px rgba(0, 0, 0, 0.12);
+  box-shadow: 5px 5px 14px 5px rgba(0, 0, 0, 0.12);
+  z-index: 9999;
+}
+.settings-post-items {
+  padding: 5px;
+  margin: 0;
+  list-style: none;
+}
+.settings-post-items hr {
+  margin: 4px;
+}
+.settings-post-item span {
+  font-size: 12px;
+  font-weight: normal;
+  margin-left: 5px;
+}
+.settings-post-item a {
+  white-space: nowrap;
+  margin-left: 5px;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  color: #424242;
+}
+.settings-post-item:hover {
+  background-color: var(--cardColor);
+  border-radius: 5px;
+}
+
+.settingsTooltip::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 10.5px;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  transform: rotate(45deg);
+  -webkit-box-shadow: 5px 5px 14px 1px rgba(0, 0, 0, 0.12);
+  box-shadow: 5px 5px 14px 1px rgba(0, 0, 0, 0.12);
+  z-index: 10;
+}
+/* .postTopRightSettingsTooltip {
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 10px solid #fff;
+} */
+.postTopRightSettingsHeight {
+  visibility: visible;
+  opacity: 1;
+}
+.postShare {
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.2s, opacity 0.2s linear;
 }

@@ -5,7 +5,7 @@
   background-color: var(--cardColor);
   padding: 1rem;
   border-radius: 1rem;
-  width: 90%;
+  width: 100%;
   min-width: 200px;
   height: min-content;
   max-height: 38%;

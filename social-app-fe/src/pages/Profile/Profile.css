@@ -14,3 +14,9 @@
   flex: 5.5;
   padding: 0 9.375rem;
 }
+
+@media (max-width: 900px) {
+  .Profile-center {
+    padding: 0px;
+  }
+}

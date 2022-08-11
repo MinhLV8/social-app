@@ -36,6 +36,11 @@
   box-shadow: var(--profileShadow);
 }
 
+.avt-img {
+  width: 4.5rem;
+  height: 4.5rem;
+}
+
 .ProfileName {
   display: flex;
   flex-direction: column;

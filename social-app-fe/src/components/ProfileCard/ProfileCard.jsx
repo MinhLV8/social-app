@@ -1,13 +1,15 @@
 import React from "react";
+import avtimg from "../../assets/person/avt-10.jpg";
+import coveimg from "../../assets/person/DSC05373.jpg";
 import "./ProfileCard.css";
 
 const ProfileCard = () => {
-    const ProfilePage = true;
+    const ProfilePage = false;
     return (
         <div className="ProfileCard">
             <div className="ProfileImages">
-                <img src="../../assets/person/DSC05373.jpg" alt="" />
-                <img src="../../assets/person/avt-10.jpg" alt="" />
+                <img src={coveimg} alt="" />
+                <img src={avtimg} alt="" className={`${!ProfilePage && "avt-img"}`} />
             </div>
 
             <div className="ProfileName">
@@ -16,22 +18,21 @@ const ProfileCard = () => {
             </div>
 
             <div className="followStatus">
-                <hr />
+                {/* <hr /> */}
                 <div>
                     <div className="follow">
                         <span>6,890</span>
                         <span>Followings</span>
                     </div>
-                    <div className="vl"></div>
+                    {/* <div className="vl"></div> */}
                     <div className="follow">
                         <span>1</span>
                         <span>Followers</span>
                     </div>
 
-
                     {ProfilePage && (
                         <>
-                            <div className="vl"></div>
+                            {/* <div className="vl"></div> */}
                             <div className="follow">
                                 <span>3</span>
                                 <span>Bài viết</span>
@@ -39,7 +40,7 @@ const ProfileCard = () => {
                         </>
                     )}
                 </div>
-                <hr />
+                {/* <hr /> */}
             </div>
             {ProfilePage ? "" : <span>Trang cá nhân</span>}
         </div>

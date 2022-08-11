@@ -1,6 +1,12 @@
 .Home {
-    position: relative;
-    display: grid;
-    grid-template-columns: 18rem auto 20rem;
-    gap: 1rem;
+  position: relative;
+  display: grid;
+  grid-template-columns: 20rem auto 20rem;
+  gap: 1rem;
+  padding: 0 10%;
+}
+@media (max-width: 1627px) {
+  .Home {
+    padding: 0;
+  }
 }

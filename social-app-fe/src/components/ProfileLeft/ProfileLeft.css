@@ -1,9 +1,15 @@
 .ProfileSide {
-  width: 15%;
+  /* width: 15%; */
   display: flex;
   flex-direction: column;
   flex: 1.8;
   /* width: 12.5rem; */
   /* min-width: 12.5rem; */
   overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .ProfileSide {
+    display: none;
+  }
 }

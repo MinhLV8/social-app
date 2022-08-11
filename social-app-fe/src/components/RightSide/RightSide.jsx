@@ -1,5 +1,8 @@
-import {UilSetting} from "@iconscout/react-unicons";
-import React, {useState} from "react";
+import React, { useState } from "react";
+import { IoMdSettings } from 'react-icons/io';
+import comment from "../../assets/icons/comment.png";
+import home from "../../assets/icons/home.png";
+import noti from "../../assets/icons/noti.png";
 import ShareModal from "../ShareModal/ShareModal";
 import TrendCard from "../TrendCard/TrendCard";
 import "./RightSide.css";
@@ -9,16 +12,17 @@ const RightSide = () => {
     return (
         <div className="RightSide">
             <div className="navIcons">
-                <img src="../../assets/icons/home.png" alt=""/>
-                <UilSetting/>
-                <img src="../../assets/icons/noti.png" alt=""/>
-                <img src="../../assets/icons/comment.png" alt=""/>
+                <img src={home} alt="" />
+                {/* <UilSetting /> */}
+                <IoMdSettings size={24} />
+                <img src={noti} alt="" />
+                <img src={comment} alt="" />
             </div>
-            <TrendCard/>
+            <TrendCard />
             <button className="button r-button" onClick={() => setModalOpened(true)}>
                 Chia sẻ
             </button>
-            <ShareModal modalOpened={modalOpened} setModalOpened={setModalOpened}/>
+            <ShareModal modalOpened={modalOpened} setModalOpened={setModalOpened} />
         </div>
     );
 };
