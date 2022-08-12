@@ -1,13 +1,15 @@
 import React from 'react'
-import './Posts.css'
-import {PostsData} from '../../Data/PostsData'
+import { PostComments, PostsData } from '../../Data/PostsData'
 import Post from '../Post/Post'
+import './Posts.css'
 
 const Posts = () => {
+    let postComments = []
     return (
         <div className="Posts">
             {PostsData.map((post, id) => {
-                return <Post data={post} id={id}/>
+                postComments = PostComments.filter((u) => u.postId === post.id)
+                return <Post key={id} data={post} postComments={postComments} id={id} />
             })}
         </div>
     )

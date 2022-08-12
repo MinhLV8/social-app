@@ -1,0 +1,92 @@
+.comments {
+  /* padding: 5px 8px 8px 5px; */
+  padding: 0;
+  margin: 0;
+}
+
+.comment {
+  padding: 0.5rem 0;
+  list-style: none;
+  display: flex;
+  /* padding: 1rem; */
+  flex-direction: row;
+}
+
+.commentImg {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  /* margin-left: 5px; */
+  border: 1px solid #eeeeee;
+}
+/* .commentWapper {
+  width: 100%; 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-start;
+} */
+.commentUsers {
+  display: inline-block;
+  max-height: 100px;
+  position: relative;
+  margin-left: 10px;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.commentUser {
+  position: relative;
+  flex-basis: 0px;
+  padding: 5px 10px 5px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #eeeeee;
+  border-radius: 10px;
+  height: 40px;
+  width: fit-content;
+  max-width: 90%;
+  vertical-align: middle;
+  text-overflow: ellipsis;
+}
+
+.commentUser a {
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 13px;
+  color: #050505;
+}
+
+.commentUser span {
+  text-decoration: none;
+  font-size: 15px;
+}
+.commentUserOptions {
+  color: #65676b;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  padding: 0;
+  font-size: 12px;
+  padding-top: 4px;
+  margin-left: 8px;
+}
+.commentUserOption {
+  font-weight: bold;
+  margin-right: 20px;
+}
+.commentUserOption a {
+  color: #65676b;
+  text-decoration: none;
+}
+.commentUserOption a:hover {
+  color: #050505;
+  text-decoration: underline;
+}
+.commentUserTimes {
+  color: #65676b;
+}

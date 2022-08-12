@@ -35,6 +35,7 @@
   align-items: center;
   width: 60%;
   gap: 0.5rem;
+  position: relative;
 }
 
 .postReact-comment > input {
@@ -52,7 +53,10 @@
 .postReact-user {
   width: 3rem;
   height: 3rem;
-  border-radius: 10px 10px 10px 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  object-fit: cover;
+  /* border-radius: 10px 10px 10px 10px; */
 }
 .Post-user {
   position: relative;
@@ -175,11 +179,7 @@
   box-shadow: 5px 5px 14px 1px rgba(0, 0, 0, 0.12);
   z-index: -1;
 }
-.postTopRightSettingsHeight {
-  visibility: visible;
-  opacity: 1;
-  /* display: block; */
-}
+
 .postShare {
   /* width: 50%; */
   border-radius: 5px;
@@ -195,4 +195,18 @@
   -webkit-box-shadow: 5px 5px 14px 5px rgba(0, 0, 0, 0.12);
   box-shadow: 5px 5px 14px 5px rgba(0, 0, 0, 0.12);
   z-index: 13;
+}
+.postTopRightSettingsHeight {
+  visibility: visible;
+  opacity: 1;
+  /* display: block; */
+}
+
+.Emoji {
+  position: absolute;
+  bottom: 55px;
+  width: 100%;
+}
+
+.moreComments {
 }

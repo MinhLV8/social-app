@@ -22,8 +22,14 @@
   width: 80%;
   align-self: center;
 }
-@media (max-width: 900px) {
+/* @media (max-width: 900px) {
   .RightSide {
     display: none;
   }
-}
+} */
+/* @media (min-width: 1000px) {
+  .RightSide {
+    padding: 0;
+    display: none;
+  }
+} */

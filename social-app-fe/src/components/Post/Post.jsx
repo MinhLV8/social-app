@@ -1,22 +1,20 @@
+import Picker from '@emoji-mart/react';
 import React, { useRef, useState } from "react";
 import { IconContext } from "react-icons";
 import { BiWorld } from "react-icons/bi";
-import { BsDot, BsFillBookmarkCheckFill } from "react-icons/bs";
+import { BsBell, BsBookmarkPlus, BsClock, BsCodeSlash, BsDot, BsJournalX, BsPersonX, BsShieldExclamation } from "react-icons/bs";
 import { FaTimes, FaUserFriends } from "react-icons/fa";
 import {
-  MdChevronRight,
-  MdMoreHoriz,
-  MdOutlineImage,
-  MdSentimentVerySatisfied,
+  MdMoreHoriz, MdOutlineImage, MdSentimentVerySatisfied
 } from "react-icons/md";
 import doneTick from "../../assets/icons/1618816460_tich_xanh_facebook.png";
 import comment from "../../assets/icons/comment.png";
 import like from "../../assets/icons/like.png";
 import notlike from "../../assets/icons/notlike.png";
 import share from "../../assets/icons/share.png";
-
+import Comments from "../comments/Comments";
 import "./Post.css";
-const Post = ({ data }) => {
+const Post = ({ data, postComments }) => {
   const [isActive, setActive] = useState({
     postOptions: false,
     postShares: false,
@@ -28,9 +26,14 @@ const Post = ({ data }) => {
       ...updateValue,
     }));
   };
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeAmount, setLikeAmount] = useState(20);
+  const [commentAmount, setCommentAmount] = useState(10);
   const commentsButton = useRef();
   const [image, setImage] = useState(null);
   const imageRef = useRef();
+  const [inputValue, setInputValue] = useState("");
+  const [commentPost, setComments] = useState([...postComments]);
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
@@ -50,7 +53,54 @@ const Post = ({ data }) => {
     visibility: "visible",
     opacity: 1,
   };
-
+  const [chosenEmoji, setChosenEmoji] = useState({
+    emojiOn: false,
+    icons: "",
+  });
+  const handleIconsClick = () => {
+    setChosenEmoji(() => ({
+      ...chosenEmoji, emojiOn: !chosenEmoji.emojiOn,
+    }));
+  };
+  const onEmojiClick = (event) => {
+    // setChosenEmoji(() => ({
+    //   ...chosenEmoji,
+    //   icons: chosenEmoji.icons.concat(event.native),
+    // }));
+    setInputValue(
+      inputValue.concat(event.native)
+    );
+  };
+  const handleIconLike = () => {
+    setLikeAmount(isLiked ? likeAmount - 1 : likeAmount + 1);
+    setIsLiked(!isLiked);
+  };
+  const handleCommentKeyDown = (event) => {
+    if (event.key === "Enter") {
+      // console.log('commentPost :>> ', commentPost);
+      setInputValue(event.target.value);
+      let commentPostaaa = {
+        id: 5,
+        postId: data.id,
+        userId: 1,
+        times: new Date().getTime(),
+        comment: inputValue,
+      };
+      setComments([...commentPost, commentPostaaa]);
+      setInputValue("");
+      setCommentAmount(commentAmount + 1);
+      console.log('inputValue', inputValue)
+      console.log('comment :>> ', comment);
+    }
+  };
+  const handelFocusCommentInput = () => {
+    if (chosenEmoji.emojiOn === true) {
+      setChosenEmoji(() => ({
+        ...chosenEmoji, emojiOn: !chosenEmoji.emojiOn,
+      }))
+    }
+  }
+  const emojis = ["🤣", "😅", "🤣", "🥰", "🤩", "🥰", "🤩", "😇"];
   return (
     <div className="Post">
       <div className="Post-user">
@@ -64,7 +114,7 @@ const Post = ({ data }) => {
               3 phút trước
               <BsDot />
               {(() => {
-                switch (data.private) {
+                switch (data.privacy) {
                   case 1:
                     return <FaUserFriends size={15} />;
                   case 2:
@@ -82,16 +132,15 @@ const Post = ({ data }) => {
           onClick={handlePostOptionsClick}
         />
         <div
-          className={`postShare ${
-            isActive.postOptions ? "postTopRightSettingsHeight" : ""
-          }`}
+          className={`postShare ${isActive.postOptions ? "postTopRightSettingsHeight" : ""
+            }`}
           style={isActive.postOptions ? porstOptions : porstOptionsHide}
         >
           {/* <div className="settingsTooltip"> */}
           {/* <div className="settings-post-options"> */}
           <ul className="settings-post-items">
             <li className="settings-post-item">
-              <BsFillBookmarkCheckFill size={24} />
+              <BsBookmarkPlus size={20} />
               <div>
                 <a href="/"> Lưu bài viết</a>
                 <span>Thêm vào danh sách mục đã lưu.</span>
@@ -99,37 +148,37 @@ const Post = ({ data }) => {
             </li>
             <hr />
             <li className="settings-post-item">
-              <MdChevronRight />
+              <BsBell size={20} />
               <a href="/">Bật thông báo về bài viết này</a>
             </li>
             <li className="settings-post-item">
-              <MdChevronRight />
+              <BsCodeSlash size={20} />
               <a href="/"> Nhúng</a>
             </li>
             <hr />
             <li className="settings-post-item">
-              <MdChevronRight />
+              <BsJournalX size={20} />
               <div>
                 <a href="/"> Ẩn bài viết </a>
                 <span>Ẩn bớt các bài viết tương tự.</span>
               </div>
             </li>
             <li className="settings-post-item">
-              <MdChevronRight />
+              <BsClock size={20} />
               <div>
                 <a href="/">Tạm ẩn {data.name.split(" ")[0]} trong 30 ngày</a>
                 <span>Tạm dừng xem bài viết.</span>
               </div>
             </li>
             <li className="settings-post-item">
-              <MdChevronRight />
+              <BsPersonX size={20} />
               <div>
                 <a href="/">Bỏ theo dõi {data.name.split(" ")[0]}</a>
                 <span>Dừng xem bài viết nhưng vẫn bạn bè.</span>
               </div>
             </li>
             <li className="settings-post-item">
-              <MdChevronRight />
+              <BsShieldExclamation size={20} />
               <div>
                 <a href="/">Báo cáo bài viết</a>
                 <span>Tôi lo ngại về bài viết này.</span>
@@ -154,13 +203,27 @@ const Post = ({ data }) => {
             ref={commentsButton}
             type="text"
             placeholder="Viết bình luận..."
+            value={inputValue}
+            onChange={(event) => setInputValue(event.target.value)}
+            onFocus={handelFocusCommentInput}
+            onKeyDown={handleCommentKeyDown}
           />
+
           <IconContext.Provider value={{ style: { cursor: "pointer" } }}>
-            <MdSentimentVerySatisfied size={30} />
+            <MdSentimentVerySatisfied size={30} onClick={handleIconsClick} />
             <MdOutlineImage
               size={30}
               onClick={() => imageRef.current.click()}
             />
+            {chosenEmoji.emojiOn && (
+              <div className='Emoji'>
+                <Picker set='facebook' skinTonePosition='none'
+                  previewPosition='none'
+                  onEmojiSelect={onEmojiClick}
+                //onClickOutside={handelFocusCommentInput}
+                />
+              </div>
+            )}
             <div style={{ display: "none" }}>
               <input
                 type="file"
@@ -171,8 +234,9 @@ const Post = ({ data }) => {
             </div>
           </IconContext.Provider>
         </div>
-        <img src={data.liked ? like : notlike} alt="" /> 20
-        <img src={comment} alt="" onClick={handleBtnCommentClick} /> 30
+        <img src={isLiked ? like : notlike} onClick={handleIconLike} alt="" /> {likeAmount}
+        <img src={comment} alt="" onClick={handleBtnCommentClick}
+        /> {commentAmount}
         <img src={share} alt="" /> 56
       </div>
       {image && (
@@ -181,7 +245,29 @@ const Post = ({ data }) => {
           <img src={image.image} alt="" />
         </div>
       )}
-
+      <div>
+        {commentPost.map((p) =>
+          commentPost.length === 0 ? (
+            <strong>Chưa có bình luận nào.</strong>
+          ) : (
+            <Comments key={p.id} commentDetail={p} />
+          )
+        )
+        }
+        {commentPost.length > 0 && (
+          <div className="moreComments" style={{ display: "flex", justifyContent: "space-between" }}>
+            <a href="/">
+              <span>Xem thêm bình luận</span>
+            </a>
+            <span>1/{commentPost.length}</span>
+          </div>
+        )}
+      </div>
+      {/* {
+        emojis.map((emoji) => {
+          return <em-emoji native={emoji} set='facebook'></em-emoji>
+        })
+      } */}
       {/* <span style={{ color: "var(--gray)", fontSize: '12px' }}>{data.likes} thích</span> */}
     </div>
   );
