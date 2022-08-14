@@ -1,0 +1,66 @@
+.postShare {
+  border-radius: 5px;
+  background-color: #fff;
+  position: absolute;
+  padding: 0.5rem;
+  bottom: 80px;
+  right: 15px;
+  visibility: visible;
+  opacity: 1;
+  transition: visibility 0.2s, opacity 0.2s linear;
+  -webkit-box-shadow: 5px 5px 14px 5px rgba(0, 0, 0, 0.12);
+  box-shadow: 5px 5px 14px 5px rgba(0, 0, 0, 0.12);
+}
+
+.postShare:before {
+  content: "";
+  position: absolute;
+  top: -10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  transform: rotate(45deg);
+  -webkit-box-shadow: 5px 5px 14px 1px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--inputColor);
+  z-index: 2;
+}
+.postTopRightSettingsHeight {
+  visibility: visible;
+  opacity: 1;
+}
+
+.settings-post-items {
+  padding: 5px;
+  margin: 0;
+  list-style: none;
+}
+.settings-post-items > hr {
+  border: 1px solid var(--inputColor);
+}
+.settings-post-item {
+  padding: 0.5rem 0.5rem;
+  display: flex;
+  align-items: center;
+}
+.settings-post-item span {
+  font-size: 12px;
+  font-weight: normal;
+  margin-left: 5px;
+}
+.settings-post-item a {
+  white-space: nowrap;
+  margin-left: 5px;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
+  text-decoration: none;
+  color: #424242;
+}
+
+.settings-post-item:hover {
+  /* background-color: var(--cardColor); */
+  border-radius: 5px;
+  background-color: var(--inputColor);
+}

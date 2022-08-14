@@ -6,14 +6,15 @@
   background-color: var(--cardColor);
   border-radius: 1rem;
   gap: 1rem;
+  border: 1px solid var(--inputColor);
 }
 
-.Post > img {
+/* .Post > img {
   width: 100%;
   max-height: 40rem;
   object-fit: cover;
   border-radius: 0.5rem;
-}
+} */
 
 .postReact {
   display: flex;
@@ -27,6 +28,43 @@
   cursor: pointer;
 }
 
+.post-imgs {
+  /* width: 800px; */
+  /* max-height: 40rem; */
+  /* width: 100px; */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 20rem 10rem;
+  grid-gap: 5px 5px;
+  /* grid-template-columns: repeat(6); */
+  /* grid-ga; */
+  grid-template-areas:
+    "img1 img1 img1 img2 img2 img2"
+    "img3 img3 img4 img4 img5 img5";
+}
+.post-img-item:first-child {
+  grid-area: img1;
+}
+.post-img-item:nth-child(2) {
+  grid-area: img2;
+}
+.post-img-item:nth-child(3) {
+  grid-area: img3;
+}
+.post-img-item:nth-child(4) {
+  grid-area: img4;
+}
+.post-img-item:last-child {
+  grid-area: img5;
+}
+
+.post-img-item > img {
+  cursor: pointer;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
 .postReact-comment {
   background-color: var(--inputColor);
   border-radius: 10px;
@@ -129,77 +167,6 @@
   -webkit-box-shadow: 5px 5px 14px 5px rgba(0, 0, 0, 0.12);
   box-shadow: 5px 5px 14px 5px rgba(0, 0, 0, 0.12);
   z-index: 9999;
-}
-.settings-post-items {
-  padding: 5px;
-  margin: 0;
-  list-style: none;
-}
-.settings-post-items hr {
-  /* margin: 4px; */
-  border: 1px solid #424242;
-}
-.settings-post-item {
-  padding: 0.5rem 0;
-  display: flex;
-  align-items: center;
-}
-.settings-post-item span {
-  font-size: 12px;
-  font-weight: normal;
-  margin-left: 5px;
-}
-.settings-post-item a {
-  white-space: nowrap;
-  margin-left: 5px;
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: space-between;
-  text-decoration: none;
-  color: #424242;
-}
-
-.settings-post-item:hover {
-  /* background-color: var(--cardColor); */
-  border-radius: 5px;
-  background-color: var(--inputColor);
-}
-
-.postShare:before {
-  content: "";
-  position: absolute;
-  top: -10px;
-  right: 10px;
-  width: 20px;
-  height: 20px;
-  background-color: #fff;
-  transform: rotate(45deg);
-  -webkit-box-shadow: 5px 5px 14px 1px rgba(0, 0, 0, 0.12);
-  box-shadow: 5px 5px 14px 1px rgba(0, 0, 0, 0.12);
-  z-index: -1;
-}
-
-.postShare {
-  /* width: 50%; */
-  border-radius: 5px;
-  background-color: #fff;
-  position: absolute;
-  padding: 1rem;
-  top: 50px;
-  right: -5px;
-  visibility: hidden;
-  opacity: 0;
-  /* display: block; */
-  transition: visibility 0.2s, opacity 0.2s linear;
-  -webkit-box-shadow: 5px 5px 14px 5px rgba(0, 0, 0, 0.12);
-  box-shadow: 5px 5px 14px 5px rgba(0, 0, 0, 0.12);
-  z-index: 13;
-}
-.postTopRightSettingsHeight {
-  visibility: visible;
-  opacity: 1;
-  /* display: block; */
 }
 
 .Emoji {

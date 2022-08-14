@@ -1,6 +1,8 @@
 import img1 from "../assets/post/post-1.jpg";
 import img2 from "../assets/post/post-2.jpg";
 import img3 from "../assets/post/post-3.jpg";
+import img4 from "../assets/post/post-4.jpg";
+import img5 from "../assets/post/post-5.jpg";
 export const Users = [
     {
         id: 1,
@@ -33,23 +35,25 @@ export const Users = [
 export const PostsData = [
     {
         id: 1,
-        img: img1,
+        img: [img1, img2, img3, img4, img5],
         userId: 1,
         privacy: 1,
-        name: 'Tzuyu',
+        name: 'Minh Lê',
         desc: "Một điểm Camping🏕  săn mây tại Tây Nguyên mà ít ai biết ☺️",
         likes: 2300,
+        shares: 56,
         times: 1656670238000,
         liked: true
     },
     {
         id: 2,
-        img: img2,
+        img: [img2],
         userId: 1,
         privacy: 2,
-        name: 'Maryam',
+        name: 'Ngọc Ánh',
         desc: "Có thằng bạn từ Mỹ sang Việt Nam, cho đi leo núi tắm thác và bắt làm nông dân, cho hút cả thuốc lào và ăn bún chả nữa, Ben nói: I love Viet Nam:)",
         likes: 2300,
+        shares: 59,
         times: 1659262238000,
         liked: false
 
@@ -57,11 +61,12 @@ export const PostsData = [
     {
         id: 3,
         userId: 1,
-        img: img3,
+        img: [img3],
         privacy: 1,
         name: "Salena Gomez",
         desc: "Một chút bình yên miền biển 🍃 🌊",
         likes: 800,
+        shares: 46,
         liked: false,
         times: 1659262238000,
     }
