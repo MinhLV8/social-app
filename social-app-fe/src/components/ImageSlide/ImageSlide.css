@@ -69,6 +69,7 @@
   position: absolute;
   opacity: 0;
   transform: scale(1.1);
+  border-radius: 10px 0px 0px 10px;
   /* transition: all 0.15s ease-out; */
 }
 .carousel__image.active {
@@ -114,6 +115,7 @@
   position: absolute;
   left: 0;
   top: 0;
+  border-radius: 10px 0px 0px 10px;
 }
 
 .right {

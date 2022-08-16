@@ -7,14 +7,14 @@ import { FaTimes, FaUserFriends } from "react-icons/fa";
 import {
   MdMoreHoriz,
   MdOutlineImage,
-  MdSentimentVerySatisfied
+  MdSentimentVerySatisfied,
 } from "react-icons/md";
 import doneTick from "../../assets/icons/1618816460_tich_xanh_facebook.png";
 import comment from "../../assets/icons/comment.png";
 import like from "../../assets/icons/like.png";
 import notlike from "../../assets/icons/notlike.png";
 import share from "../../assets/icons/share.png";
-import { Users } from '../../Data/PostsData';
+import { Users } from "../../Data/PostsData";
 import { timeDiff } from "../../utils/Utils";
 import Comments from "../comments/Comments";
 import ImageSlide from "../ImageSlide/ImageSlide";
@@ -53,8 +53,6 @@ const Post = ({ data, postComments }) => {
   const [commentPost, setComments] = useState([...postComments]);
   const [imageSlide, setImageSlide] = useState(false);
 
-
-
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
@@ -66,14 +64,6 @@ const Post = ({ data, postComments }) => {
   const handleBtnCommentClick = () => {
     commentsButton.current.focus();
   };
-  // const porstOptionsHide = {
-  //   visibility: "hidden",
-  //   opacity: 0,
-  // };
-  // const porstOptions = {
-  //   visibility: "visible",
-  //   opacity: 1,
-  // };
   const [chosenEmoji, setChosenEmoji] = useState({
     emojiOn: false,
     icons: "",
@@ -89,6 +79,7 @@ const Post = ({ data, postComments }) => {
     //   ...chosenEmoji,
     //   icons: chosenEmoji.icons.concat(event.native),
     // }));
+    console.log("event", event);
     setInputValue(inputValue.concat(event.native));
   };
   const handleIconLike = () => {
@@ -120,13 +111,12 @@ const Post = ({ data, postComments }) => {
   };
 
   const handelPostImageClick = () => {
-    setImageSlide(true)
-  }
+    setImageSlide(true);
+  };
 
   const handelclosePopup = () => {
-    setImageSlide(false)
-  }
-  // const emojis = ["🤣", "😅", "🤣", "🥰", "🤩", "🥰", "🤩", "😇"];
+    setImageSlide(false);
+  };
   return (
     <div className="Post">
       <div className="Post-user">
@@ -176,8 +166,14 @@ const Post = ({ data, postComments }) => {
           alt=""
         />
       )}
-      <PostImage key={data.id} images={data.img} onImgClick={handelPostImageClick} />
-      {imageSlide && <ImageSlide images={data.img} onClosePopup={handelclosePopup} />}
+      <PostImage
+        key={data.id}
+        images={data.img}
+        onImgClick={handelPostImageClick}
+      />
+      {imageSlide && (
+        <ImageSlide images={data.img} onClosePopup={handelclosePopup} />
+      )}
       <div className="postReact">
         <img src={userAvatar} alt="" className="postReact-user" />
         <div className="postReact-comment">
@@ -190,7 +186,6 @@ const Post = ({ data, postComments }) => {
             onFocus={handelFocusCommentInput}
             onKeyDown={handleCommentKeyDown}
           />
-
           <IconContext.Provider value={{ style: { cursor: "pointer" } }}>
             <MdSentimentVerySatisfied size={30} onClick={handleIconsClick} />
             <MdOutlineImage
@@ -204,7 +199,7 @@ const Post = ({ data, postComments }) => {
                   skinTonePosition="none"
                   previewPosition="none"
                   onEmojiSelect={onEmojiClick}
-                //onClickOutside={handelFocusCommentInput}
+                  //onClickOutside={handelFocusCommentInput}
                 />
               </div>
             )}
@@ -257,12 +252,6 @@ const Post = ({ data, postComments }) => {
           </div>
         )}
       </div>
-      {/* {
-        emojis.map((emoji) => {
-          return <em-emoji native={emoji} set='facebook'></em-emoji>
-        })
-      } */}
-      {/* <span style={{ color: "var(--gray)", fontSize: '12px' }}>{data.likes} thích</span> */}
     </div>
   );
 };

@@ -15,8 +15,10 @@ export default function Comments({ commentDetail }) {
           <div className="commentUsers">
             <div className="commentUser">
               <a href="https://www.facebook.com/">{username}</a>
-              <span>{commentDetail.comment}</span>
-              <em-emoji native=":)" set="facebook"></em-emoji>
+              <span>
+                {commentDetail.comment}{" "}
+                <em-emoji native="🤗" unified="1f619" set="facebook"></em-emoji>
+              </span>
             </div>
             <ul className="commentUserOptions">
               <li className="commentUserOption">
