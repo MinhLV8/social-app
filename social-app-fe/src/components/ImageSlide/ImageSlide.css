@@ -1,0 +1,146 @@
+.popup {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: rgba(20, 20, 20, 0.911);
+  z-index: 9999;
+}
+.popup_inner {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 10%;
+  bottom: 10%;
+  margin: auto;
+  background: rgb(110, 110, 110);
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-around;
+  border-radius: 10px;
+}
+.popup_img {
+  width: 70%;
+  height: 100%;
+  border-radius: 5px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.popup_comments {
+  width: 30%;
+  height: 100%;
+  background-color: white;
+  border-radius: 0px 10px 10px 0px;
+}
+/* carousel css .carousel__wrapper {
+  border-radius: 5px;
+  box-shadow: 0 1rem 2rem rgba(59, 59, 59, 0.2);
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+} */
+
+.carousel__container {
+  display: flex;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.carousel__image {
+  object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
+  height: 100%;
+  display: block;
+  position: absolute;
+  opacity: 0;
+  transform: scale(1.1);
+  /* transition: all 0.15s ease-out; */
+}
+.carousel__image.active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.carousel__button {
+  position: absolute;
+  height: 100%;
+  width: 4.5rem;
+  background: transparent;
+  border: 0;
+  color: black;
+  cursor: pointer;
+  font-size: 2rem;
+  flex-grow: 1;
+  outline: none;
+  transition: all 0.1s ease-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel__button:hover {
+  background: rgba(110, 110, 110, 0.158);
+}
+
+.flavor-text {
+  display: block;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.75rem;
+  font-weight: 300;
+  letter-spacing: 2px;
+  line-height: 1.5;
+  margin: 1rem auto;
+  max-width: 100%;
+  text-align: center;
+  text-transform: uppercase;
+  width: 15rem;
+}
+.left {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.right {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.hinh {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.binhluan {
+  background-color: aliceblue;
+  width: 30%;
+  height: 100%;
+}
+.btn-close {
+  border: none;
+  outline: none;
+  background-color: transparent;
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  color: white;
+}
+.show {
+  display: none;
+}

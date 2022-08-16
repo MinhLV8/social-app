@@ -7,17 +7,20 @@ import { FaTimes, FaUserFriends } from "react-icons/fa";
 import {
   MdMoreHoriz,
   MdOutlineImage,
-  MdSentimentVerySatisfied,
+  MdSentimentVerySatisfied
 } from "react-icons/md";
 import doneTick from "../../assets/icons/1618816460_tich_xanh_facebook.png";
 import comment from "../../assets/icons/comment.png";
 import like from "../../assets/icons/like.png";
 import notlike from "../../assets/icons/notlike.png";
 import share from "../../assets/icons/share.png";
+import { Users } from '../../Data/PostsData';
 import { timeDiff } from "../../utils/Utils";
 import Comments from "../comments/Comments";
+import ImageSlide from "../ImageSlide/ImageSlide";
 import PopupOptions from "../popupOptions/PopupOptions";
 import PopupShare from "../popupShares/PopupShare";
+import PostImage from "../postImage/PostImage";
 import "./Post.css";
 const Post = ({ data, postComments }) => {
   const [isActive, setActive] = useState({
@@ -38,6 +41,8 @@ const Post = ({ data, postComments }) => {
       ...updateValue,
     }));
   };
+  const username = Users.filter((u) => u.id === data.userId)[0].username;
+  const userAvatar = Users.filter((u) => u.id === data.userId)[0].userAvatar;
   const [isLiked, setIsLiked] = useState(false);
   const [likeAmount, setLikeAmount] = useState(20);
   const [commentAmount, setCommentAmount] = useState(10);
@@ -46,6 +51,10 @@ const Post = ({ data, postComments }) => {
   const imageRef = useRef();
   const [inputValue, setInputValue] = useState("");
   const [commentPost, setComments] = useState([...postComments]);
+  const [imageSlide, setImageSlide] = useState(false);
+
+
+
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
@@ -57,7 +66,6 @@ const Post = ({ data, postComments }) => {
   const handleBtnCommentClick = () => {
     commentsButton.current.focus();
   };
-
   // const porstOptionsHide = {
   //   visibility: "hidden",
   //   opacity: 0,
@@ -89,7 +97,6 @@ const Post = ({ data, postComments }) => {
   };
   const handleCommentKeyDown = (event) => {
     if (event.key === "Enter") {
-      // console.log('commentPost :>> ', commentPost);
       setInputValue(event.target.value);
       let commentPostaaa = {
         id: 5,
@@ -101,8 +108,6 @@ const Post = ({ data, postComments }) => {
       setComments([...commentPost, commentPostaaa]);
       setInputValue("");
       setCommentAmount(commentAmount + 1);
-      console.log("inputValue", inputValue);
-      console.log("comment :>> ", comment);
     }
   };
   const handelFocusCommentInput = () => {
@@ -113,15 +118,23 @@ const Post = ({ data, postComments }) => {
       }));
     }
   };
+
+  const handelPostImageClick = () => {
+    setImageSlide(true)
+  }
+
+  const handelclosePopup = () => {
+    setImageSlide(false)
+  }
   // const emojis = ["🤣", "😅", "🤣", "🥰", "🤩", "🥰", "🤩", "😇"];
   return (
     <div className="Post">
       <div className="Post-user">
         <div>
-          <img src={data.img} alt="" />
+          <img src={userAvatar} alt="" />
           <div className="Post-user-detail">
             <span>
-              <b>{data.name}</b> <img src={doneTick} alt="" />{" "}
+              <b>{username}</b> <img src={doneTick} alt="" />{" "}
             </span>
             <span>
               {timeDiff(new Date().getTime(), data.times)}
@@ -133,7 +146,7 @@ const Post = ({ data, postComments }) => {
                   case 2:
                     return <BiWorld size={15} />;
                   default:
-                    throw new Error("Invalid peivate post");
+                    throw new Error("Invalid private post");
                 }
               })()}
             </span>
@@ -144,14 +157,6 @@ const Post = ({ data, postComments }) => {
           style={{ position: "relative", cursor: "pointer" }}
           onClick={handlePostOptionsClick}
         />
-        {/* <div
-          className={`postShare ${
-            isActive.postOptions ? "postTopRightSettingsHeight" : ""
-          }`}
-          style={isActive.postOptions ? porstOptions : porstOptionsHide}
-        >
-          <PopupOptions username={data.name} />
-        </div> */}
         {isActive.postOptions && <PopupOptions username={data.name} />}
       </div>
       <div className="detail">
@@ -171,17 +176,10 @@ const Post = ({ data, postComments }) => {
           alt=""
         />
       )}
-      {data.img.length >= 5 && (
-        <div className="post-imgs">
-          {data.img.map((img, index) => (
-            <div className="post-img-item">
-              <img key={index} src={img} alt="" />
-            </div>
-          ))}
-        </div>
-      )}
+      <PostImage key={data.id} images={data.img} onImgClick={handelPostImageClick} />
+      {imageSlide && <ImageSlide images={data.img} onClosePopup={handelclosePopup} />}
       <div className="postReact">
-        <img src={data.img} alt="" className="postReact-user" />
+        <img src={userAvatar} alt="" className="postReact-user" />
         <div className="postReact-comment">
           <input
             ref={commentsButton}
@@ -206,7 +204,7 @@ const Post = ({ data, postComments }) => {
                   skinTonePosition="none"
                   previewPosition="none"
                   onEmojiSelect={onEmojiClick}
-                  //onClickOutside={handelFocusCommentInput}
+                //onClickOutside={handelFocusCommentInput}
                 />
               </div>
             )}
