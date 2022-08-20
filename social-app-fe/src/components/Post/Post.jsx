@@ -7,7 +7,7 @@ import { FaTimes, FaUserFriends } from "react-icons/fa";
 import {
   MdMoreHoriz,
   MdOutlineImage,
-  MdSentimentVerySatisfied,
+  MdSentimentVerySatisfied
 } from "react-icons/md";
 import doneTick from "../../assets/icons/1618816460_tich_xanh_facebook.png";
 import comment from "../../assets/icons/comment.png";
@@ -199,7 +199,7 @@ const Post = ({ data, postComments }) => {
                   skinTonePosition="none"
                   previewPosition="none"
                   onEmojiSelect={onEmojiClick}
-                  //onClickOutside={handelFocusCommentInput}
+                //onClickOutside={handelFocusCommentInput}
                 />
               </div>
             )}

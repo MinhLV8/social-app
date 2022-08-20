@@ -5,13 +5,13 @@
   background-color: var(--cardColor);
   padding: 1rem;
   border-radius: 1rem;
-  width: 100%;
   min-width: 200px;
   height: min-content;
   max-height: 38%;
 }
 
 .infoHead {
+  height: 15%;
   display: flex;
   justify-content: space-between;
   align-items: center;

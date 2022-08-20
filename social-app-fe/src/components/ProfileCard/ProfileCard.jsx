@@ -6,7 +6,7 @@ import "./ProfileCard.css";
 const ProfileCard = () => {
     const ProfilePage = false;
     return (
-        <div className="ProfileCard">
+        <div className="ProfileCard" style={{ margin: "0 10%" }}>
             <div className="ProfileImages">
                 <img src={coveimg} alt="" />
                 <img src={avtimg} alt="" className={`${!ProfilePage && "avt-img"}`} />

@@ -1,5 +1,6 @@
-import { UilPen } from "@iconscout/react-unicons";
+// import { UilPen } from "@iconscout/react-unicons";
 import React, { useState } from "react";
+import { FiEdit } from "react-icons/fi";
 import briefcase from "../../assets/icons/icons8-briefcase-24.png";
 import home from "../../assets/icons/icons8-home-24.png";
 import location from "../../assets/icons/icons8-location-24.png";
@@ -14,9 +15,7 @@ const InfoCard = () => {
       <div className="infoHead">
         <h4>Tiểu sử</h4>
         <div>
-          <UilPen
-            width="2rem"
-            height="1.2rem"
+          <FiEdit size={18}
             onClick={() => setModalOpened(true)}
           />
           <ProfileModal
