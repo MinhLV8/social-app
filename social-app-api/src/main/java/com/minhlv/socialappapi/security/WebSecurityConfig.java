@@ -22,86 +22,92 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
-public class WebSecurityConfig  extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailsServiceImpl userService;
+	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+	private final UserDetailsServiceImpl userService;
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Autowired
+	public WebSecurityConfig(UserDetailsServiceImpl userService, JwtAuthenticationFilter jwtAuthenticationFilter) {
+		this.userService = userService;
+		this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+	}
 
-    @Bean
-    public CustomAccessDeniedHandler customAccessDeniedHandler() {
-        return new CustomAccessDeniedHandler();
-    }
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService)
-                .passwordEncoder(this.bCryptPasswordEncoder());
-    }
+	@Bean
+	public CustomAccessDeniedHandler customAccessDeniedHandler() {
+		return new CustomAccessDeniedHandler();
+	}
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userService)
+				.passwordEncoder(this.bCryptPasswordEncoder());
+	}
 
-        // Disable CSRF (cross site request forgery)
-        http.csrf().disable();
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
 
-        // No session will be created or used by spring security
-        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		// Disable CSRF (cross site request forgery)
+		http.csrf().disable();
 
-        // Entry points
-        http.authorizeRequests()//
-                .antMatchers("/api/users/signin").permitAll()//
-                .antMatchers("/api/users/signup").permitAll()//
-                .antMatchers("/api/h2-console/**/**").permitAll()
-                // Disallow everything else..
-                .anyRequest().authenticated();
+		// No session will be created or used by spring security
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        // If a user try to access a resource without having enough permissions
-        http.exceptionHandling().accessDeniedPage("/login");
+		// Entry points
+		http.authorizeRequests()//
+				.antMatchers("/api/auth/signin").permitAll()//
+				.antMatchers("/api/auth/signup").permitAll()//
+				.antMatchers("/api/h2-console/**/**").permitAll()
 
-        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class).exceptionHandling()
-                .accessDeniedHandler(customAccessDeniedHandler());
-        // Apply JWT
-        //http.apply(new jwtTokenFilterConfigurer(jwtTokenProvider));
+				// Disallow everything else..
+				.anyRequest().authenticated();
 
-        // Optional, if you want to test the API from a browser
-        // http.httpBasic();
+		// If a user try to access a resource without having enough permissions
+		http.exceptionHandling().accessDeniedPage("/login");
 
-        //Remember me account
-        http.authorizeRequests().and().rememberMe().tokenRepository(this.persistentTokenRepository()).tokenValiditySeconds(24 * 60 * 60);
-    }
+		http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class).exceptionHandling()
+				.accessDeniedHandler(customAccessDeniedHandler());
+		// Apply JWT
+		//http.apply(new jwtTokenFilterConfigurer(jwtTokenProvider));
 
-    @Override
-    public void configure(WebSecurity web) {
-        // Allow swagger to be accessed without authentication
-        web.ignoring().antMatchers("/v2/api-docs")//
-                .antMatchers("/swagger-resources/**")//
-                .antMatchers("/swagger-ui.html")//
-                .antMatchers("/configuration/**")//
-                .antMatchers("/webjars/**")//
-                .antMatchers("/public")
+		// Optional, if you want to test the API from a browser
+		// http.httpBasic();
 
-                // Un-secure H2 Database (for testing purposes, H2 console shouldn't be unprotected in production)
-                .and()
-                .ignoring()
-                .antMatchers("/h2-console/**/**");
+		//Remember me account
+		http.authorizeRequests().and().rememberMe().tokenRepository(this.persistentTokenRepository()).tokenValiditySeconds(24 * 60 * 60);
+	}
 
-    }
+	@Override
+	public void configure(WebSecurity web) {
+		// Allow swagger to be accessed without authentication
+		web.ignoring().antMatchers("/v2/api-docs")//
+				.antMatchers("/swagger-resources/**")//
+				.antMatchers("/swagger-ui.html")//
+				.antMatchers("/configuration/**")//
+				.antMatchers("/webjars/**")//
+				.antMatchers("/public")
 
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+				// Un-secure H2 Database (for testing purposes, H2 console shouldn't be unprotected in production)
+				.and()
+				.ignoring()
+				.antMatchers("/h2-console/**/**");
 
-    @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
-        return new InMemoryTokenRepositoryImpl();
-    }
+	}
+
+	@Override
+	@Bean
+	public AuthenticationManager authenticationManagerBean() throws Exception {
+		return super.authenticationManagerBean();
+	}
+
+	@Bean
+	public PersistentTokenRepository persistentTokenRepository() {
+		return new InMemoryTokenRepositoryImpl();
+	}
 }

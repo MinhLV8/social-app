@@ -1,6 +1,7 @@
 package com.minhlv.socialappapi.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -52,6 +53,7 @@ public class SystemUserEntity implements Serializable {
 	private String sdt;
 
 	@JsonIgnore
+	@JsonManagedReference
 	@OneToOne(mappedBy = "users", fetch = FetchType.EAGER)
 	private AccountEntity accountEntity;
 
@@ -63,7 +65,7 @@ public class SystemUserEntity implements Serializable {
 	private Set<SystemGroupEntity> groups = new HashSet<>();
 
 	@JsonIgnore
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "system_userrole", schema = "public", joinColumns = {
 			@JoinColumn(name = "user_id", nullable = false, updatable = false)}, inverseJoinColumns = {
 			@JoinColumn(name = "role_id", nullable = false, updatable = false)})

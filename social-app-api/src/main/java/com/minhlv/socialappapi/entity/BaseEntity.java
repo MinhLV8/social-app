@@ -18,19 +18,12 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @MappedSuperclass
-@EntityListeners({AuditingEntityListener.class})
-public abstract class BaseEntity implements Serializable{
+@EntityListeners(AuditingEntityListener.class)
+public abstract class BaseEntity implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -266794152498589987L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-
-	@Column(name = "createdDate")
+	@Column(name = "createdDate", nullable = false, updatable = false)
 	@CreatedDate
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date createdDate;
@@ -40,11 +33,11 @@ public abstract class BaseEntity implements Serializable{
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date modifiedDate;
 
-	@Column(name = "createdBy")
 	@CreatedBy
+	@Column(name = "created_by", nullable = false, updatable = false)
 	private String createdBy;
 
-	@Column(name = "modifiedBy")
+	@Column(name = "modified_by")
 	@LastModifiedBy
 	private String modifiedBy;
 
