@@ -3,9 +3,11 @@ package com.minhlv.socialappapi.service.impl;
 import com.minhlv.socialappapi.dto.requestDTO.AccountUpdateDTO;
 import com.minhlv.socialappapi.entity.PostEntity;
 import com.minhlv.socialappapi.entity.SystemUserEntity;
+import com.minhlv.socialappapi.repository.ImageRepository;
 import com.minhlv.socialappapi.repository.UserRepository;
 import com.minhlv.socialappapi.service.AccountService;
 import com.minhlv.socialappapi.utils.APIResult;
+import com.minhlv.socialappapi.utils.FileUploadUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -13,7 +15,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Base64;
 import java.util.Objects;
 
 @Slf4j
@@ -22,7 +23,10 @@ public class AccountServiceImpl implements AccountService {
 
 	private final UserRepository userRepository;
 
-	public AccountServiceImpl(UserRepository userRepository) {
+	private final ImageRepository imageRepository;
+
+	public AccountServiceImpl(UserRepository userRepository, ImageRepository imageRepository) {
+		this.imageRepository = imageRepository;
 		this.userRepository = userRepository;
 	}
 
@@ -31,13 +35,9 @@ public class AccountServiceImpl implements AccountService {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		SystemUserEntity user = userRepository.findByUsername(username);
 		String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-
-		/*user.getAccountEntity().setUserAvatar(fileName);
-		SystemUserEntity savedUser = userRepository.save(user);*/
-		/*String uploadDir = "user-photos/" + user.getId();*/
 		try {
-			//FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
-			user.getAccountEntity().setUserAvatar(Base64.getEncoder().encodeToString(multipartFile.getBytes()));
+			user.getAccountEntity().setUserAvatar(FileUploadUtil.compressImage(multipartFile.getBytes()
+			));
 			userRepository.save(user);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -51,12 +51,26 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public APIResult updateCoverImg() {
-		return null;
+	public APIResult updateCoverImg(MultipartFile multipartFile) {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		SystemUserEntity user = userRepository.findByUsername(username);
+		String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+		try {
+			user.getAccountEntity().setUserCover(FileUploadUtil.compressImage(multipartFile.getBytes()));
+			userRepository.save(user);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new APIResult(fileName);
 	}
 
 
-	public PostEntity changeAvatarPost(){
+	public PostEntity changeAvatarPost() {
+
+		return new PostEntity();
+	}
+
+	public PostEntity changeCoverPost() {
 
 		return new PostEntity();
 	}

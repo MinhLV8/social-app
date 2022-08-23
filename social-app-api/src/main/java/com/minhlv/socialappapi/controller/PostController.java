@@ -30,7 +30,7 @@ public class PostController {
 		return postService.createPost(modelMapper.map(payload, PostEntity.class));
 	}
 
-	@PostMapping(value = "/")
+	@PostMapping(value = "/privacy")
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 	@ApiOperation(value = "${PostController.updatePrivacyPost}", response = CreatePostDTO.class, authorizations = {
 			@Authorization(value = "jwt")})

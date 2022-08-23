@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -50,11 +51,15 @@ public class AccountEntity extends BaseEntity implements Serializable {
 	@Column(name = "firstname", length = 10)
 	private String firstName;
 
-	@Column(name = "avatar", columnDefinition = "TEXT")
-	private String userAvatar;
+	@Lob
+	@Type(type = "org.hibernate.type.BinaryType")
+	@Column(name = "avatar", columnDefinition = "bytea")
+	private byte[] userAvatar;
 
-	@Column(name = "cover_image", columnDefinition = "TEXT")
-	private String userCover;
+	@Lob
+	@Type(type = "org.hibernate.type.BinaryType")
+	@Column(name = "cover", columnDefinition = "bytea")
+	private byte[] userCover;
 
 	@Column(name = "bio")
 	private String bio;

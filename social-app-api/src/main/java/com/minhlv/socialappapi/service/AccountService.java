@@ -12,5 +12,5 @@ public interface AccountService {
 
 	APIResult updateFullName(AccountUpdateDTO payload);
 
-	APIResult updateCoverImg();
+	APIResult updateCoverImg(MultipartFile multipartFile);
 }
