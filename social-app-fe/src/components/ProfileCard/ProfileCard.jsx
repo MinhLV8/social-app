@@ -11,7 +11,7 @@ const ProfileCard = () => {
         <img src={coveimg} alt="" />
         {/* <img src={avtimg} alt="" className={`${!ProfilePage && "avt-img"}`} /> */}
         <img
-          src={`data:image/jpeg;base64,${avtimg}`}
+          src={`${avtimg}`}
           alt=""
           className={`${!ProfilePage && "avt-img"}`}
         />

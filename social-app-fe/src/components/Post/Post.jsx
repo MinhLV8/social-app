@@ -1,5 +1,5 @@
 import Picker from "@emoji-mart/react";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, createContext } from "react";
 import { IconContext } from "react-icons";
 import { BiWorld } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
@@ -53,6 +53,7 @@ const Post = ({ data, postComments }) => {
   const [commentPost, setComments] = useState([...postComments]);
   const [imageSlide, setImageSlide] = useState(false);
 
+  //const [selectedImage, setSelectedImage] = useState(0);
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
@@ -110,7 +111,8 @@ const Post = ({ data, postComments }) => {
     }
   };
 
-  const handelPostImageClick = () => {
+  const handelPostImageClick = (event) => {
+    console.log('event :>> ', event);
     setImageSlide(true);
   };
 
@@ -172,7 +174,7 @@ const Post = ({ data, postComments }) => {
         onImgClick={handelPostImageClick}
       />
       {imageSlide && (
-        <ImageSlide images={data.img} onClosePopup={handelclosePopup} />
+        <ImageSlide images={data.img} selectedImage={selectedImage} onClosePopup={handelclosePopup} />
       )}
       <div className="postReact">
         <img src={userAvatar} alt="" className="postReact-user" />

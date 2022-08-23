@@ -7,10 +7,10 @@ import {
     RiCloseFill
 } from "react-icons/ri";
 import "./ImageSlide.css";
-export default function ImageSlide({ images, onClosePopup }) {
+export default function ImageSlide({ images, selectedImage, onClosePopup }) {
 
     const [state, setState] = useState({
-        currentIndex: 0,
+        currentIndex: selectedImage,
         isTransitioning: false,
         goingLeft: false
     })
@@ -39,7 +39,7 @@ export default function ImageSlide({ images, onClosePopup }) {
                         <button className="carousel__button right" onClick={showNextSet}><BsChevronRight /></button>
                     </div>
                 </div>
-                <div className='popup_comments'>hguhj</div>
+                <div className='popup_comments'>Bình luận</div>
             </div>
             <button className='btn-close' onClick={onClosePopup}><RiCloseFill size={30} /></button>
         </div>
