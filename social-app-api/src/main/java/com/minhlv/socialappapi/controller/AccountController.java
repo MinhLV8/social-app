@@ -23,6 +23,17 @@ public class AccountController {
 		this.accountService = accountService;
 	}
 
+	@GetMapping(value = "/")
+	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+	@ApiOperation(value = "${AccountController.get-accounts}", response = UserResponseDTO.class, authorizations = {
+			@Authorization(value = "jwt")})
+	@ApiResponses(value = {@ApiResponse(code = 400, message = "Something went wrong"),
+			@ApiResponse(code = 403, message = "Access denied"),
+			@ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+	public APIResult getAccount() {
+		return accountService.getAccount();
+	}
+
 	@PostMapping(value = "/avatar")
 	@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
 	@ApiOperation(value = "${AccountController.update-avatar}", response = UserResponseDTO.class, authorizations = {

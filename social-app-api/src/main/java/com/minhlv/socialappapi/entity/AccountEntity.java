@@ -19,7 +19,7 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(callSuper = false)
+@EqualsAndHashCode(exclude = "dependent_list")
 @ToString
 @Entity
 @EntityListeners(AuditingEntityListener.class)
@@ -56,10 +56,16 @@ public class AccountEntity extends BaseEntity implements Serializable {
 	@Column(name = "avatar", columnDefinition = "bytea")
 	private byte[] userAvatar;
 
+	@Column(name = "avatar_content_type")
+	private String userAvatarContentType;
+
 	@Lob
 	@Type(type = "org.hibernate.type.BinaryType")
 	@Column(name = "cover", columnDefinition = "bytea")
 	private byte[] userCover;
+
+	@Column(name = "cover_content_type")
+	private String userCoverContentType;
 
 	@Column(name = "bio")
 	private String bio;

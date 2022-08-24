@@ -1,9 +1,6 @@
 package com.minhlv.socialappapi.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -20,6 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @ToString
+@EqualsAndHashCode(exclude = "dependent_list")
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "system_post")
 @Document(indexName = "system_post")
@@ -68,4 +66,12 @@ public class PostEntity extends BaseEntity implements Serializable {
 
 	@OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<SystemCommentsEntity> comments;
+
+
+	public PostEntity(String caption, @NotNull short privacy, Set<AccountEntity> accounts, Set<ImageEntity> images) {
+		this.caption = caption;
+		this.privacy = privacy;
+		this.accounts = accounts;
+		this.images = images;
+	}
 }

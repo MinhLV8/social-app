@@ -1,5 +1,5 @@
 import Picker from "@emoji-mart/react";
-import React, { useRef, useState, createContext } from "react";
+import React, { useRef, useState } from "react";
 import { IconContext } from "react-icons";
 import { BiWorld } from "react-icons/bi";
 import { BsDot } from "react-icons/bs";
@@ -7,7 +7,7 @@ import { FaTimes, FaUserFriends } from "react-icons/fa";
 import {
   MdMoreHoriz,
   MdOutlineImage,
-  MdSentimentVerySatisfied
+  MdSentimentVerySatisfied,
 } from "react-icons/md";
 import doneTick from "../../assets/icons/1618816460_tich_xanh_facebook.png";
 import comment from "../../assets/icons/comment.png";
@@ -111,8 +111,7 @@ const Post = ({ data, postComments }) => {
     }
   };
 
-  const handelPostImageClick = (event) => {
-    console.log('event :>> ', event);
+  const handelPostImageClick = () => {
     setImageSlide(true);
   };
 
@@ -152,9 +151,9 @@ const Post = ({ data, postComments }) => {
         {isActive.postOptions && <PopupOptions username={data.name} />}
       </div>
       <div className="detail">
-        <span>
+        {/* <span>
           <b>{data.name}</b>
-        </span>
+        </span> */}
         <span> {data.desc}</span>
       </div>
       {data.img.length === 1 && (
@@ -174,7 +173,11 @@ const Post = ({ data, postComments }) => {
         onImgClick={handelPostImageClick}
       />
       {imageSlide && (
-        <ImageSlide images={data.img} selectedImage={selectedImage} onClosePopup={handelclosePopup} />
+        <ImageSlide
+          images={data.img}
+          selectedImage={1}
+          onClosePopup={handelclosePopup}
+        />
       )}
       <div className="postReact">
         <img src={userAvatar} alt="" className="postReact-user" />
@@ -201,7 +204,7 @@ const Post = ({ data, postComments }) => {
                   skinTonePosition="none"
                   previewPosition="none"
                   onEmojiSelect={onEmojiClick}
-                //onClickOutside={handelFocusCommentInput}
+                  //onClickOutside={handelFocusCommentInput}
                 />
               </div>
             )}

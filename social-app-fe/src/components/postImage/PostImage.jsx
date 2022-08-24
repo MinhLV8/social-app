@@ -5,17 +5,17 @@ export default function PostImage({ images, onImgClick }) {
   const imagesLength = images.length;
   const [selectedImage, setSelectedImage] = useState(0);
 
-  const handelImgOnClick = (index) => {
-    onImgClick;
-    setSelectedImage(index)
-  }
+  // const handelImgOnClick = (index) => {
+  //   onImgClick;
+  //   setSelectedImage(index)
+  // }
 
   if (imagesLength >= 5) {
     return (
       <div className="post-imgs-5">
         {images.map((img, index) => (
           <div key={`img-item-${index}`} className="post-img-item">
-            <img key={index} src={img} alt="" onClick={handelImgOnClick(index)} />
+            <img key={index} src={img} alt="" onClick={onImgClick} />
           </div>
         ))}
       </div>

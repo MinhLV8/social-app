@@ -1,9 +1,11 @@
 package com.minhlv.socialappapi.service.impl;
 
 import com.minhlv.socialappapi.dto.requestDTO.AccountUpdateDTO;
+import com.minhlv.socialappapi.entity.ImageEntity;
 import com.minhlv.socialappapi.entity.PostEntity;
 import com.minhlv.socialappapi.entity.SystemUserEntity;
 import com.minhlv.socialappapi.repository.ImageRepository;
+import com.minhlv.socialappapi.repository.PostRepository;
 import com.minhlv.socialappapi.repository.UserRepository;
 import com.minhlv.socialappapi.service.AccountService;
 import com.minhlv.socialappapi.utils.APIResult;
@@ -25,9 +27,19 @@ public class AccountServiceImpl implements AccountService {
 
 	private final ImageRepository imageRepository;
 
-	public AccountServiceImpl(UserRepository userRepository, ImageRepository imageRepository) {
+	private final PostRepository postRepository;
+
+	public AccountServiceImpl(UserRepository userRepository, ImageRepository imageRepository, PostRepository postRepository) {
 		this.imageRepository = imageRepository;
 		this.userRepository = userRepository;
+		this.postRepository = postRepository;
+	}
+
+	@Override
+	public APIResult getAccount() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		SystemUserEntity user = userRepository.findByUsername(username);
+		return new APIResult(user.getAccountEntity());
 	}
 
 	@Override
@@ -36,9 +48,20 @@ public class AccountServiceImpl implements AccountService {
 		SystemUserEntity user = userRepository.findByUsername(username);
 		String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
 		try {
-			user.getAccountEntity().setUserAvatar(FileUploadUtil.compressImage(multipartFile.getBytes()
-			));
+			user.getAccountEntity().setUserAvatar(FileUploadUtil.compressImage(multipartFile.getBytes()));
+			user.getAccountEntity().setUserAvatarContentType(multipartFile.getContentType());
 			userRepository.save(user);
+
+			log.info("{}", user.getAccountEntity());
+			PostEntity postChangeAvatar = new PostEntity();
+			postChangeAvatar.setCaption("Thay đổi ảnh đại diện.");
+			postChangeAvatar.setPrivacy((short) 1);
+			//postChangeAvatar.getAccounts().add(user.getAccountEntity());
+			postChangeAvatar.getImages().add(imageRepository.save(ImageEntity.builder()
+					.fileName(multipartFile.getOriginalFilename())
+					.typeFile(multipartFile.getContentType())
+					.image(FileUploadUtil.compressImage(multipartFile.getBytes())).build()));
+			postRepository.save(postChangeAvatar);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -57,7 +80,18 @@ public class AccountServiceImpl implements AccountService {
 		String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
 		try {
 			user.getAccountEntity().setUserCover(FileUploadUtil.compressImage(multipartFile.getBytes()));
+			user.getAccountEntity().setUserCoverContentType(multipartFile.getContentType());
 			userRepository.save(user);
+
+			PostEntity postChangeCover = new PostEntity();
+			postChangeCover.setCaption("Thay đổi ảnh bìa.");
+			postChangeCover.setPrivacy((short) 1);
+			postChangeCover.getAccounts().add(user.getAccountEntity());
+			postChangeCover.getImages().add(imageRepository.save(ImageEntity.builder()
+					.fileName(multipartFile.getOriginalFilename())
+					.typeFile(multipartFile.getContentType())
+					.image(FileUploadUtil.compressImage(multipartFile.getBytes())).build()));
+			postRepository.save(postChangeCover);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

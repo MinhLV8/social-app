@@ -8,6 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public interface AccountService {
 
+	APIResult getAccount();
+
 	APIResult updateAvatar(MultipartFile multipartFile);
 
 	APIResult updateFullName(AccountUpdateDTO payload);
