@@ -1,5 +1,5 @@
 import React from "react";
-import avtimg from "../../assets/person/avt-1.jpg";
+import avtimg from "../../assets/person/avt-10.jpg";
 import coveimg from "../../assets/person/DSC05373.jpg";
 import "./ProfileCard.css";
 
@@ -11,7 +11,7 @@ const ProfileCard = () => {
         <img src={coveimg} alt="" />
         {/* <img src={avtimg} alt="" className={`${!ProfilePage && "avt-img"}`} /> */}
         <img
-          src={`${avtimg}`}
+          src={avtimg}
           alt=""
           className={`${!ProfilePage && "avt-img"}`}
         />

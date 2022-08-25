@@ -1,7 +1,6 @@
 import "./App.css";
 //import Auth from "./pages/Auth/Auth";
-//import Home from "./pages/home/Home";
-import Profile from "./pages/Profile/Profile";
+import Home from "./pages/home/Home";
 function App() {
     return (
         <div
@@ -24,8 +23,8 @@ function App() {
                             '-8rem'
                     }
                 }></div>
-            {/* <Home /> */}
-            <Profile />
+            <Home />
+            {/* <Profile /> */}
             {/*   <Auth /> */}
         </div>
     )

@@ -8,7 +8,8 @@ export default function PostImage({ images, onImgClick }) {
   // const handelImgOnClick = (index) => {
   //   onImgClick;
   //   setSelectedImage(index)
-  // }
+  // } 
+  //yêu là chết ở trong lòng một chút vì mấy khi yêu mà đã được yêu, cho thì nhiều nhận lại chẳng bao nhiêu 
 
   if (imagesLength >= 5) {
     return (
