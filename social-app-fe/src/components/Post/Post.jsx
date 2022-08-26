@@ -7,7 +7,7 @@ import { FaTimes, FaUserFriends } from "react-icons/fa";
 import {
   MdMoreHoriz,
   MdOutlineImage,
-  MdSentimentVerySatisfied,
+  MdSentimentVerySatisfied
 } from "react-icons/md";
 import doneTick from "../../assets/icons/1618816460_tich_xanh_facebook.png";
 import comment from "../../assets/icons/comment.png";
@@ -53,7 +53,7 @@ const Post = ({ data, postComments }) => {
   const [commentPost, setComments] = useState([...postComments]);
   const [imageSlide, setImageSlide] = useState(false);
 
-  //const [selectedImage, setSelectedImage] = useState(0);
+  const [selectedImage, setSelectedImage] = useState(0);
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
@@ -111,9 +111,12 @@ const Post = ({ data, postComments }) => {
     }
   };
 
-  const handelPostImageClick = () => {
+  const handelPostImageClick = (index) => {
     setImageSlide(true);
+    setSelectedImage(index)
+    return index;
   };
+
 
   const handelclosePopup = () => {
     setImageSlide(false);
@@ -151,22 +154,8 @@ const Post = ({ data, postComments }) => {
         {isActive.postOptions && <PopupOptions username={data.name} />}
       </div>
       <div className="detail">
-        {/* <span>
-          <b>{data.name}</b>
-        </span> */}
         <span> {data.desc}</span>
       </div>
-      {data.img.length === 1 && (
-        <img
-          style={{
-            maxHeight: "40rem",
-            objectFit: "cover",
-            borderRadius: "5px",
-          }}
-          src={data.img}
-          alt=""
-        />
-      )}
       <PostImage
         key={data.id}
         images={data.img}
@@ -175,7 +164,7 @@ const Post = ({ data, postComments }) => {
       {imageSlide && (
         <ImageSlide
           images={data.img}
-          selectedImage={1}
+          selectedImage={selectedImage}
           onClosePopup={handelclosePopup}
         />
       )}
@@ -204,7 +193,7 @@ const Post = ({ data, postComments }) => {
                   skinTonePosition="none"
                   previewPosition="none"
                   onEmojiSelect={onEmojiClick}
-                  //onClickOutside={handelFocusCommentInput}
+                //onClickOutside={handelFocusCommentInput}
                 />
               </div>
             )}

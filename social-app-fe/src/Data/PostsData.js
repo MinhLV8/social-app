@@ -75,6 +75,30 @@ export const PostsData = [
         shares: 46,
         liked: false,
         times: 1659262238000,
+    },
+    {
+        id: 4,
+        userId: 4,
+        img: [img4, img5],
+        privacy: 1,
+        name: "Salena Gomez",
+        desc: "Một chút bình yên miền biển 🍃 🌊",
+        likes: 800,
+        shares: 46,
+        liked: false,
+        times: 1659262238000,
+    },
+    {
+        id: 5,
+        userId: 5,
+        img: [img4],
+        privacy: 1,
+        name: "Salena Gomez",
+        desc: "Một chút bình yên miền biển 🍃 🌊",
+        likes: 800,
+        shares: 46,
+        liked: false,
+        times: 1659262238000,
     }
 ]
 export const PostComments = [

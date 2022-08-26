@@ -1,4 +1,4 @@
-package com.minhlv.socialappapi.dto.requestDTO;
+package com.minhlv.socialappapi.dto.requestdto;
 
 import com.minhlv.socialappapi.entity.ImageEntity;
 import lombok.*;

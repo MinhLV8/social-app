@@ -1,4 +1,4 @@
-package com.minhlv.socialappapi.dto.requestDTO;
+package com.minhlv.socialappapi.dto.requestdto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

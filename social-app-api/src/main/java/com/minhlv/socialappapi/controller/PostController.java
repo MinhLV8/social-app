@@ -1,6 +1,6 @@
 package com.minhlv.socialappapi.controller;
 
-import com.minhlv.socialappapi.dto.requestDTO.CreatePostDTO;
+import com.minhlv.socialappapi.dto.requestdto.CreatePostDTO;
 import com.minhlv.socialappapi.entity.PostEntity;
 import com.minhlv.socialappapi.service.PostService;
 import com.minhlv.socialappapi.utils.APIResult;

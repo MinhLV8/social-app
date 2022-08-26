@@ -2,7 +2,7 @@ package com.minhlv.socialappapi.controller;
 
 import com.minhlv.socialappapi.dto.UserDataDTO;
 import com.minhlv.socialappapi.dto.UserResponseDTO;
-import com.minhlv.socialappapi.dto.requestDTO.SigninDTO;
+import com.minhlv.socialappapi.dto.requestdto.SigninDTO;
 import com.minhlv.socialappapi.entity.SystemUserEntity;
 import com.minhlv.socialappapi.service.UserService;
 import com.minhlv.socialappapi.utils.APIResult;

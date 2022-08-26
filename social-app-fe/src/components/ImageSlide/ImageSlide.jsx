@@ -8,7 +8,6 @@ import {
 } from "react-icons/ri";
 import "./ImageSlide.css";
 export default function ImageSlide({ images, selectedImage, onClosePopup }) {
-
     const [state, setState] = useState({
         currentIndex: selectedImage,
         isTransitioning: false,
@@ -34,10 +33,14 @@ export default function ImageSlide({ images, selectedImage, onClosePopup }) {
                         if (index === state.currentIndex) className += ' active';
                         return <img src={img} className={className} key={`img-${index}`} alt="" />;
                     })}
-                    <div className="carousel__controls">
-                        <button className="carousel__button left" onClick={showPrevSet}><BsChevronLeft /></button>
-                        <button className="carousel__button right" onClick={showNextSet}><BsChevronRight /></button>
-                    </div>
+                    {
+                        images.length !== 1 && (
+                            <div className="carousel__controls">
+                                <button className="carousel__button left" onClick={showPrevSet}><BsChevronLeft /></button>
+                                <button className="carousel__button right" onClick={showNextSet}><BsChevronRight /></button>
+                            </div>
+                        )
+                    }
                 </div>
                 <div className='popup_comments'>Bình luận</div>
             </div>

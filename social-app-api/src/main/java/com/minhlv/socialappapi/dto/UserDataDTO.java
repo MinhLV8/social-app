@@ -1,11 +1,12 @@
 package com.minhlv.socialappapi.dto;
 
+import java.util.List;
+
 import com.minhlv.socialappapi.entity.SystemRoleEntity;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -17,6 +18,7 @@ public class UserDataDTO {
     private String email;
     @ApiModelProperty(position = 2)
     private String password;
+    private String sdt;
     @ApiModelProperty(position = 3)
     List<SystemRoleEntity> appUserRoles;
 }
