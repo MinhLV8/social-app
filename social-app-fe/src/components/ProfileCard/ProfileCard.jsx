@@ -6,15 +6,11 @@ import "./ProfileCard.css";
 const ProfileCard = () => {
   const ProfilePage = false;
   return (
-    <div className="ProfileCard" style={{ margin: "0 10%" }}>
+    <div className="ProfileCard">
       <div className="ProfileImages">
         <img src={coveimg} alt="" />
         {/* <img src={avtimg} alt="" className={`${!ProfilePage && "avt-img"}`} /> */}
-        <img
-          src={avtimg}
-          alt=""
-          className={`${!ProfilePage && "avt-img"}`}
-        />
+        <img src={avtimg} alt="" className={`${!ProfilePage && "avt-img"}`} />
       </div>
 
       <div className="ProfileName">
@@ -26,12 +22,12 @@ const ProfileCard = () => {
         {/* <hr /> */}
         <div>
           <div className="follow">
-            <span>6,890</span>
+            <span>1</span>
             <span>Followings</span>
           </div>
           {/* <div className="vl"></div> */}
           <div className="follow">
-            <span>1</span>
+            <span>6,890</span>
             <span>Followers</span>
           </div>
 

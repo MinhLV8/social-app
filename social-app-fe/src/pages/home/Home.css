@@ -4,10 +4,13 @@
   grid-template-columns: 20rem auto 20rem;
   gap: 1rem;
   padding: 0 10%;
+  height: 100%;
+  overflow: hidden;
 }
+
 /* @media (min-width: 1000px) {
   .Home {
     padding: 0;
     grid-template-columns: auto;
   }
-} */
+} */ ;

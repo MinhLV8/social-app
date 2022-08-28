@@ -1,7 +1,7 @@
 import React from "react";
-import "./FollowersCard.css";
-
+import { RiUserAddLine } from "react-icons/ri";
 import { Followers } from "../../Data/FollowersData";
+import "./FollowersCard.css";
 
 const FollowersCard = () => {
   return (
@@ -20,7 +20,10 @@ const FollowersCard = () => {
                 <span id={id}>@{follower.username}</span>
               </div>
             </div>
-            <button className="button fc-button">Theo dõi</button>
+            <button className="button fc-button">
+              <RiUserAddLine />
+              Theo dõi
+            </button>
           </div>
         );
       })}

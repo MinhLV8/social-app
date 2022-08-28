@@ -14,7 +14,7 @@ export default function Comments({ commentDetail }) {
           <img className="commentImg" src={userAvatar} alt="" />
           <div className="commentUsers">
             <div className="commentUser">
-              <a href="https://www.facebook.com/">{username}</a>
+              <a href="/">{username}</a>
               <span>
                 {commentDetail.comment}{" "}
                 <em-emoji native="🤗" unified="1f619" set="facebook"></em-emoji>
@@ -22,10 +22,10 @@ export default function Comments({ commentDetail }) {
             </div>
             <ul className="commentUserOptions">
               <li className="commentUserOption">
-                <a href="https://www.facebook.com/">Thích</a>
+                <a href="/">Thích</a>
               </li>
               <li className="commentUserOption">
-                <a href="https://www.facebook.com/">Phản hồi</a>
+                <a href="/">Phản hồi</a>
               </li>
               <li className="commentUserTimes">
                 {timeDiff(new Date().getTime(), commentDetail.times)}

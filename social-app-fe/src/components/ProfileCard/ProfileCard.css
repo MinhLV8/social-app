@@ -90,7 +90,7 @@
 }
 
 .follow > span:nth-of-type(2) {
-  color: var(--gray);
+  color: var(--text-secondary);
   font-size: 13px;
 }
 
@@ -105,4 +105,9 @@
   align-self: center;
   margin-bottom: 1rem;
   cursor: pointer;
+}
+@media (min-width: 256px) {
+  .ProfileCard {
+    margin: 0;
+  }
 }

@@ -6,7 +6,6 @@
   background-color: var(--cardColor);
   border-radius: 1rem;
   gap: 1rem;
-  border: 1px solid var(--inputColor);
 }
 
 /* .Post > img {
@@ -79,7 +78,7 @@
 }
 
 .Post-user > svg:hover {
-  background-color: var(--inputColor);
+  background-color: var(--alpha-bg);
   border-radius: 10px;
   margin: -0.3rem 0 -0.3rem -0.3rem;
 }
@@ -103,6 +102,7 @@
 .previewImageComment {
   width: 20%;
   position: relative;
+  padding-left: 3.5rem;
 }
 .previewImageComment > svg {
   position: absolute;

@@ -1,28 +1,46 @@
+import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
+import { init } from "emoji-mart";
 import React, { useRef, useState } from "react";
 import { IconContext } from "react-icons";
 import { BiWorld } from "react-icons/bi";
-import { BsDot } from "react-icons/bs";
+import {
+  BsChatDots,
+  BsDot,
+  BsHeart,
+  BsHeartFill,
+  BsShare,
+} from "react-icons/bs";
 import { FaTimes, FaUserFriends } from "react-icons/fa";
 import {
   MdMoreHoriz,
   MdOutlineImage,
-  MdSentimentVerySatisfied
+  MdSentimentVerySatisfied,
 } from "react-icons/md";
 import doneTick from "../../assets/icons/1618816460_tich_xanh_facebook.png";
-import comment from "../../assets/icons/comment.png";
-import like from "../../assets/icons/like.png";
-import notlike from "../../assets/icons/notlike.png";
-import share from "../../assets/icons/share.png";
 import { Users } from "../../Data/PostsData";
-import { timeDiff } from "../../utils/Utils";
+import { nFormatter, timeDiff } from "../../utils/Utils";
 import Comments from "../comments/Comments";
 import ImageSlide from "../ImageSlide/ImageSlide";
 import PopupOptions from "../popupOptions/PopupOptions";
 import PopupShare from "../popupShares/PopupShare";
 import PostImage from "../postImage/PostImage";
 import "./Post.css";
-const Post = ({ data, postComments }) => {
+init({ data });
+const Post = ({ post, postComments }) => {
+  const username = Users.filter((u) => u.id === post.userId)[0].username;
+  const userAvatar = Users.filter((u) => u.id === post.userId)[0].userAvatar;
+  const [isLiked, setIsLiked] = useState(false);
+  const [likeAmount, setLikeAmount] = useState(post.likes);
+  const [commentAmount, setCommentAmount] = useState(post.comments);
+  const commentsButton = useRef();
+  const [image, setImage] = useState(null);
+  const imageRef = useRef();
+  const [inputValue, setInputValue] = useState("");
+  const [commentPost, setComments] = useState([...postComments]);
+  const [imageSlide, setImageSlide] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(0);
+
   const [isActive, setActive] = useState({
     postOptions: false,
     postShares: false,
@@ -41,19 +59,7 @@ const Post = ({ data, postComments }) => {
       ...updateValue,
     }));
   };
-  const username = Users.filter((u) => u.id === data.userId)[0].username;
-  const userAvatar = Users.filter((u) => u.id === data.userId)[0].userAvatar;
-  const [isLiked, setIsLiked] = useState(false);
-  const [likeAmount, setLikeAmount] = useState(20);
-  const [commentAmount, setCommentAmount] = useState(10);
-  const commentsButton = useRef();
-  const [image, setImage] = useState(null);
-  const imageRef = useRef();
-  const [inputValue, setInputValue] = useState("");
-  const [commentPost, setComments] = useState([...postComments]);
-  const [imageSlide, setImageSlide] = useState(false);
 
-  const [selectedImage, setSelectedImage] = useState(0);
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
@@ -77,10 +83,9 @@ const Post = ({ data, postComments }) => {
   };
   const onEmojiClick = (event) => {
     // setChosenEmoji(() => ({
-    //   ...chosenEmoji,
     //   icons: chosenEmoji.icons.concat(event.native),
     // }));
-    console.log("event", event);
+    // console.log("event", event);
     setInputValue(inputValue.concat(event.native));
   };
   const handleIconLike = () => {
@@ -88,16 +93,17 @@ const Post = ({ data, postComments }) => {
     setIsLiked(!isLiked);
   };
   const handleCommentKeyDown = (event) => {
-    if (event.key === "Enter") {
+    inputValue.trim();
+    if (event.key === "Enter" && inputValue.length !== 0) {
       setInputValue(event.target.value);
-      let commentPostaaa = {
-        id: 5,
+      let commentPosts = {
+        id: Math.floor(Math.random() * (999999 - 10 + 1)) + 10,
         postId: data.id,
-        userId: 1,
+        userId: Math.floor(Math.random() * (5 - 1 + 1)) + 1,
         times: new Date().getTime(),
         comment: inputValue,
       };
-      setComments([...commentPost, commentPostaaa]);
+      setComments([...commentPost, commentPosts]);
       setInputValue("");
       setCommentAmount(commentAmount + 1);
     }
@@ -113,14 +119,14 @@ const Post = ({ data, postComments }) => {
 
   const handelPostImageClick = (index) => {
     setImageSlide(true);
-    setSelectedImage(index)
+    setSelectedImage(index);
     return index;
   };
 
-
-  const handelclosePopup = () => {
+  const handelClosePopup = () => {
     setImageSlide(false);
   };
+
   return (
     <div className="Post">
       <div className="Post-user">
@@ -131,10 +137,10 @@ const Post = ({ data, postComments }) => {
               <b>{username}</b> <img src={doneTick} alt="" />{" "}
             </span>
             <span>
-              {timeDiff(new Date().getTime(), data.times)}
+              {timeDiff(new Date().getTime(), post.times)}
               <BsDot />
               {(() => {
-                switch (data.privacy) {
+                switch (post.privacy) {
                   case 1:
                     return <FaUserFriends size={15} />;
                   case 2:
@@ -149,23 +155,24 @@ const Post = ({ data, postComments }) => {
         <MdMoreHoriz
           size={30}
           style={{ position: "relative", cursor: "pointer" }}
+          color={"#dadada"}
           onClick={handlePostOptionsClick}
         />
-        {isActive.postOptions && <PopupOptions username={data.name} />}
+        {isActive.postOptions && <PopupOptions username={post.name} />}
       </div>
       <div className="detail">
-        <span> {data.desc}</span>
+        <span> {post.desc}</span>
       </div>
       <PostImage
-        key={data.id}
-        images={data.img}
+        key={post.id}
+        images={post.img}
         onImgClick={handelPostImageClick}
       />
       {imageSlide && (
         <ImageSlide
-          images={data.img}
+          images={post.img}
           selectedImage={selectedImage}
-          onClosePopup={handelclosePopup}
+          onClosePopup={handelClosePopup}
         />
       )}
       <div className="postReact">
@@ -189,11 +196,12 @@ const Post = ({ data, postComments }) => {
             {chosenEmoji.emojiOn && (
               <div className="Emoji">
                 <Picker
+                  data={data}
                   set="facebook"
                   skinTonePosition="none"
                   previewPosition="none"
                   onEmojiSelect={onEmojiClick}
-                //onClickOutside={handelFocusCommentInput}
+                  //onClickOutside={handelFocusCommentInput}
                 />
               </div>
             )}
@@ -207,17 +215,24 @@ const Post = ({ data, postComments }) => {
             </div>
           </IconContext.Provider>
         </div>
-        <img src={isLiked ? like : notlike} onClick={handleIconLike} alt="" />{" "}
-        {likeAmount}
-        <img src={comment} alt="" onClick={handleBtnCommentClick} />{" "}
-        {commentAmount}
-        <img
+        {/* <img src={isLiked ? like : notlike} onClick={handleIconLike} alt="" />{" "} */}
+        {isLiked ? (
+          <BsHeartFill onClick={handleIconLike} size={25} color={"#7200a1"} />
+        ) : (
+          <BsHeart size={25} onClick={handleIconLike} />
+        )}
+        {nFormatter(likeAmount)}
+        {/* <img src={comment} alt="" onClick={handleBtnCommentClick} />{" "} */}
+        <BsChatDots size={25} onClick={handleBtnCommentClick} />
+        {nFormatter(commentAmount)}
+        {/* <img
           src={share}
           alt=""
           onClick={handleBtnShareClick}
           style={{ position: "relative" }}
-        />{" "}
-        {data.shares}
+        />{" "} */}
+        <BsShare size={23} onClick={handleBtnShareClick} />
+        {nFormatter(post.shares)}
         {isActive.postShares && <PopupShare />}
       </div>
       {image && (
@@ -229,7 +244,7 @@ const Post = ({ data, postComments }) => {
       <div>
         {commentPost.map((p) =>
           commentPost.length === 0 ? (
-            <strong>Chưa có bình luận nào.</strong>
+            <p>Chưa có bình luận nào.</p>
           ) : (
             <Comments key={p.id} commentDetail={p} />
           )

@@ -1,11 +1,14 @@
 import "./App.css";
 //import Auth from "./pages/Auth/Auth";
+import data from '@emoji-mart/data';
+import { init } from 'emoji-mart';
 import Home from "./pages/home/Home";
+init({ data })
 function App() {
     return (
         <div
             className="App" >
-            <div
+            {/* <div
                 className="blur"
                 style={
                     {
@@ -13,8 +16,8 @@ function App() {
                             :
                             '0'
                     }
-                }></div>
-            <div
+                }></div> */}
+            {/* <div
                 className="blur"
                 style={
                     {
@@ -22,7 +25,7 @@ function App() {
                             :
                             '-8rem'
                     }
-                }></div>
+                }></div> */}
             <Home />
             {/* <Profile /> */}
             {/*   <Auth /> */}

@@ -4,8 +4,9 @@ import { FaTimes } from "react-icons/fa";
 import {
   MdAddLocationAlt,
   MdOutlineAddPhotoAlternate,
-  MdOutlineSentimentVerySatisfied
+  MdOutlineSentimentVerySatisfied,
 } from "react-icons/md";
+import { RiShareForwardLine } from "react-icons/ri";
 import avt from "../../assets/person/avt-10.jpg";
 import "./PostShare.css";
 const PostShare = () => {
@@ -46,7 +47,10 @@ const PostShare = () => {
             <MdOutlineSentimentVerySatisfied size={24} />
             Cảm xúc/Hoạt động
           </div>
-          <button className="button ps-button">Chia sẻ</button>
+          <button className="button ps-button">
+            Chia sẻ
+            <RiShareForwardLine size={17} />
+          </button>
           <div style={{ display: "none" }}>
             <input
               type="file"

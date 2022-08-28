@@ -1,10 +1,11 @@
 .FollowersCard {
   width: 100%;
-  border-radius: 0.7rem;
   gap: 1rem;
   display: flex;
   flex-direction: column;
   font-size: 13px;
+  overflow: auto;
+  /* padding-bottom: 2rem; */
 }
 
 .follower {
@@ -25,10 +26,9 @@
   border-radius: 50%;
   object-fit: cover;
   background-size: cover;
-  /* background-position: top center; */
   cursor: pointer;
   vertical-align: middle;
-  border: 0.06rem solid #eeeeee;
+  border: 0.06rem solid transparent;
 }
 
 .name {
@@ -44,8 +44,9 @@
 
 .fc-button {
   height: 2rem;
-  padding-left: 20px;
-  padding-right: 20px;
+  padding-left: 15px;
+  padding-right: 15px;
+  gap: 5px;
 }
 
 .follower__avt {
@@ -60,9 +61,12 @@
   border-radius: 50%;
   height: 0.7rem;
   width: 0.7rem;
-  box-shadow: 0 0 0 0.1rem #fff;
+  box-shadow: 0 0 0 0.1rem var(--darkBgColor);
 }
 
 .online {
   background-color: rgb(9, 168, 9);
+}
+.FollowersCard::-webkit-scrollbar {
+  display: none;
 }

@@ -19,7 +19,7 @@
   object-fit: cover;
   cursor: pointer;
   /* margin-left: 5px; */
-  border: 1px solid #eeeeee;
+  /* border: 1px solid #eeeeee; */
 }
 /* .commentWapper {
   width: 100%; 
@@ -45,7 +45,7 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  background-color: #eeeeee;
+  background-color: var(--inputColor);
   border-radius: 10px;
   height: 40px;
   width: fit-content;
@@ -58,7 +58,7 @@
   text-decoration: none;
   font-weight: 700;
   font-size: 13px;
-  color: #050505;
+  /* color: #050505; */
 }
 
 .commentUser span {
