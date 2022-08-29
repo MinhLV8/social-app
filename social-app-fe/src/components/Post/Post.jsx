@@ -1,7 +1,7 @@
-import data from "@emoji-mart/data";
+// import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
-import { init } from "emoji-mart";
-import React, { useRef, useState } from "react";
+// import { init } from "emoji-mart";
+import React, { useEffect, useRef, useState } from "react";
 import { IconContext } from "react-icons";
 import { BiWorld } from "react-icons/bi";
 import {
@@ -9,13 +9,13 @@ import {
   BsDot,
   BsHeart,
   BsHeartFill,
-  BsShare,
+  BsShare
 } from "react-icons/bs";
 import { FaTimes, FaUserFriends } from "react-icons/fa";
 import {
   MdMoreHoriz,
   MdOutlineImage,
-  MdSentimentVerySatisfied,
+  MdSentimentVerySatisfied
 } from "react-icons/md";
 import doneTick from "../../assets/icons/1618816460_tich_xanh_facebook.png";
 import { Users } from "../../Data/PostsData";
@@ -26,15 +26,18 @@ import PopupOptions from "../popupOptions/PopupOptions";
 import PopupShare from "../popupShares/PopupShare";
 import PostImage from "../postImage/PostImage";
 import "./Post.css";
-init({ data });
+// init({ data });
 const Post = ({ post, postComments }) => {
+
+  console.log('re-rendering', post.id)
+
   const username = Users.filter((u) => u.id === post.userId)[0].username;
   const userAvatar = Users.filter((u) => u.id === post.userId)[0].userAvatar;
   const [isLiked, setIsLiked] = useState(false);
   const [likeAmount, setLikeAmount] = useState(post.likes);
   const [commentAmount, setCommentAmount] = useState(post.comments);
   const commentsButton = useRef();
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState();
   const imageRef = useRef();
   const [inputValue, setInputValue] = useState("");
   const [commentPost, setComments] = useState([...postComments]);
@@ -68,6 +71,7 @@ const Post = ({ post, postComments }) => {
       });
     }
   };
+
   const handleBtnCommentClick = () => {
     commentsButton.current.focus();
   };
@@ -85,7 +89,7 @@ const Post = ({ post, postComments }) => {
     // setChosenEmoji(() => ({
     //   icons: chosenEmoji.icons.concat(event.native),
     // }));
-    // console.log("event", event);
+    console.log("event", event);
     setInputValue(inputValue.concat(event.native));
   };
   const handleIconLike = () => {
@@ -98,7 +102,7 @@ const Post = ({ post, postComments }) => {
       setInputValue(event.target.value);
       let commentPosts = {
         id: Math.floor(Math.random() * (999999 - 10 + 1)) + 10,
-        postId: data.id,
+        postId: post.id,
         userId: Math.floor(Math.random() * (5 - 1 + 1)) + 1,
         times: new Date().getTime(),
         comment: inputValue,
@@ -126,6 +130,13 @@ const Post = ({ post, postComments }) => {
   const handelClosePopup = () => {
     setImageSlide(false);
   };
+
+  useEffect(() => {
+    return () => {
+      image && URL.revokeObjectURL(image.image)
+    };
+  }, [image]);
+
 
   return (
     <div className="Post">
@@ -183,7 +194,7 @@ const Post = ({ post, postComments }) => {
             type="text"
             placeholder="Viết bình luận..."
             value={inputValue}
-            onChange={(event) => setInputValue(event.target.value)}
+            onChange={(e) => setInputValue(e.target.value)}
             onFocus={handelFocusCommentInput}
             onKeyDown={handleCommentKeyDown}
           />
@@ -196,12 +207,13 @@ const Post = ({ post, postComments }) => {
             {chosenEmoji.emojiOn && (
               <div className="Emoji">
                 <Picker
-                  data={data}
+                  //data={data}
                   set="facebook"
+                  theme='dark'
                   skinTonePosition="none"
                   previewPosition="none"
                   onEmojiSelect={onEmojiClick}
-                  //onClickOutside={handelFocusCommentInput}
+                // onClickOutside={handelFocusCommentInput}
                 />
               </div>
             )}

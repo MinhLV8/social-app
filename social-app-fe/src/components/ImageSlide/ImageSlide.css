@@ -111,9 +111,7 @@
 }
 .hinh {
   width: 70%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  object-fit: scale-down;
 }
 .binhluan {
   background-color: aliceblue;

@@ -7,11 +7,16 @@
 }
 
 .navIcons {
-  margin-top: 1rem;
+  /* margin-top: 1rem; */
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
 }
-
+.navIcons > svg {
+  padding: 10px;
+  border-radius: 50%;
+  background-color: var(--bg-color-hover);
+}
 .navIcons > img {
   width: 1.5rem;
   height: 1.5rem;

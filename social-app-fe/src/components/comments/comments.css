@@ -30,12 +30,14 @@
 } */
 .commentUsers {
   display: inline-block;
-  max-height: 100px;
+  /* max-height: 100px; */
   position: relative;
   margin-left: 10px;
-  width: 100%;
+  /* width: 100%; */
   white-space: nowrap;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 .commentUser {
   position: relative;
@@ -89,4 +91,12 @@
 }
 .commentUserTimes {
   color: #65676b;
+}
+.commentsElement {
+  display: block;
+  height: 100%;
+  padding-top: 5px;
+}
+.commentsElement > img {
+  border-radius: 10px;
 }

@@ -29,6 +29,7 @@
   cursor: pointer;
   vertical-align: middle;
   border: 0.06rem solid transparent;
+  image-rendering: auto;
 }
 
 .name {

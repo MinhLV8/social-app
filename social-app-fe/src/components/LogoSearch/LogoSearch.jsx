@@ -5,7 +5,7 @@ import "./LogoSearch.css";
 const LogoSearch = () => {
   return (
     <div className="LogoSearch">
-      <img src={logo} alt="" />
+      <img src={logo} alt="" onClick={() => window.location.href = '/'} />
       <div className="Search">
         <input type="text" placeholder="Tìm kiếm ở đây..." />
         <div className="s-icon">

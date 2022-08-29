@@ -1,4 +1,5 @@
 import React from "react";
+import noti from "../../assets/person/avt-1.jpg";
 import { Users } from "../../Data/PostsData";
 import { timeDiff } from "../../utils/Utils";
 import "./comments.css";
@@ -19,6 +20,9 @@ export default function Comments({ commentDetail }) {
                 {commentDetail.comment}{" "}
                 <em-emoji native="🤗" unified="1f619" set="facebook"></em-emoji>
               </span>
+            </div>
+            <div className="commentsElement">
+              <img src={noti} alt="" />
             </div>
             <ul className="commentUserOptions">
               <li className="commentUserOption">
