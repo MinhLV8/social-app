@@ -136,7 +136,26 @@
   position: absolute;
   bottom: 55px;
   width: 100%;
+  overflow: hidden;
+}
+.emoji-mart {
+  overflow: hidden;
+}
+.emoji-mart-scroll {
+}
+::-webkit-scrollbar {
+  width: 10px;
 }
 
+/* Track */
+::-webkit-scrollbar-track {
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #222222;
+  border-radius: 10px;
+}
 .moreComments {
 }

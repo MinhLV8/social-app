@@ -1,5 +1,5 @@
+import { Emoji } from "emoji-mart";
 import React from "react";
-import noti from "../../assets/person/avt-1.jpg";
 import { Users } from "../../Data/PostsData";
 import { timeDiff } from "../../utils/Utils";
 import "./comments.css";
@@ -8,6 +8,18 @@ export default function Comments({ commentDetail }) {
     .username;
   const userAvatar = Users.filter((u) => u.id === commentDetail.userId)[0]
     .userAvatar;
+  const emoji = {
+    "id": "innocent",
+    "name": "Smiling Face with Halo",
+    "short_names": [
+      "innocent"
+    ],
+    "colons": ":innocent:",
+    "emoticons": [],
+    "unified": "1f607",
+    "skin": null,
+    "native": "😇"
+  }
   return (
     <>
       <ul className="comments">
@@ -18,12 +30,12 @@ export default function Comments({ commentDetail }) {
               <a href="/">{username}</a>
               <span>
                 {commentDetail.comment}{" "}
-                <em-emoji native="🤗" unified="1f619" set="facebook"></em-emoji>
+                <Emoji emoji={emoji} set="facebook" size={15} />
               </span>
             </div>
-            <div className="commentsElement">
+            {/* <div className="commentsElement">
               <img src={noti} alt="" />
-            </div>
+            </div> */}
             <ul className="commentUserOptions">
               <li className="commentUserOption">
                 <a href="/">Thích</a>

@@ -1,9 +1,6 @@
 import "./App.css";
 //import Auth from "./pages/Auth/Auth";
-import data from '@emoji-mart/data';
-import { init } from 'emoji-mart';
 import Home from "./pages/home/Home";
-init({ data })
 function App() {
     return (
         <div

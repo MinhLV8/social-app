@@ -1,5 +1,4 @@
 // import data from "@emoji-mart/data";
-import Picker from "@emoji-mart/react";
 // import { init } from "emoji-mart";
 import React, { useEffect, useRef, useState } from "react";
 import { IconContext } from "react-icons";
@@ -21,7 +20,9 @@ import doneTick from "../../assets/icons/1618816460_tich_xanh_facebook.png";
 import { Users } from "../../Data/PostsData";
 import { nFormatter, timeDiff } from "../../utils/Utils";
 import Comments from "../comments/Comments";
+import EmojiPicker from "../emoji/EmojiPicker";
 import ImageSlide from "../ImageSlide/ImageSlide";
+import InputComment from "../inputComment/InputComment";
 import PopupOptions from "../popupOptions/PopupOptions";
 import PopupShare from "../popupShares/PopupShare";
 import PostImage from "../postImage/PostImage";
@@ -91,6 +92,7 @@ const Post = ({ post, postComments }) => {
     // }));
     console.log("event", event);
     setInputValue(inputValue.concat(event.native));
+    return event;
   };
   const handleIconLike = () => {
     setLikeAmount(isLiked ? likeAmount - 1 : likeAmount + 1);
@@ -188,6 +190,7 @@ const Post = ({ post, postComments }) => {
       )}
       <div className="postReact">
         <img src={userAvatar} alt="" className="postReact-user" />
+        <InputComment />
         <div className="postReact-comment">
           <input
             ref={commentsButton}
@@ -206,15 +209,7 @@ const Post = ({ post, postComments }) => {
             />
             {chosenEmoji.emojiOn && (
               <div className="Emoji">
-                <Picker
-                  //data={data}
-                  set="facebook"
-                  theme='dark'
-                  skinTonePosition="none"
-                  previewPosition="none"
-                  onEmojiSelect={onEmojiClick}
-                // onClickOutside={handelFocusCommentInput}
-                />
+                <EmojiPicker onEmojiClick={onEmojiClick} />
               </div>
             )}
             <div style={{ display: "none" }}>
