@@ -31,7 +31,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         SystemUserEntity systemUserEntity = userRepository.findByUsernameOrSdt(username);
         if (ObjectUtils.isEmpty(systemUserEntity)) {
-            log.error("User not found! {}" + username);
+            log.error("User not found! {}", username);
             throw new UsernameNotFoundException(username);
         }
         return CustomUserDetailsImpl.build(systemUserEntity);

@@ -5,11 +5,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.minhlv.socialappapi.dto.requestdto.AccountUpdateDTO;
+import com.minhlv.socialappapi.entity.AccountEntity;
 import com.minhlv.socialappapi.service.AccountService;
 import com.minhlv.socialappapi.utils.APIResult;
 
@@ -64,5 +68,16 @@ public class AccountController {
             @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
     public APIResult updateCover(@RequestParam("image") MultipartFile multipartFile) {
         return accountService.updateCoverImg(multipartFile);
+    }
+
+    @PutMapping(value = "/")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @ApiOperation(value = "${AccountController.update-account}", response = APIResult.class, authorizations = {
+            @Authorization(value = "jwt")})
+    @ApiResponses(value = {@ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    public APIResult updateAccount(@RequestBody AccountUpdateDTO payload) {
+        return accountService.updateAccount(modelMapper.map(payload, AccountEntity.class));
     }
 }

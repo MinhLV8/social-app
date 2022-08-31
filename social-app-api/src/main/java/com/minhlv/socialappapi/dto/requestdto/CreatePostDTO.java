@@ -1,9 +1,14 @@
 package com.minhlv.socialappapi.dto.requestdto;
 
-import com.minhlv.socialappapi.entity.ImageEntity;
-import lombok.*;
-
 import java.util.Set;
+
+import com.minhlv.socialappapi.entity.ImageEntity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @AllArgsConstructor
@@ -11,7 +16,7 @@ import java.util.Set;
 @ToString
 @EqualsAndHashCode
 public class CreatePostDTO {
-	Set<ImageEntity> images;
-	private String caption;
-	private String privacy;
+    private Set<ImageEntity> images;
+    private String caption;
+    private String privacy;
 }

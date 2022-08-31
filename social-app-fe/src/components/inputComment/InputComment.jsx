@@ -6,6 +6,7 @@ export default function InputComment() {
 
     const ref = useRef();
 
+
     const [comment, setComment] = useState({
         text: "",
         showEmojis: false
@@ -16,7 +17,9 @@ export default function InputComment() {
             ...comment,
             showEmojis: !comment.showEmojis,
         }));
+
     };
+
 
     const handleChange = (e) => {
         setComment({
@@ -53,7 +56,7 @@ export default function InputComment() {
                 />
             </form>
             {comment.showEmojis ? (
-                <span >
+                <span>
                     <Picker
                         onSelect={addEmoji} theme="dark" showSkinTones={false} showPreview={false}
                     />

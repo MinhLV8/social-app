@@ -71,6 +71,7 @@ public class SystemUserServiceImpl implements UserService {
         if (!userRepository.existsByUsername(appUser.getUsername())) {
             appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
             userRepository.save(appUser);
+            // appUser.getAccountEntity().setFirstName();
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(appUser.getUsername(), appUser.getPassword()));
             return jwtTokenProvider.generateToken(

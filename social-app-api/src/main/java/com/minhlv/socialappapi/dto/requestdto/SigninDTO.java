@@ -12,7 +12,7 @@ import lombok.NonNull;
 @NoArgsConstructor
 public class SigninDTO {
 
-    @NonNull()
+    @NonNull
     private String username;
 
     @NotNull

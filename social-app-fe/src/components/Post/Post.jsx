@@ -22,7 +22,6 @@ import { nFormatter, timeDiff } from "../../utils/Utils";
 import Comments from "../comments/Comments";
 import EmojiPicker from "../emoji/EmojiPicker";
 import ImageSlide from "../ImageSlide/ImageSlide";
-import InputComment from "../inputComment/InputComment";
 import PopupOptions from "../popupOptions/PopupOptions";
 import PopupShare from "../popupShares/PopupShare";
 import PostImage from "../postImage/PostImage";
@@ -190,7 +189,7 @@ const Post = ({ post, postComments }) => {
       )}
       <div className="postReact">
         <img src={userAvatar} alt="" className="postReact-user" />
-        <InputComment />
+        {/* <InputComment /> */}
         <div className="postReact-comment">
           <input
             ref={commentsButton}

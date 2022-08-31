@@ -2,23 +2,28 @@ package com.minhlv.socialappapi.service.impl;
 
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.minhlv.socialappapi.dto.requestdto.AccountUpdateDTO;
+import com.minhlv.socialappapi.entity.AccountEntity;
 import com.minhlv.socialappapi.entity.ImageEntity;
 import com.minhlv.socialappapi.entity.PostEntity;
 import com.minhlv.socialappapi.entity.SystemUserEntity;
+import com.minhlv.socialappapi.repository.AccountRepository;
 import com.minhlv.socialappapi.repository.ImageRepository;
 import com.minhlv.socialappapi.repository.PostRepository;
 import com.minhlv.socialappapi.repository.UserRepository;
 import com.minhlv.socialappapi.service.AccountService;
 import com.minhlv.socialappapi.utils.APIResult;
+import com.minhlv.socialappapi.utils.AuthContext;
 import com.minhlv.socialappapi.utils.FileUploadUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -33,11 +38,17 @@ public class AccountServiceImpl implements AccountService {
 
     private final PostRepository postRepository;
 
+    private final AccountRepository accountRepository;
+
+    private AuthContext authContext = new AuthContext();
+
+    @Autowired
     public AccountServiceImpl(UserRepository userRepository, ImageRepository imageRepository,
-            PostRepository postRepository) {
+            PostRepository postRepository, AccountRepository accountRepository) {
         this.imageRepository = imageRepository;
         this.userRepository = userRepository;
         this.postRepository = postRepository;
+        this.accountRepository = accountRepository;
     }
 
     @Override
@@ -76,7 +87,7 @@ public class AccountServiceImpl implements AccountService {
             re.setData(avatar);
             re.setMessage("Thành công");
         } catch (IOException e) {
-            re.setMessage("Lỗi.");
+            re.setMessage("Lỗi");
         }
         return re;
     }
@@ -108,7 +119,8 @@ public class AccountServiceImpl implements AccountService {
                     .image(FileUploadUtil.compressImage(multipartFile.getBytes()))
                     .post(postRepository.save(postChangeCover)).build());
         } catch (IOException e) {
-            e.printStackTrace();
+            re.setErrorCode(99);
+            re.setMessage("Có lỗi xảy ra, thử lại sau.");
         }
         re.setData(fileName);
         re.setMessage("Thành công");
@@ -123,5 +135,27 @@ public class AccountServiceImpl implements AccountService {
     public PostEntity changeCoverPost() {
 
         return new PostEntity();
+    }
+
+    @Override
+    public APIResult updateAccount(AccountEntity account) {
+        APIResult re = new APIResult();
+        try {
+            Optional<AccountEntity> account = accountRepository.findById(payload.getId());
+            if (!account.isPresent()) {
+                re.setErrorCode(99);
+                re.setMessage("Có lỗi xảy ra, thử lại sau.");
+                return re;
+            }
+            account.get();
+
+            re.setData(null);
+            re.setMessage("Thành công");
+        } catch (Exception e) {
+            e.printStackTrace();
+            re.setErrorCode(99);
+            re.setMessage("Có lỗi xảy ra, thử lại sau.");
+        }
+        return re;
     }
 }
