@@ -18,7 +18,7 @@ import lombok.EqualsAndHashCode;
 public class CustomUserDetailsImpl implements UserDetails {
 
     private static final long serialVersionUID = -3595426590795716449L;
-    List<GrantedAuthority> authorities;
+    private List<GrantedAuthority> authorities;
     private Long id;
     private String username;
     private String email;
@@ -79,11 +79,11 @@ public class CustomUserDetailsImpl implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return isEnabled;
+        return user.getAccountEntity().getIsEnable() == 1;
     }
 
-    public void setEnabled(boolean isEnabled) {
-        this.isEnabled = isEnabled;
+    public void setEnabled(short isEnabled) {
+        this.isEnabled = isEnabled == 1;
     }
 
     public boolean isDelete() {

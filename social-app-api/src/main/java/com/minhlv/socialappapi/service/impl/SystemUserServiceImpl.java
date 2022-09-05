@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -46,6 +47,8 @@ public class SystemUserServiceImpl implements UserService {
 
     @Override
     public APIResult signin(String username, String password) {
+        APIResult result = new APIResult();
+
         try {
             Authentication authentication = authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(username, password));
@@ -54,12 +57,16 @@ public class SystemUserServiceImpl implements UserService {
             CustomUserDetailsImpl userDetails = (CustomUserDetailsImpl) authentication.getPrincipal();
             List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
-            APIResult result = new APIResult();
-            result.setMessage("Thành công.");
             Map<String, Object> re = new HashMap<>();
-            re.put("jwt", "Bearer " + jwt);
+            result.setMessage("Thành công.");
+
+            re.put("token", "Bearer " + jwt);
             re.put("roles", roles);
             result.setData(re);
+            return result;
+        } catch (DisabledException ex) {
+            result.setMessage("Tài khoản bị khoá !!!");
+            result.setErrorCode(APIResult.ERROR_CODE.INSERT_AUTH);
             return result;
         } catch (AuthenticationException e) {
             throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);

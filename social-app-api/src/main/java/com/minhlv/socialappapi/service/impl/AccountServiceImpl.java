@@ -141,14 +141,13 @@ public class AccountServiceImpl implements AccountService {
     public APIResult updateAccount(AccountEntity account) {
         APIResult re = new APIResult();
         try {
-            Optional<AccountEntity> account = accountRepository.findById(payload.getId());
-            if (!account.isPresent()) {
+            Optional<AccountEntity> accountUpdate = accountRepository.findById(account.getId());
+            if (!accountUpdate.isPresent()) {
                 re.setErrorCode(99);
                 re.setMessage("Có lỗi xảy ra, thử lại sau.");
                 return re;
             }
-            account.get();
-
+            accountUpdate.get();
             re.setData(null);
             re.setMessage("Thành công");
         } catch (Exception e) {
