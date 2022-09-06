@@ -99,13 +99,14 @@
   border-left: 2px solid var(--hrColor);
 }
 
-.ProfileCard > span {
-  font-weight: bold;
-  color: orange;
+.ProfileCard > a {
   align-self: center;
   margin-bottom: 1rem;
   cursor: pointer;
+  font-weight: bold;
+  color: var(--orange);
 }
+
 @media (min-width: 256px) {
   .ProfileCard {
     margin: 0;

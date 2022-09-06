@@ -1,6 +1,6 @@
 import React, { useState } from "react";
+import logo from "../../assets/icons/care-2387662-1991058.png";
 import "./Auth.css";
-
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [data, setData] = useState({
@@ -26,7 +26,7 @@ const Auth = () => {
   return (
     <div className="Auth">
       <div className="a-left">
-        <img src="../../assets/icons/care-2387662-1991058.png" alt="" />
+        <img src={logo} alt="logo" />
         <div className="Webname">
           <h1>Unitech Social Media</h1>
           <h6>Khám phá những ý tưởng trên khắp thế giới "động vật".</h6>

@@ -1,6 +1,8 @@
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-//import Auth from "./pages/Auth/Auth";
+import Auth from "./pages/Auth/Auth";
 import Home from "./pages/home/Home";
+import Profile from "./pages/Profile/Profile";
 function App() {
     return (
         <div
@@ -23,9 +25,12 @@ function App() {
                             '-8rem'
                     }
                 }></div> */}
-            <Home />
-            {/* <Profile /> */}
-            {/*   <Auth /> */}
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/auth" element={<Auth />} />
+            </Routes>
+
         </div>
     )
         ;

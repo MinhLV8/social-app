@@ -1,6 +1,6 @@
-// import { UilPen } from "@iconscout/react-unicons";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FiEdit } from "react-icons/fi";
+import { useNavigate } from 'react-router-dom';
 import briefcase from "../../assets/icons/icons8-briefcase-24.png";
 import home from "../../assets/icons/icons8-home-24.png";
 import location from "../../assets/icons/icons8-location-24.png";
@@ -10,6 +10,8 @@ import "./InfoCard.css";
 
 const InfoCard = () => {
   const [modalOpened, setModalOpened] = useState(false);
+  const navigate = useNavigate();
+  const handleOnClick = useCallback(() => navigate('/auth', { replace: true }), [navigate]);
   return (
     <div className="InfoCard">
       <div className="infoHead">
@@ -28,33 +30,33 @@ const InfoCard = () => {
         <span>The world is dull, but it has you 🍃</span>
       </div>
       <div className="info">
-        <img src={briefcase} alt="" />
+        <img src={briefcase} alt="work_at-icon" />
         <span>
           <b>Làm việc tại</b>
         </span>
         <span> Unitech@</span>
       </div>
       <div className="info">
-        <img src={location} alt="" />
+        <img src={location} alt="location-icon" />
         <span>
           <b>Sống tại </b>
         </span>
         <span> Đà Nẵng</span>
       </div>
       <div className="info">
-        <img src={home} alt="" />
+        <img src={home} alt="hometown-icon" />
         <span>
           <b>Đến từ </b>
         </span>
         <span> Quảng Ngãi</span>
       </div>
       <div className="info">
-        <img src={love} alt="" />
+        <img src={love} alt="relationship-icon" />
         <span>
           <b> Muốn một mình nhưng sợ cô đơn.</b>
         </span>
       </div>
-      <button className="button logout-button">Đăng xuất</button>
+      <button className="button logout-button" onClick={handleOnClick}>Đăng xuất</button>
     </div>
   );
 };

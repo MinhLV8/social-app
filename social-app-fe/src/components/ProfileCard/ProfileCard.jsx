@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import avtimg from "../../assets/person/avt-10.jpg";
 import coveimg from "../../assets/person/DSC05373.jpg";
 import "./ProfileCard.css";
@@ -8,9 +9,9 @@ const ProfileCard = () => {
   return (
     <div className="ProfileCard">
       <div className="ProfileImages">
-        <img src={coveimg} alt="" />
+        <img src={coveimg} alt="coveimg" />
         {/* <img src={avtimg} alt="" className={`${!ProfilePage && "avt-img"}`} /> */}
-        <img src={avtimg} alt="" className={`${!ProfilePage && "avt-img"}`} />
+        <img src={avtimg} alt="avtimg" className={`${!ProfilePage && "avt-img"}`} />
       </div>
 
       <div className="ProfileName">
@@ -43,7 +44,7 @@ const ProfileCard = () => {
         </div>
         {/* <hr /> */}
       </div>
-      {ProfilePage ? "" : <span>Trang cá nhân</span>}
+      {ProfilePage ? "" : <Link to="/profile"><span>Trang cá nhân</span></Link>}
     </div>
   );
 };
