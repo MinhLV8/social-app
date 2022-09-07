@@ -13,8 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -22,6 +21,8 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -71,11 +72,10 @@ public class PostEntity extends BaseEntity implements Serializable {
     @Column(name = "is_delete")
     private short isDelete = 0;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "system_post_account", joinColumns = {
-            @JoinColumn(name = "post_id", nullable = false, updatable = false)}, inverseJoinColumns = {
-                    @JoinColumn(name = "account_id", nullable = false, updatable = false)})
-    private Set<AccountEntity> accounts = new HashSet<>();
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id", nullable = false)
+    private AccountEntity account;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<ImageEntity> images = new HashSet<>();
@@ -83,10 +83,10 @@ public class PostEntity extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<SystemCommentsEntity> comments = new HashSet<>();
 
-    public PostEntity(String caption, @NotNull short privacy, Set<AccountEntity> accounts, Set<ImageEntity> images) {
+    public PostEntity(String caption, @NotNull short privacy, AccountEntity account, Set<ImageEntity> images) {
         this.caption = caption;
         this.privacy = privacy;
-        this.accounts = accounts;
+        this.account = account;
         this.images = images;
     }
 }

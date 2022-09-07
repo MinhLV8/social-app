@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.DisabledException;
@@ -18,7 +20,10 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.minhlv.socialappapi.dto.UserDataDTO;
+import com.minhlv.socialappapi.entity.AccountEntity;
 import com.minhlv.socialappapi.entity.SystemUserEntity;
 import com.minhlv.socialappapi.exception.CustomException;
 import com.minhlv.socialappapi.repository.UserRepository;
@@ -37,6 +42,9 @@ public class SystemUserServiceImpl implements UserService {
 
     private final AuthenticationManager authenticationManager;
 
+    private final ModelMapper modelMapper = new ModelMapper();
+
+    @Autowired
     public SystemUserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
             JwtTokenProvider jwtTokenProvider, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
@@ -74,11 +82,14 @@ public class SystemUserServiceImpl implements UserService {
     }
 
     @Override
-    public String signup(SystemUserEntity appUser) {
+    @Transactional
+    public String signup(UserDataDTO appUser) {
+        SystemUserEntity user = modelMapper.map(appUser, SystemUserEntity.class);
         if (!userRepository.existsByUsername(appUser.getUsername())) {
-            appUser.setPassword(passwordEncoder.encode(appUser.getPassword()));
-            userRepository.save(appUser);
-            // appUser.getAccountEntity().setFirstName();
+            user.setPassword(passwordEncoder.encode(appUser.getPassword()));
+            AccountEntity account = modelMapper.map(appUser, AccountEntity.class);
+            user.setAccountEntity(account);
+            userRepository.save(user);
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(appUser.getUsername(), appUser.getPassword()));
             return jwtTokenProvider.generateToken(

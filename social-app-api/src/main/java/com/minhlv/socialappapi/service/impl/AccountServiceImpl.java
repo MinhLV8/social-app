@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -26,9 +27,6 @@ import com.minhlv.socialappapi.utils.APIResult;
 import com.minhlv.socialappapi.utils.AuthContext;
 import com.minhlv.socialappapi.utils.FileUploadUtil;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -56,8 +54,7 @@ public class AccountServiceImpl implements AccountService {
         APIResult re = new APIResult();
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         SystemUserEntity user = userRepository.findByUsername(username);
-        re.setData(user.getAccountEntity());
-        re.setMessage("Thành công");
+        re.setData(user.getAccountEntity(), APIResult.MSG.SUCCESS.getMSG());
         return re;
     }
 
@@ -74,20 +71,19 @@ public class AccountServiceImpl implements AccountService {
             userRepository.save(user);
 
             PostEntity postChangeAvatar = new PostEntity();
-            postChangeAvatar.setCaption("Thay đổi ảnh đại diện.");
+            postChangeAvatar.setCaption(user.getAccountEntity().getFullName() + " đã thay đổi ảnh đại diện.");
             postChangeAvatar.setPrivacy((short) 1);
-            postChangeAvatar.getAccounts().add(user.getAccountEntity());
+            postChangeAvatar.setAccount(user.getAccountEntity());
 
             String avtPath = FileUploadUtil.saveFile("uploads/photos/" + username, fileName, multipartFile);
 
-            ImageEntity avatar = imageRepository.save(ImageEntity.builder().fileName(fileName)
-                    .typeFile(multipartFile.getContentType()).pathFile(avtPath).sizeFile(multipartFile.getSize())
+            imageRepository.save(ImageEntity.builder().fileName(fileName).typeFile(multipartFile.getContentType())
+                    .pathFile(avtPath).sizeFile(multipartFile.getSize())
                     .image(FileUploadUtil.compressImage(multipartFile.getBytes()))
                     .post(postRepository.save(postChangeAvatar)).build());
-            re.setData(avatar);
-            re.setMessage("Thành công");
+            re.setData(fileName, APIResult.MSG.SUCCESS.getMSG());
         } catch (IOException e) {
-            re.setMessage("Lỗi");
+            re.setMessage(e);
         }
         return re;
     }
@@ -109,9 +105,9 @@ public class AccountServiceImpl implements AccountService {
             userRepository.save(user);
 
             PostEntity postChangeCover = new PostEntity();
-            postChangeCover.setCaption("Thay đổi ảnh bìa.");
+            postChangeCover.setCaption(user.getAccountEntity().getFullName() + "đã thay đổi ảnh bìa.");
             postChangeCover.setPrivacy((short) 1);
-            postChangeCover.getAccounts().add(user.getAccountEntity());
+            postChangeCover.setAccount(user.getAccountEntity());
             String avtPath = FileUploadUtil.saveFile("uploads/photos/" + username, fileName, multipartFile);
 
             imageRepository.save(ImageEntity.builder().fileName(fileName).typeFile(multipartFile.getContentType())
@@ -119,11 +115,40 @@ public class AccountServiceImpl implements AccountService {
                     .image(FileUploadUtil.compressImage(multipartFile.getBytes()))
                     .post(postRepository.save(postChangeCover)).build());
         } catch (IOException e) {
-            re.setErrorCode(99);
-            re.setMessage("Có lỗi xảy ra, thử lại sau.");
+            re.setMessage(e);
         }
-        re.setData(fileName);
-        re.setMessage("Thành công");
+        re.setData(fileName, APIResult.MSG.SUCCESS.getMSG());
+        return re;
+    }
+
+    @Override
+    public APIResult updateAccount(AccountEntity account) {
+        APIResult re = new APIResult();
+        try {
+            Optional<AccountEntity> accountUpdate = accountRepository.findById(account.getId());
+            if (!accountUpdate.isPresent()) {
+                re.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED.getMSG());
+                return re;
+            }
+            if (!Objects.equals(account.getId(), authContext.getCurrentAccount().getId())) {
+                re.setMessage(11, APIResult.MSG.NOT_PERMISSION.getMSG());
+                return re;
+            }
+            AccountEntity accountExist = accountUpdate.get();
+            accountExist.setSurname(account.getSurname());
+            accountExist.setFirstName(account.getFirstName());
+            accountExist.setWorksAt(account.getWorksAt());
+            accountExist.setSex(account.getSex());
+            accountExist.setLivesIn(account.getLivesIn());
+            accountExist.setHomeTown(account.getHomeTown());
+            accountExist.setDateOfBirth(account.getDateOfBirth());
+            accountExist.setRelationshipStatus(account.getRelationshipStatus());
+            accountExist.setBio(account.getBio());
+            accountRepository.save(accountExist);
+            re.setData(new ModelMapper().map(accountExist, AccountUpdateDTO.class), APIResult.MSG.SUCCESS.getMSG());
+        } catch (Exception e) {
+            re.setMessage(e);
+        }
         return re;
     }
 
@@ -137,24 +162,4 @@ public class AccountServiceImpl implements AccountService {
         return new PostEntity();
     }
 
-    @Override
-    public APIResult updateAccount(AccountEntity account) {
-        APIResult re = new APIResult();
-        try {
-            Optional<AccountEntity> accountUpdate = accountRepository.findById(account.getId());
-            if (!accountUpdate.isPresent()) {
-                re.setErrorCode(99);
-                re.setMessage("Có lỗi xảy ra, thử lại sau.");
-                return re;
-            }
-            accountUpdate.get();
-            re.setData(null);
-            re.setMessage("Thành công");
-        } catch (Exception e) {
-            e.printStackTrace();
-            re.setErrorCode(99);
-            re.setMessage("Có lỗi xảy ra, thử lại sau.");
-        }
-        return re;
-    }
 }

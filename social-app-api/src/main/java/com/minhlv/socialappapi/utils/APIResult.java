@@ -13,8 +13,32 @@ public class APIResult {
         int DATABASE_ERROR = 8;
         int DOITUONG_ILLEGAL = 9;
         int EXISTS = 10;
-        int NOT_PERMISSTION = 11;
+        int NOT_PERMISSION = 11;
         int UNKNOW_ERROR = 99;
+    }
+
+    public enum MSG {
+        SUCCESS, UNEXPECTED_ERROR_OCCURRED, NOT_PERMISSION, NOT_EXISTS, ACCESS_DENIED, ACTION_FORBIDDEN;
+
+        public String getMSG() {
+
+            switch (this) {
+                case SUCCESS :
+                    return "Success";
+                case UNEXPECTED_ERROR_OCCURRED :
+                    return "Unexpected error occurred";
+                case NOT_PERMISSION :
+                    return "Not permission";
+                case NOT_EXISTS :
+                    return "Not exists";
+                case ACCESS_DENIED :
+                    return "Access denied";
+                case ACTION_FORBIDDEN :
+                    return "Action forbidden";
+                default :
+                    return null;
+            }
+        }
     }
 
     private int errorCode = 0;
@@ -51,12 +75,26 @@ public class APIResult {
         this.errorCode = ERROR_CODE.UNKNOW_ERROR;
     }
 
+    public void setMessage(int errorCode, String message) {
+        this.timeEnd = System.currentTimeMillis();
+        this.timeTotal = timeEnd - timeStart;
+        this.message = message;
+        this.errorCode = errorCode;
+    }
+
     public Object getData() {
         return data;
     }
 
     public void setData(Object data) {
         this.data = data;
+        this.timeEnd = System.currentTimeMillis();
+        this.timeTotal = timeEnd - timeStart;
+    }
+
+    public void setData(Object data, String message) {
+        this.data = data;
+        this.message = message;
         this.timeEnd = System.currentTimeMillis();
         this.timeTotal = timeEnd - timeStart;
     }

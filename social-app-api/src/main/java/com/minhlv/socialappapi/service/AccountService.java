@@ -19,4 +19,5 @@ public interface AccountService {
     APIResult updateCoverImg(MultipartFile multipartFile);
 
     APIResult updateAccount(AccountEntity payload);
+
 }
