@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     RoleRepository roleRepository;
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         SystemUserEntity systemUserEntity = userRepository.findByUsernameOrSdt(username);
         if (ObjectUtils.isEmpty(systemUserEntity)) {
