@@ -1,5 +1,7 @@
 package com.minhlv.socialappapi.utils;
 
+import java.util.ArrayList;
+
 public class APIResult {
 
     public interface ERROR_CODE {
@@ -73,6 +75,15 @@ public class APIResult {
         this.timeTotal = timeEnd - timeStart;
         this.message = exeption.getMessage();
         this.errorCode = ERROR_CODE.UNKNOW_ERROR;
+        this.data = new ArrayList<>();
+    }
+
+    public void setMessage(int errorCode, MSG message) {
+        this.timeEnd = System.currentTimeMillis();
+        this.timeTotal = timeEnd - timeStart;
+        this.message = message.getMSG();
+        this.errorCode = errorCode;
+        this.data = new ArrayList<>();
     }
 
     public void setMessage(int errorCode, String message) {
@@ -80,6 +91,7 @@ public class APIResult {
         this.timeTotal = timeEnd - timeStart;
         this.message = message;
         this.errorCode = errorCode;
+        this.data = new ArrayList<>();
     }
 
     public Object getData() {
@@ -92,9 +104,9 @@ public class APIResult {
         this.timeTotal = timeEnd - timeStart;
     }
 
-    public void setData(Object data, String message) {
+    public void setData(Object data, MSG message) {
         this.data = data;
-        this.message = message;
+        this.message = message.getMSG();
         this.timeEnd = System.currentTimeMillis();
         this.timeTotal = timeEnd - timeStart;
     }

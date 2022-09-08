@@ -41,10 +41,10 @@ public class PostServiceImpl implements PostService {
         APIResult re = new APIResult();
         Optional<PostEntity> getPost = postRepository.findById(id);
         if (!getPost.isPresent()) {
-            re.setMessage(6, APIResult.MSG.NOT_EXISTS.getMSG());
+            re.setMessage(6, APIResult.MSG.NOT_EXISTS);
             return re;
         }
-        re.setData(getPost.get(), APIResult.MSG.SUCCESS.getMSG());
+        re.setData(getPost.get(), APIResult.MSG.SUCCESS);
         return re;
     }
 
@@ -55,7 +55,7 @@ public class PostServiceImpl implements PostService {
         Iterable<PostEntity> getPosts = postRepository.findAllByAccount(authContext.getCurrentAccount());
         List<PostReponseDTO> posts = new ArrayList<>();
         getPosts.forEach(post -> posts.add(modelMapper.map(post, PostReponseDTO.class)));
-        re.setData(posts, APIResult.MSG.SUCCESS.getMSG());
+        re.setData(posts, APIResult.MSG.SUCCESS);
         return re;
     }
 
@@ -66,9 +66,9 @@ public class PostServiceImpl implements PostService {
         try {
             payload.setAccount(authContext.getCurrentAccount());
             PostEntity newPost = postRepository.save(payload);
-            re.setData(newPost, APIResult.MSG.SUCCESS.getMSG());
+            re.setData(newPost, APIResult.MSG.SUCCESS);
         } catch (Exception e) {
-            re.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED.getMSG());
+            re.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED);
         }
         return re;
     }
@@ -87,7 +87,7 @@ public class PostServiceImpl implements PostService {
             checkAllowedFor(postEntity.getAccount().getId(), authContext);
 
         } catch (Exception e) {
-            re.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED.getMSG());
+            re.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED);
         }
         return re;
     }
@@ -104,9 +104,9 @@ public class PostServiceImpl implements PostService {
                 }
             });
             postRepository.deleteAll(listWillDel);
-            re.setMessage(0, APIResult.MSG.SUCCESS.getMSG());
+            re.setMessage(0, APIResult.MSG.SUCCESS);
         } catch (Exception e) {
-            re.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED.getMSG());
+            re.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED);
         }
         return re;
     }
@@ -123,7 +123,8 @@ public class PostServiceImpl implements PostService {
         return null;
     }
 
-    private void checkAllowedFor(final long targetUserId, @NonNull final AuthContext authContext) {
+    private void checkAllowedFor(final long targetUserId, @NonNull final AuthContext authContext)
+            throws CustomException {
         if (targetUserId != authContext.getCurrentAccount().getId()) {
             throw new CustomException(APIResult.MSG.ACTION_FORBIDDEN.getMSG(), HttpStatus.FORBIDDEN);
         }

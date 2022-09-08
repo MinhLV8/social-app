@@ -54,7 +54,7 @@ public class AccountServiceImpl implements AccountService {
         APIResult re = new APIResult();
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         SystemUserEntity user = userRepository.findByUsername(username);
-        re.setData(user.getAccountEntity(), APIResult.MSG.SUCCESS.getMSG());
+        re.setData(user.getAccountEntity(), APIResult.MSG.SUCCESS);
         return re;
     }
 
@@ -81,7 +81,7 @@ public class AccountServiceImpl implements AccountService {
                     .pathFile(avtPath).sizeFile(multipartFile.getSize())
                     .image(FileUploadUtil.compressImage(multipartFile.getBytes()))
                     .post(postRepository.save(postChangeAvatar)).build());
-            re.setData(fileName, APIResult.MSG.SUCCESS.getMSG());
+            re.setData(fileName, APIResult.MSG.SUCCESS);
         } catch (IOException e) {
             re.setMessage(e);
         }
@@ -117,7 +117,7 @@ public class AccountServiceImpl implements AccountService {
         } catch (IOException e) {
             re.setMessage(e);
         }
-        re.setData(fileName, APIResult.MSG.SUCCESS.getMSG());
+        re.setData(fileName, APIResult.MSG.SUCCESS);
         return re;
     }
 
@@ -127,15 +127,15 @@ public class AccountServiceImpl implements AccountService {
         try {
             Optional<AccountEntity> accountUpdate = accountRepository.findById(account.getId());
             if (!accountUpdate.isPresent()) {
-                re.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED.getMSG());
+                re.setMessage(500, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED.getMSG());
                 return re;
             }
             if (!Objects.equals(account.getId(), authContext.getCurrentAccount().getId())) {
-                re.setMessage(11, APIResult.MSG.NOT_PERMISSION.getMSG());
+                re.setMessage(403, APIResult.MSG.ACTION_FORBIDDEN);
                 return re;
             }
             AccountEntity accountExist = accountUpdate.get();
-            accountExist.setSurname(account.getSurname());
+            accountExist.setSurName(account.getSurName());
             accountExist.setFirstName(account.getFirstName());
             accountExist.setWorksAt(account.getWorksAt());
             accountExist.setSex(account.getSex());
@@ -145,7 +145,7 @@ public class AccountServiceImpl implements AccountService {
             accountExist.setRelationshipStatus(account.getRelationshipStatus());
             accountExist.setBio(account.getBio());
             accountRepository.save(accountExist);
-            re.setData(new ModelMapper().map(accountExist, AccountUpdateDTO.class), APIResult.MSG.SUCCESS.getMSG());
+            re.setData(new ModelMapper().map(accountExist, AccountUpdateDTO.class), APIResult.MSG.SUCCESS);
         } catch (Exception e) {
             re.setMessage(e);
         }

@@ -14,8 +14,8 @@ public class UserDataDTO {
     private String email;
     @ApiModelProperty(position = 2)
     private String password;
-    private String lastname;
-    private String surname;
+    private String firstName;
+    private String surName;
     private int sex;
     private String sdt;
 }

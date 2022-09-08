@@ -12,4 +12,5 @@ import com.minhlv.socialappapi.entity.PostEntity;
 public interface PostRepository extends CrudRepository<PostEntity, Long> {
 
     List<PostEntity> findAllByAccount(AccountEntity id);
+
 }
