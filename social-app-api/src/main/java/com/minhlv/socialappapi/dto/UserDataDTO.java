@@ -1,5 +1,9 @@
 package com.minhlv.socialappapi.dto;
 
+import java.time.LocalDate;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,4 +22,7 @@ public class UserDataDTO {
     private String surName;
     private int sex;
     private String sdt;
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate dateOfBirth;
 }

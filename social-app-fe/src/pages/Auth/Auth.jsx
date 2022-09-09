@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { signIn, signUp } from "../../actions/AuthAction";
 import logo from "../../assets/icons/care-2387662-1991058.png";
 import "./Auth.css";
 const Auth = () => {
+  console.log("re-rendering");
+
   const [isSignup, setIsSignup] = useState(true);
   const [data, setData] = useState({
     firstName: "",
@@ -11,25 +15,39 @@ const Auth = () => {
     email: "",
     password: "",
     username: "",
-    confirmPass: ""
+    dateOfBirth: "",
+    confirmPass: "",
   });
   const [confirmPass, setcomfirmPass] = useState(true);
   const handlerLogin = () => {
     setIsSignup(!isSignup);
-    resetForm()
+    resetForm();
   };
   const handlerChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value, sdt: data.username, email: data.username });
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+      sdt: data.username,
+      email: data.username,
+    });
   };
-
+  const dispatch = useDispatch();
   const handlerSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     if (isSignup) {
-      data.password !== data.confirmPass && setcomfirmPass(false)
+      data.password !== data.confirmPass
+        ? dispatch(signUp(data))
+        : setcomfirmPass(false);
+      setData({
+        ...data,
+        dateOfBirth: minh.day + "/" + minh.month + "/" + minh.year,
+      });
+    } else {
+      dispatch(signIn(data));
     }
   };
   const resetForm = () => {
-    setcomfirmPass(true)
+    setcomfirmPass(true);
     setData({
       firstName: "",
       sdt: "",
@@ -38,9 +56,68 @@ const Auth = () => {
       email: "",
       password: "",
       username: "",
-      confirmPass: ""
-    })
-  }
+      dateOfBirth: "",
+      confirmPass: "",
+    });
+  };
+  const jsonSex = {
+    choices: [
+      { text: "Nam", value: 1 },
+      { text: "Nữ", value: 2 },
+      { text: "Khác", value: -1 },
+    ],
+  };
+
+  const handleOnChangeSex = (e) => {
+    setData({ ...data, sex: +e.target.value });
+  };
+
+  const year = (startYear) => {
+    let currentYear = new Date().getFullYear(),
+      years = [];
+    startYear = startYear || 1980;
+    while (startYear <= currentYear) {
+      years.push(startYear++);
+    }
+    return years;
+  };
+
+  const monthList = [
+    "01",
+    "02",
+    "03",
+    "04",
+    "05",
+    "06",
+    "07",
+    "08",
+    "09",
+    "10",
+    "11",
+    "12",
+  ];
+  const [minh, setMinh] = useState({
+    day: "01",
+    month: "01",
+    year: "1980",
+  });
+
+  const [daysInMonth, setDaysInMonth] = useState([]);
+
+  const getDaysInMonth = (month, year) => {
+    month = parseInt(month) - 1;
+    year = parseInt(year);
+    let date = new Date(Date.UTC(year, month, 1));
+    let days = [];
+    while (date.getMonth() === month) {
+      days.push(date.getDate());
+      date.setDate(date.getDate() + 1);
+    }
+    return days;
+  };
+  useEffect(() => {
+    setDaysInMonth(getDaysInMonth(minh.month, minh.year));
+  }, [minh]);
   return (
     <div className="Auth">
       <div className="a-left">
@@ -91,6 +168,7 @@ const Auth = () => {
               placeholder="Mật khẩu"
               name="password"
               required
+              autoComplete="on"
               value={data.password}
               onChange={handlerChange}
             />
@@ -101,25 +179,61 @@ const Auth = () => {
                 name="confirmPass"
                 placeholder="Nhập lại mật khẩu"
                 required
+                autoComplete="on"
                 onChange={handlerChange}
               />
             )}
           </div>
           {isSignup && (
-            <div>
-              <div className="infoInput">
-                <input type="radio" id="r1" name="sex" />
-                <label for="r1"><span></span>Nam</label>
+            <>
+              <div className="custom-select">
+                <select
+                  onChange={(e) => setMinh({ ...minh, day: e.target.value })}
+                >
+                  {daysInMonth.map((value, index) => (
+                    <option key={index} value={value}>
+                      Ngày {value}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  onChange={(e) => setMinh({ ...minh, month: e.target.value })}
+                >
+                  {monthList.map((value, index) => (
+                    <option key={index} value={value}>
+                      Tháng {value}
+                    </option>
+                  ))}
+                </select>
+                <select
+                  onChange={(e) => setMinh({ ...minh, year: e.target.value })}
+                >
+                  {year().map((value, index) => (
+                    <option key={index} value={value}>
+                      {value}
+                    </option>
+                  ))}
+                </select>
               </div>
-
-              <div className="infoInput">
-                <input type="radio" id="r2" name="sex" />
-                <label for="r2"><span></span>Nữ</label>
+              <div>
+                {jsonSex.choices.map((choice, index) => (
+                  <React.Fragment key={index}>
+                    <input
+                      key={`input ${index}`}
+                      type="radio"
+                      id={`radio${index}`}
+                      name="sex"
+                      value={choice.value}
+                      onChange={handleOnChangeSex}
+                    />
+                    <label key={`label ${index}`} htmlFor={`radio${index}`}>
+                      <span key={`span ${index}`}></span>
+                      {choice.text}
+                    </label>
+                  </React.Fragment>
+                ))}
               </div>
-              <div className="infoInput">
-                <input type="radio" id="r3" name="sex" />
-                <label for="r3"><span></span>Tuỳ chỉnh</label></div>
-            </div>
+            </>
           )}
           {!confirmPass && (
             <span style={{ color: "red", fontSize: "0.9rem" }}>

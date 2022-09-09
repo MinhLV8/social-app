@@ -139,6 +139,7 @@ const Post = ({ post, postComments }) => {
   }, [image]);
 
 
+
   return (
     <div className="Post">
       <div className="Post-user">
