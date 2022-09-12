@@ -8,7 +8,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.minhlv.socialappapi.entity.AccountEntity;
 import com.minhlv.socialappapi.entity.SystemUserEntity;
 
@@ -22,22 +21,19 @@ public class CustomUserDetailsImpl implements UserDetails {
     private Long id;
     private String username;
     private String email;
-    private boolean isEnabled;
+    // private boolean isEnabled;
     private boolean isDelete;
     private SystemUserEntity user;
     private AccountEntity account;
-    @JsonIgnore
-    private String password;
 
     public CustomUserDetailsImpl(Long id, String username, String email, boolean isEnabled, boolean isDelete,
-            String password, SystemUserEntity user, List<GrantedAuthority> authorities) {
+            SystemUserEntity user, List<GrantedAuthority> authorities) {
         super();
         this.id = id;
         this.username = username;
         this.email = email;
-        this.isEnabled = isEnabled;
+        // this.isEnabled = isEnabled;
         this.isDelete = isDelete;
-        this.password = password;
         this.user = user;
         this.account = user.getAccountEntity();
         this.authorities = authorities;
@@ -48,8 +44,7 @@ public class CustomUserDetailsImpl implements UserDetails {
                 .map(role -> new SimpleGrantedAuthority(role.getRole())).collect(Collectors.toList());
         return new CustomUserDetailsImpl(systemUserEntity.getId(), systemUserEntity.getUsername(),
                 systemUserEntity.getEmail(), systemUserEntity.getAccountEntity().getIsEnable() == 1,
-                systemUserEntity.getAccountEntity().getIsDelete() == 0, systemUserEntity.getPassword(),
-                systemUserEntity, authorities);
+                systemUserEntity.getAccountEntity().getIsDelete() == 0, systemUserEntity, authorities);
     }
 
     public Long getId() {
@@ -82,9 +77,10 @@ public class CustomUserDetailsImpl implements UserDetails {
         return user.getAccountEntity().getIsEnable() == 1;
     }
 
-    public void setEnabled(short isEnabled) {
-        this.isEnabled = isEnabled == 1;
-    }
+    /*
+     * public void setEnabled(short isEnabled) { this.isEnabled = isEnabled ==
+     * 0; }
+     */
 
     public boolean isDelete() {
         return isDelete;
@@ -92,15 +88,6 @@ public class CustomUserDetailsImpl implements UserDetails {
 
     public void setDelete(boolean isDelete) {
         this.isDelete = isDelete;
-    }
-
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     @Override
@@ -137,6 +124,11 @@ public class CustomUserDetailsImpl implements UserDetails {
 
     public void setAccountEntity() {
         this.account = this.user.getAccountEntity();
+    }
+
+    @Override
+    public String getPassword() {
+        return user.getPassword();
     }
 
 }

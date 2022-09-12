@@ -1,11 +1,8 @@
 import { Picker } from "emoji-mart";
 import "emoji-mart/css/emoji-mart.css";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 
 export default function InputComment() {
-
-    const ref = useRef();
-
 
     const [comment, setComment] = useState({
         text: "",

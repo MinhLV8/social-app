@@ -4,7 +4,7 @@ import { FaTimes } from "react-icons/fa";
 import {
   MdAddLocationAlt,
   MdOutlineAddPhotoAlternate,
-  MdOutlineSentimentVerySatisfied,
+  MdOutlineSentimentVerySatisfied
 } from "react-icons/md";
 import { RiShareForwardLine } from "react-icons/ri";
 import avt from "../../assets/person/avt-10.jpg";
@@ -12,20 +12,44 @@ import "./PostShare.css";
 const PostShare = () => {
   const [image, setImage] = useState(null);
   const imageRef = useRef();
-
+  const captionRef = useRef();
+  //const user = useSelector((state) => state.authReducer.authData)
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
-      setImage({
-        image: URL.createObjectURL(img),
-      });
+      setImage(img);
     }
   };
+  const handelSubmit = (e) => {
+    e.preventDefault()
+    const newPost =
+    {
+      caption: captionRef.current.value,
+      images: [
+        {
+          fileName: "",
+          id: 0,
+          image: "",
+          pathFile: "",
+          sizeFile: 0,
+          typeFile: ""
+        }
+      ],
+      privacy: 1
+    }
+    console.log('newPost :>> ', newPost);
+  }
   return (
     <div className="PostShare">
       <img src={avt} alt="" />
       <div>
-        <input type="text" placeholder="Minh ơi, bạn đang nghĩ gì thế?" />
+        <input
+          type="text"
+          name="caption"
+          ref={captionRef}
+          placeholder="Minh ơi, bạn đang nghĩ gì thế?"
+          required
+        />
         <div className="postOptions">
           <div
             className="option"
@@ -47,7 +71,9 @@ const PostShare = () => {
             <MdOutlineSentimentVerySatisfied size={24} />
             Cảm xúc/Hoạt động
           </div>
-          <button className="button ps-button">
+          <button className="button ps-button"
+            onClick={handelSubmit}
+          >
             Chia sẻ
             <RiShareForwardLine size={17} />
           </button>
@@ -63,7 +89,7 @@ const PostShare = () => {
         {image && (
           <div className="previewImage">
             <FaTimes onClick={() => setImage(null)} />
-            <img src={image.image} alt="" />
+            <img src={URL.createObjectURL(image)} alt="" />
           </div>
         )}
       </div>

@@ -35,11 +35,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 @EntityListeners(AuditingEntityListener.class)
 @Table(name = "system_account")
@@ -47,10 +49,6 @@ import lombok.Setter;
 public class AccountEntity extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 8938047413938216839L;
-
-    @JsonBackReference
-    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
-    private Set<PostEntity> posts = new HashSet<>();
 
     @Id
     @GeneratedValue(generator = "bigid")
@@ -60,7 +58,7 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @NotNull
     @NotBlank
     @Column(name = "surname", length = 10)
-    private String surname;
+    private String surName;
 
     @NotNull
     @NotBlank
@@ -131,10 +129,14 @@ public class AccountEntity extends BaseEntity implements Serializable {
     @Column(name = "is_root", nullable = false)
     private Boolean isRoot = false;
 
+    // @JsonBackReference
     @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private SystemUserEntity user;
+
     @JsonBackReference
-    @JoinColumn(name = "user_id")
-    private SystemUserEntity users;
+    @OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+    private Set<PostEntity> posts = new HashSet<>();
 
     @JsonIgnore
     @OneToOne(mappedBy = "account", fetch = FetchType.LAZY)

@@ -30,7 +30,7 @@ import io.swagger.annotations.Authorization;
 @RequestMapping("/api/auth")
 @Api(tags = "users")
 // @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
     private final ModelMapper modelMapper = new ModelMapper();
@@ -54,7 +54,7 @@ public class UserController {
     @ApiResponses(value = {@ApiResponse(code = 400, message = "Something went wrong"),
             // @ApiResponse(code = 403, message = "Access denied"),
             @ApiResponse(code = 422, message = "Username is already in use")})
-    public String signup(@ApiParam("Signup User") @RequestBody UserDataDTO user) {
+    public APIResult signup(@ApiParam("Signup User") @RequestBody UserDataDTO user) {
         return userService.signup(user);
     }
 

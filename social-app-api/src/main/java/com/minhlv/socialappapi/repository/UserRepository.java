@@ -22,5 +22,5 @@ public interface UserRepository extends CrudRepository<SystemUserEntity, Long> {
     boolean existsByUsername(String username);
 
     @Transactional
-    void deleteByUsername(String username);
+    SystemUserEntity deleteByUsername(String username);
 }

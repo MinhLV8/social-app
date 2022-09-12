@@ -1,5 +1,4 @@
-// import data from "@emoji-mart/data";
-// import { init } from "emoji-mart";
+
 import React, { useEffect, useRef, useState } from "react";
 import { IconContext } from "react-icons";
 import { BiWorld } from "react-icons/bi";
@@ -26,7 +25,7 @@ import PopupOptions from "../popupOptions/PopupOptions";
 import PopupShare from "../popupShares/PopupShare";
 import PostImage from "../postImage/PostImage";
 import "./Post.css";
-// init({ data });
+
 const Post = ({ post, postComments }) => {
 
   console.log('re-rendering', post.id)
@@ -86,10 +85,6 @@ const Post = ({ post, postComments }) => {
     }));
   };
   const onEmojiClick = (event) => {
-    // setChosenEmoji(() => ({
-    //   icons: chosenEmoji.icons.concat(event.native),
-    // }));
-    console.log("event", event);
     setInputValue(inputValue.concat(event.native));
     return event;
   };
@@ -137,6 +132,7 @@ const Post = ({ post, postComments }) => {
       image && URL.revokeObjectURL(image.image)
     };
   }, [image]);
+
 
 
   return (

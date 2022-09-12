@@ -1,9 +1,5 @@
 package com.minhlv.socialappapi.service.impl;
 
-import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 
 import com.minhlv.socialappapi.entity.SystemCommentsEntity;
@@ -16,35 +12,34 @@ import lombok.NonNull;
 public class CommentsImpl implements CommentsService {
 
     @Override
+    public @NonNull SystemCommentsEntity reply(SystemCommentsEntity reply) {
+        return new SystemCommentsEntity();
+    }
+
+    @Override
     public @NonNull SystemCommentsEntity find(long id, AuthContext authContext) {
-        return new SystemCommentsEntity();
+        return null;
     }
 
     @Override
-    public @NonNull List<SystemCommentsEntity> list(AuthContext authContext) {
-        return Collections.emptyList();
+    public @NonNull SystemCommentsEntity list(AuthContext authContext) {
+        return null;
     }
 
     @Override
-    public @NonNull SystemCommentsEntity save(@NonNull SystemCommentsEntity payload, @NonNull AuthContext authContext)
-            throws IOException {
-        return new SystemCommentsEntity();
+    public @NonNull SystemCommentsEntity save(@NonNull SystemCommentsEntity payload, @NonNull AuthContext authContext) {
+        return null;
     }
 
     @Override
     public @NonNull SystemCommentsEntity update(@NonNull SystemCommentsEntity payload,
             @NonNull AuthContext authContext) {
-        return new SystemCommentsEntity();
+        return null;
     }
 
     @Override
-    public void delete(@NonNull long[] ids, @NonNull AuthContext authContext) {
-
-    }
-
-    @Override
-    public @NonNull SystemCommentsEntity reply(SystemCommentsEntity reply) {
-        return new SystemCommentsEntity();
+    public SystemCommentsEntity delete(@NonNull long[] ids, @NonNull AuthContext authContext) {
+        return null;
     }
 
 }

@@ -1,1 +1,14 @@
+social-app-api/src/main/java/ws/backend/target/classes/application-dev.properties
+social-app-api/src/main/java/ws/backend/target/classes/liquibase.properties
+social-app-api/src/main/java/ws/backend/target/classes/META-INF/MANIFEST.MF
+social-app-api/src/main/java/ws/backend/target/classes/META-INF/maven/com.mercure/messenger/pom.properties
+social-app-api/src/main/java/ws/backend/target/classes/META-INF/maven/com.mercure/messenger/pom.xml
+social-app-api/src/main/java/ws/backend/target/classes/db/changelog-master.xml
+social-app-api/src/main/java/ws/backend/target/classes/db/changelog/createFileBlobTable.xml
+social-app-api/src/main/java/ws/backend/target/classes/db/changelog/createGroupTable.xml
+social-app-api/src/main/java/ws/backend/target/classes/db/changelog/createJoinTableGroupUser.xml
+social-app-api/src/main/java/ws/backend/target/classes/db/changelog/createJoinTableMessageUserSeen.xml
+social-app-api/src/main/java/ws/backend/target/classes/db/changelog/createJoinTableUserGroup.xml
+social-app-api/src/main/java/ws/backend/target/classes/db/changelog/createMessageWsTable.xml
+social-app-api/src/main/java/ws/backend/target/classes/db/changelog/createUserTable.xml
 social-app-api/src/main/resources/application.yml

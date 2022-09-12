@@ -1,6 +1,5 @@
 package com.minhlv.socialappapi;
 
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -11,29 +10,31 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import lombok.RequiredArgsConstructor;
+
 @SpringBootApplication
 @RequiredArgsConstructor
 @ComponentScan({"com.minhlv.socialappapi.*"})
 @EnableGlobalMethodSecurity(securedEnabled = true)
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "auditorProvider")
 public class SocialAppApiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SocialAppApiApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(SocialAppApiApplication.class, args);
+    }
 
-	@Bean
-	public ModelMapper modelMapper() {
-		return new ModelMapper();
-	}
+    @Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurer() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/greeting-javaconfig").allowedOrigins("http://localhost:8080");
-			}
-		};
-	}
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**").allowedOrigins("http://localhost:9090");
+            }
+        };
+    }
 }

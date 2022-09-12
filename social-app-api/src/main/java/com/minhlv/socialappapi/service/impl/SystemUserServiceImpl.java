@@ -1,13 +1,17 @@
 package com.minhlv.socialappapi.service.impl;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.ObjectUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,12 +28,17 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.minhlv.socialappapi.dto.UserDataDTO;
 import com.minhlv.socialappapi.entity.AccountEntity;
+import com.minhlv.socialappapi.entity.SystemRoleEntity;
 import com.minhlv.socialappapi.entity.SystemUserEntity;
 import com.minhlv.socialappapi.exception.CustomException;
+import com.minhlv.socialappapi.exception.HandledException;
+import com.minhlv.socialappapi.repository.AccountRepository;
+import com.minhlv.socialappapi.repository.RoleRepository;
 import com.minhlv.socialappapi.repository.UserRepository;
 import com.minhlv.socialappapi.security.JwtTokenProvider;
 import com.minhlv.socialappapi.service.UserService;
 import com.minhlv.socialappapi.utils.APIResult;
+import com.minhlv.socialappapi.utils.AuthContext;
 
 @Service
 public class SystemUserServiceImpl implements UserService {
@@ -42,15 +51,21 @@ public class SystemUserServiceImpl implements UserService {
 
     private final AuthenticationManager authenticationManager;
 
+    private final RoleRepository roleRepository;
+
     private final ModelMapper modelMapper = new ModelMapper();
+
+    private final AuthContext authContext = new AuthContext();
 
     @Autowired
     public SystemUserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
-            JwtTokenProvider jwtTokenProvider, AuthenticationManager authenticationManager) {
+            JwtTokenProvider jwtTokenProvider, AuthenticationManager authenticationManager,
+            RoleRepository roleRepository, AccountRepository accountRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtTokenProvider = jwtTokenProvider;
         this.authenticationManager = authenticationManager;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -66,42 +81,74 @@ public class SystemUserServiceImpl implements UserService {
             List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
             Map<String, Object> re = new HashMap<>();
-            result.setMessage("Thành công.");
+            result.setMessage(APIResult.MSG.SUCCESS.getMSG());
 
             re.put("token", "Bearer " + jwt);
             re.put("roles", roles);
             result.setData(re);
             return result;
         } catch (DisabledException ex) {
-            result.setMessage("Tài khoản bị khoá !!!");
-            result.setErrorCode(APIResult.ERROR_CODE.INSERT_AUTH);
+            result.setMessage(403, APIResult.MSG.ACCESS_DENIED);
             return result;
         } catch (AuthenticationException e) {
-            throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+            result.setMessage(403, "Invalid username/password supplied");
+            return result;
         }
     }
 
     @Override
     @Transactional
-    public String signup(UserDataDTO appUser) {
-        SystemUserEntity user = modelMapper.map(appUser, SystemUserEntity.class);
-        if (!userRepository.existsByUsername(appUser.getUsername())) {
-            user.setPassword(passwordEncoder.encode(appUser.getPassword()));
-            AccountEntity account = modelMapper.map(appUser, AccountEntity.class);
-            user.setAccountEntity(account);
-            userRepository.save(user);
-            authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(appUser.getUsername(), appUser.getPassword()));
-            return jwtTokenProvider.generateToken(
-                    (CustomUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getDetails());
-        } else {
-            throw new CustomException("Username is already in use", HttpStatus.UNPROCESSABLE_ENTITY);
+    public APIResult signup(UserDataDTO appUser) {
+        APIResult result = new APIResult();
+        try {
+            if (!userRepository.existsByUsername(appUser.getUsername())) {
+                SystemUserEntity user = modelMapper.map(appUser, SystemUserEntity.class);
+                AccountEntity account = modelMapper.map(appUser, AccountEntity.class);
+                account.setFullName(appUser.getFirstName() + " " + appUser.getSurName());
+
+                Set<SystemRoleEntity> roles = new HashSet<>(Arrays.asList(roleRepository.findByRole("ROLE_USER")));
+                user.setPassword(passwordEncoder.encode(appUser.getPassword()));
+                user.setRoles(roles);
+
+                account.setUser(user);
+                user.setAccountEntity(account);
+                userRepository.save(user);
+
+                SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(
+                        new UsernamePasswordAuthenticationToken(appUser.getUsername(), appUser.getPassword())));
+                result.setData(jwtTokenProvider.generateToken(
+                        (CustomUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal()),
+                        APIResult.MSG.SUCCESS);
+                return result;
+            } else {
+                result.setMessage(500, "Username is already in use");
+                return result;
+            }
+        } catch (Exception e) {
+            result.setMessage(500, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED);
+            return result;
         }
     }
 
     @Override
-    public void delete(String username) {
-        userRepository.deleteByUsername(username);
+    public APIResult delete(String username) {
+        APIResult result = new APIResult();
+        try {
+            SystemUserEntity user = userRepository.findByUsername(username);
+
+            checkExist(user);
+            checkAllowed(user.getId(), authContext);
+
+            SystemUserEntity userDel = userRepository.deleteByUsername(username);
+
+            result.setData(userDel, APIResult.MSG.SUCCESS);
+
+            return result;
+        } catch (Exception e) {
+            result.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED);
+            return result;
+        }
+
     }
 
     @Override
@@ -144,4 +191,22 @@ public class SystemUserServiceImpl implements UserService {
     public SystemUserEntity saveUser(SystemUserEntity userEntity) {
         return null;
     }
+
+    private void checkExist(SystemUserEntity user) throws HandledException {
+        if (user != null && ObjectUtils.isNotEmpty(user)) {
+            return;
+        }
+        throw new HandledException(404, APIResult.MSG.NOT_EXISTS.getMSG());
+    }
+
+    private void checkAllowed(long targetId, AuthContext authContext) throws HandledException {
+        if (Boolean.TRUE.equals(authContext.getCurrentAccount().getIsRoot())) {
+            return;
+        }
+        if (targetId == authContext.getCurrentUser().getId()) {
+            return;
+        }
+        throw new HandledException(403, APIResult.MSG.ACTION_FORBIDDEN.getMSG());
+    }
+
 }

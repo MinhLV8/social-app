@@ -15,9 +15,9 @@ public interface UserService {
 
     APIResult signin(String username, String password);
 
-    String signup(UserDataDTO appUser);
+    APIResult signup(UserDataDTO appUser);
 
-    void delete(String username);
+    APIResult delete(String username);
 
     SystemUserEntity whoami(HttpServletRequest req);
 
