@@ -1,65 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signIn, signUp } from "../../actions/AuthAction";
 import logo from "../../assets/icons/care-2387662-1991058.png";
+import Loading from "../../components/Loading/Loading";
 import "./Auth.css";
 const Auth = () => {
   console.log("re-rendering");
-
-  const [isSignup, setIsSignup] = useState(true);
-  const [data, setData] = useState({
-    firstName: "",
-    sdt: "",
-    sex: 0,
-    surName: "",
-    email: "",
-    password: "",
-    username: "",
-    dateOfBirth: "",
-    confirmPass: "",
-  });
-  const [confirmPass, setcomfirmPass] = useState(true);
-  const handlerLogin = () => {
-    setIsSignup(!isSignup);
-    resetForm();
-  };
-  const handlerChange = (e) => {
-    setData({
-      ...data,
-      [e.target.name]: e.target.value,
-      sdt: data.username,
-      email: data.username,
-    });
-  };
-  const dispatch = useDispatch();
-  const handlerSubmit = (e) => {
-    e.preventDefault();
-    if (isSignup) {
-      data.password !== data.confirmPass
-        ? dispatch(signUp(data))
-        : setcomfirmPass(false);
-      setData({
-        ...data,
-        dateOfBirth: minh.day + "/" + minh.month + "/" + minh.year,
-      });
-    } else {
-      dispatch(signIn(data));
-    }
-  };
-  const resetForm = () => {
-    setcomfirmPass(true);
-    setData({
-      firstName: "",
-      sdt: "",
-      sex: 0,
-      surName: "",
-      email: "",
-      password: "",
-      username: "",
-      dateOfBirth: "",
-      confirmPass: "",
-    });
-  };
   const jsonSex = {
     choices: [
       { text: "Nam", value: 1 },
@@ -67,21 +13,6 @@ const Auth = () => {
       { text: "Khác", value: -1 },
     ],
   };
-
-  const handleOnChangeSex = (e) => {
-    setData({ ...data, sex: +e.target.value });
-  };
-
-  const year = (startYear) => {
-    let currentYear = new Date().getFullYear(),
-      years = [];
-    startYear = startYear || 1980;
-    while (startYear <= currentYear) {
-      years.push(startYear++);
-    }
-    return years;
-  };
-
   const monthList = [
     "01",
     "02",
@@ -101,8 +32,82 @@ const Auth = () => {
     month: "01",
     year: "1980",
   });
-
   const [daysInMonth, setDaysInMonth] = useState([]);
+  const [isSignup, setIsSignup] = useState(false);
+  const [data, setData] = useState({
+    firstName: "",
+    sdt: "",
+    sex: 0,
+    surName: "",
+    email: "",
+    password: "",
+    username: "",
+    dateOfBirth: "01/01/1980",
+    confirmPass: "",
+  });
+  const dispatch = useDispatch();
+  const loading = useSelector((state) => state.authReducer.loading)
+  console.log('loading', loading)
+  const [confirmPass, setcomfirmPass] = useState(true);
+  const handlerLogin = () => {
+    setIsSignup(!isSignup);
+    resetForm();
+  };
+  const handlerChange = (e) => {
+    setData({
+      ...data,
+      [e.target.name]: e.target.value,
+      sdt: data.username,
+      email: data.username,
+    });
+  };
+  const handelSelectChange = (e) => {
+    setMinh({ ...minh, [e.target.name]: e.target.value })
+    setData({
+      ...data,
+      dateOfBirth: minh.day + "/" + minh.month + "/" + minh.year,
+    });
+  }
+  const handlerSubmit = (e) => {
+    e.preventDefault();
+    if (isSignup) {
+      data.password === data.confirmPass
+        ? dispatch(signUp(data))
+        : setcomfirmPass(false);
+    } else {
+      dispatch(signIn(data));
+    }
+  };
+  const resetForm = () => {
+    setcomfirmPass(true);
+    setData({
+      firstName: "",
+      sdt: "",
+      sex: 0,
+      surName: "",
+      email: "",
+      password: "",
+      username: "",
+      dateOfBirth: "01/01/1980",
+      confirmPass: "",
+    });
+  };
+
+
+  const handleOnChangeSex = (e) => {
+    setData({ ...data, sex: +e.target.value });
+  };
+
+  const year = (startYear) => {
+    let currentYear = new Date().getFullYear(),
+      years = [];
+    startYear = startYear || 1980;
+    while (startYear <= currentYear) {
+      years.push(startYear++);
+    }
+    return years;
+  };
+
 
   const getDaysInMonth = (month, year) => {
     month = parseInt(month) - 1;
@@ -187,8 +192,8 @@ const Auth = () => {
           {isSignup && (
             <>
               <div className="custom-select">
-                <select
-                  onChange={(e) => setMinh({ ...minh, day: e.target.value })}
+                <select name="day"
+                  onChange={handelSelectChange}
                 >
                   {daysInMonth.map((value, index) => (
                     <option key={index} value={value}>
@@ -196,8 +201,8 @@ const Auth = () => {
                     </option>
                   ))}
                 </select>
-                <select
-                  onChange={(e) => setMinh({ ...minh, month: e.target.value })}
+                <select name="month"
+                  onChange={handelSelectChange}
                 >
                   {monthList.map((value, index) => (
                     <option key={index} value={value}>
@@ -205,8 +210,8 @@ const Auth = () => {
                     </option>
                   ))}
                 </select>
-                <select
-                  onChange={(e) => setMinh({ ...minh, year: e.target.value })}
+                <select name="year"
+                  onChange={handelSelectChange}
                 >
                   {year().map((value, index) => (
                     <option key={index} value={value}>
@@ -249,8 +254,9 @@ const Auth = () => {
                 ? "Chưa có tài khoản? Đăng ký ngay"
                 : "Đã có tài khoản. Đăng nhập!"}
             </span>
-            <button className="button infoButton">
-              {!isSignup ? "Đăng nhập" : "Đăng ký"}
+            <button className="button infoButton" type="submit" disabled={loading}>
+              {loading ? <Loading /> : !isSignup ? "Đăng nhập" : "Đăng ký"}
+
             </button>
           </div>
         </form>

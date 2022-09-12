@@ -1,10 +1,10 @@
 import * as AuthApi from "../api/AuthApi"
 
 export const signIn = (formData) => async (dispatch) => {
+    dispatch({ type: "AUTH_START" })
     try {
-        dispatch({ type: "AUTH_START" })
         const data = await AuthApi.signIn(formData)
-        dispatch({ type: "AUTH_SUCCESS", data: data })
+        dispatch({ type: "AUTH_SUCCESS", data: data.data })
     } catch (error) {
         console.log(error)
         dispatch({ type: "AUTH_FAIL" })
@@ -12,10 +12,10 @@ export const signIn = (formData) => async (dispatch) => {
 }
 
 export const signUp = (formData) => async (dispatch) => {
+    dispatch({ type: "AUTH_START" })
     try {
-        dispatch({ type: "AUTH_START" })
-        const data = await AuthApi.signIn(formData)
-        dispatch({ type: "AUTH_SUCCESS", data: data })
+        const data = await AuthApi.signUp(formData)
+        dispatch({ type: "AUTH_SUCCESS", data: data.data })
     } catch (error) {
         console.log(error)
         dispatch({ type: "AUTH_FAIL" })

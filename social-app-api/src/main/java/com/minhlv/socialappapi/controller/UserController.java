@@ -30,7 +30,7 @@ import io.swagger.annotations.Authorization;
 @RequestMapping("/api/auth")
 @Api(tags = "users")
 // @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class UserController {
 
     private final ModelMapper modelMapper = new ModelMapper();
