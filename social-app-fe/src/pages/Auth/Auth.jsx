@@ -46,8 +46,8 @@ const Auth = () => {
     confirmPass: "",
   });
   const dispatch = useDispatch();
-  const loading = useSelector((state) => state.authReducer.loading)
-  console.log('loading', loading)
+  const loading = useSelector((state) => state.authReducer.loading);
+  console.log("loading", loading);
   const [confirmPass, setcomfirmPass] = useState(true);
   const handlerLogin = () => {
     setIsSignup(!isSignup);
@@ -62,12 +62,12 @@ const Auth = () => {
     });
   };
   const handelSelectChange = (e) => {
-    setMinh({ ...minh, [e.target.name]: e.target.value })
+    setMinh({ ...minh, [e.target.name]: e.target.value });
     setData({
       ...data,
       dateOfBirth: minh.day + "/" + minh.month + "/" + minh.year,
     });
-  }
+  };
   const handlerSubmit = (e) => {
     e.preventDefault();
     if (isSignup) {
@@ -93,7 +93,6 @@ const Auth = () => {
     });
   };
 
-
   const handleOnChangeSex = (e) => {
     setData({ ...data, sex: +e.target.value });
   };
@@ -107,7 +106,6 @@ const Auth = () => {
     }
     return years;
   };
-
 
   const getDaysInMonth = (month, year) => {
     month = parseInt(month) - 1;
@@ -192,27 +190,21 @@ const Auth = () => {
           {isSignup && (
             <>
               <div className="custom-select">
-                <select name="day"
-                  onChange={handelSelectChange}
-                >
+                <select name="day" onChange={handelSelectChange}>
                   {daysInMonth.map((value, index) => (
                     <option key={index} value={value}>
                       Ngày {value}
                     </option>
                   ))}
                 </select>
-                <select name="month"
-                  onChange={handelSelectChange}
-                >
+                <select name="month" onChange={handelSelectChange}>
                   {monthList.map((value, index) => (
                     <option key={index} value={value}>
                       Tháng {value}
                     </option>
                   ))}
                 </select>
-                <select name="year"
-                  onChange={handelSelectChange}
-                >
+                <select name="year" onChange={handelSelectChange}>
                   {year().map((value, index) => (
                     <option key={index} value={value}>
                       {value}
@@ -254,9 +246,12 @@ const Auth = () => {
                 ? "Chưa có tài khoản? Đăng ký ngay"
                 : "Đã có tài khoản. Đăng nhập!"}
             </span>
-            <button className="button infoButton" type="submit" disabled={loading}>
+            <button
+              className="button infoButton"
+              type="submit"
+              disabled={loading}
+            >
               {loading ? <Loading /> : !isSignup ? "Đăng nhập" : "Đăng ký"}
-
             </button>
           </div>
         </form>

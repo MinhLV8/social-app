@@ -1,7 +1,5 @@
-import React from 'react';
-import './loading.css';
+import React from "react";
+import "./loading.css";
 export default function Loading() {
-    return (
-        <div class="lds-dual-ring">Đợi chút</div>
-    )
+  return <div className="lds-dual-ring">Đợi chút</div>;
 }
