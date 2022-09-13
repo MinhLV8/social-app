@@ -2,16 +2,13 @@ package com.minhlv.socialappapi.utils;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 
 import com.minhlv.socialappapi.entity.AccountEntity;
 import com.minhlv.socialappapi.entity.SystemUserEntity;
 import com.minhlv.socialappapi.service.impl.CustomUserDetailsImpl;
 
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
-@Getter
+@Component
 public class AuthContext {
 
     private String username;
@@ -19,19 +16,15 @@ public class AuthContext {
     private AccountEntity currentAccount;
 
     public AuthContext() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        log.info("Current Authentication: {}", auth);
-        if (auth != null) {
-            SystemUserEntity user = (SystemUserEntity) SecurityContextHolder.getContext().getAuthentication()
-                    .getPrincipal();
-            this.username = auth.getName();
-            this.currentUser = user;
-            this.currentAccount = this.currentUser.getAccountEntity();
-            log.info("Current User: {}", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
-            log.info("Current User: {}", this.currentUser.toString());
-            log.info("Current Account: {}", this.currentAccount.toString());
-        }
+    }
 
+    private SystemUserEntity fetchUserInfo() {
+        SystemUserEntity systemUser = new SystemUserEntity();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            systemUser.setUsername(auth.getName());
+        }
+        return systemUser;
     }
 
     public SystemUserEntity getCurrentUser() {
@@ -42,5 +35,15 @@ public class AuthContext {
     public AccountEntity getCurrentAccount() {
         return ((CustomUserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal())
                 .getAccountEntity();
+    }
+
+    public String getUsername() {
+        return fetchUserInfo().getUsername();
+    }
+
+    @Override
+    public String toString() {
+        return "AuthContext [username=" + username + ", currentUser=" + currentUser + ", currentAccount="
+                + currentAccount + "]";
     }
 }

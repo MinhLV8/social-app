@@ -60,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
+        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
         // Disable CSRF (cross site request forgery)
         http.csrf().disable();
 
@@ -127,6 +127,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             }
         };
     }
+
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {

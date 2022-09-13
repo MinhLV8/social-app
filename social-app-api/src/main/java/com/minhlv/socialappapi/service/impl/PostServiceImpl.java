@@ -22,7 +22,9 @@ import com.minhlv.socialappapi.utils.APIResult;
 import com.minhlv.socialappapi.utils.AuthContext;
 
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -64,6 +66,7 @@ public class PostServiceImpl implements PostService {
     public @NonNull APIResult save(@NonNull PostEntity payload, @NonNull AuthContext authContext) {
         APIResult re = new APIResult();
         try {
+            log.info(" PostEntity payload > {}", payload);
             payload.setAccount(authContext.getCurrentAccount());
             PostEntity newPost = postRepository.save(payload);
             re.setData(newPost, APIResult.MSG.SUCCESS);

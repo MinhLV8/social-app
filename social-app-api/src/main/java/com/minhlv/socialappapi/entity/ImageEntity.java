@@ -64,8 +64,8 @@ public class ImageEntity extends BaseEntity implements Serializable {
     private byte[] image;
 
     @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "post_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "post_id", nullable = true)
     private PostEntity post;
 
 }

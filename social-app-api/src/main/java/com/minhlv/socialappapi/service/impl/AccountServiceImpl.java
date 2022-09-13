@@ -38,15 +38,16 @@ public class AccountServiceImpl implements AccountService {
 
     private final AccountRepository accountRepository;
 
-    private AuthContext authContext = new AuthContext();
+    private final AuthContext authContext;
 
     @Autowired
     public AccountServiceImpl(UserRepository userRepository, ImageRepository imageRepository,
-            PostRepository postRepository, AccountRepository accountRepository) {
+            PostRepository postRepository, AccountRepository accountRepository, AuthContext authContext) {
         this.imageRepository = imageRepository;
         this.userRepository = userRepository;
         this.postRepository = postRepository;
         this.accountRepository = accountRepository;
+        this.authContext = authContext;
     }
 
     @Override

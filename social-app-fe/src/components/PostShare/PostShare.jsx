@@ -4,52 +4,48 @@ import { FaTimes } from "react-icons/fa";
 import {
   MdAddLocationAlt,
   MdOutlineAddPhotoAlternate,
-  MdOutlineSentimentVerySatisfied,
+  MdOutlineSentimentVerySatisfied
 } from "react-icons/md";
 import { RiShareForwardLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
 import { uploadImage } from "../../actions/UploadAction";
+import { uploadPost } from "../../api/UploadApi";
 import avt from "../../assets/person/avt-10.jpg";
+import Loading from "../Loading/Loading";
 import "./PostShare.css";
 const PostShare = () => {
   const dispatch = useDispatch();
-  const [image, setImage] = useState(null);
+  const [images, setImages] = useState([]);
   const imageRef = useRef();
-
+  const loading = useSelector((state) => state.postReducer.uploading)
   const captionRef = useRef();
   const user = useSelector((state) => state.authReducer.authData);
   const onImageChange = (event) => {
-    if (event.target.files && event.target.files[0]) {
-      let img = event.target.files[0];
-      setImage(img);
+    if (event.target.files) {
+      let imgs = event.target.files;
+      setImages(imgs);
     }
   };
   const handelSubmit = (e) => {
     e.preventDefault();
     const newPost = {
       caption: captionRef.current.value,
-      images: [
-        {
-          fileName: "",
-          id: 0,
-          image: "",
-          pathFile: "",
-          sizeFile: 0,
-          typeFile: "",
-        },
-      ],
+      images: [],
       privacy: 1,
     };
-    if (image) {
-      const data = new FormData();
-      const filename = Date.now() + "_" + image.name;
-      data.append("name", filename);
-      newPost.images = filename;
-      try {
-        dispatch(uploadImage(data));
-      } catch (error) {
-        console.log("error :>> ", error);
+    const data = new FormData();
+    try {
+      if (images) {
+        Array.from(images).map((image) => (
+          data.append('multipartFiles', image)
+        ))
+        const promise = dispatch(uploadImage(data)).then((response) => response);
+        console.log('object :>> ', promise);
       }
+      console.log('newPost', newPost)
+      dispatch(uploadPost(newPost));
+    } catch (error) {
+      console.log(error);
     }
   };
   return (
@@ -84,23 +80,27 @@ const PostShare = () => {
             <MdOutlineSentimentVerySatisfied size={24} />
             Cảm xúc/Hoạt động
           </div>
-          <button className="button ps-button" onClick={handelSubmit}>
-            Chia sẻ
+          <button className="button ps-button" onClick={handelSubmit} disabled={loading}>
+            {loading ? <Loading /> : "Chia sẻ"}
             <RiShareForwardLine size={17} />
           </button>
           <div style={{ display: "none" }}>
             <input
               type="file"
               name="myImage"
+              multiple
               ref={imageRef}
               onChange={onImageChange}
+              accept='application/jpg, image/png, image/JPEG'
             />
           </div>
         </div>
-        {image && (
-          <div className="previewImage">
-            <FaTimes onClick={() => setImage(null)} />
-            <img src={URL.createObjectURL(image)} alt="" />
+        {images && (
+          <div className="previewImage" >
+            <FaTimes onClick={() => setImages(null)} />
+            {Array.from(images).map((image, index) => (
+              <img key={index} src={URL.createObjectURL(image)} alt="" />
+            ))}
           </div>
         )}
       </div>

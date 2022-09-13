@@ -1,12 +1,11 @@
 package com.minhlv.socialappapi.dto.requestdto;
 
-import java.util.Set;
+import java.util.List;
 
-import com.minhlv.socialappapi.entity.ImageEntity;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
@@ -14,9 +13,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-@EqualsAndHashCode
 public class CreatePostDTO {
-    private Set<ImageEntity> images;
+    private List<MultipartFile> images;
     private String caption;
     private String privacy;
 }
