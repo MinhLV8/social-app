@@ -117,7 +117,7 @@ public class AccountEntity extends BaseEntity implements Serializable {
 	private SystemUserEntity user;
 
 	@JsonBackReference
-	@OneToMany(mappedBy = "account", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<PostEntity> posts = new HashSet<>();
 
 	@JsonIgnore

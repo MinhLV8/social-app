@@ -32,13 +32,14 @@ import io.swagger.annotations.Authorization;
 public class PostController {
 	private final ModelMapper modelMapper = new ModelMapper();
 
-	private final AuthContext authContext = new AuthContext();
+	private final AuthContext authContext;
 
 	private final PostService postService;
 
 	@Autowired
-	public PostController(PostService postService) {
+	public PostController(PostService postService, AuthContext authContext) {
 		this.postService = postService;
+		this.authContext = authContext;
 	}
 
 	@GetMapping(value = "/get")
