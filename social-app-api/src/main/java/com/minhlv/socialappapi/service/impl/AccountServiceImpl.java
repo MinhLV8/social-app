@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -27,6 +28,9 @@ import com.minhlv.socialappapi.utils.APIResult;
 import com.minhlv.socialappapi.utils.AuthContext;
 import com.minhlv.socialappapi.utils.FileUploadUtil;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -67,7 +71,9 @@ public class AccountServiceImpl implements AccountService {
         SystemUserEntity user = userRepository.findByUsername(username);
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         try {
-            user.getAccountEntity().setUserAvatar(FileUploadUtil.compressImage(multipartFile.getBytes()));
+            String avtPath = FileUploadUtil.saveFile("uploads/photos/" + username, fileName, multipartFile);
+
+            user.getAccountEntity().setUserAvatar(new String(Base64.encodeBase64(multipartFile.getBytes())));
             user.getAccountEntity().setUserAvatarContentType(multipartFile.getContentType());
             userRepository.save(user);
 
@@ -76,13 +82,11 @@ public class AccountServiceImpl implements AccountService {
             postChangeAvatar.setPrivacy((short) 1);
             postChangeAvatar.setAccount(user.getAccountEntity());
 
-            String avtPath = FileUploadUtil.saveFile("uploads/photos/" + username, fileName, multipartFile);
-
             imageRepository.save(ImageEntity.builder().fileName(fileName).typeFile(multipartFile.getContentType())
                     .pathFile(avtPath).sizeFile(multipartFile.getSize())
                     .image(FileUploadUtil.compressImage(multipartFile.getBytes()))
                     .post(postRepository.save(postChangeAvatar)).build());
-            re.setData(fileName, APIResult.MSG.SUCCESS);
+            re.setData(new String(Base64.encodeBase64(multipartFile.getBytes())), APIResult.MSG.SUCCESS);
         } catch (IOException e) {
             re.setMessage(e);
         }
@@ -101,7 +105,8 @@ public class AccountServiceImpl implements AccountService {
         SystemUserEntity user = userRepository.findByUsername(username);
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         try {
-            user.getAccountEntity().setUserCover(FileUploadUtil.compressImage(multipartFile.getBytes()));
+            user.getAccountEntity().setUserCover(
+                    new String(Base64.encodeBase64(FileUploadUtil.compressImage(multipartFile.getBytes()))));
             user.getAccountEntity().setUserCoverContentType(multipartFile.getContentType());
             userRepository.save(user);
 

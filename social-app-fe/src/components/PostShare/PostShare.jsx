@@ -4,12 +4,11 @@ import { FaTimes } from "react-icons/fa";
 import {
   MdAddLocationAlt,
   MdOutlineAddPhotoAlternate,
-  MdOutlineSentimentVerySatisfied,
+  MdOutlineSentimentVerySatisfied
 } from "react-icons/md";
 import { RiShareForwardLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { uploadImage, uploadPost } from "../../actions/UploadAction";
-import avt from "../../assets/person/avt-10.jpg";
+import { uploadPost } from "../../actions/UploadAction";
 import Loading from "../Loading/Loading";
 import "./PostShare.css";
 const PostShare = () => {
@@ -29,17 +28,18 @@ const PostShare = () => {
     e.preventDefault();
     const newPost = {
       caption: captionRef.current.value,
-      images: Array,
       privacy: 1,
     };
     const data = new FormData();
     try {
       if (images) {
-        Array.from(images).map((image) => data.append("multipartFiles", image));
-        dispatch(uploadImage(data)).then((response) => {
-          newPost.images = response.data;
-          dispatch(uploadPost(newPost));
-        });
+        Array.from(images).map((image) => data.append("images", image));
+        data.append("post", newPost);
+        console.log('object :>> ', data);
+        dispatch(uploadPost(data));
+        // dispatch(uploadImage(data)).then((response) => {
+        //   newPost.images = response.data;
+        // });
       }
     } catch (error) {
       console.log(error);
@@ -47,7 +47,7 @@ const PostShare = () => {
   };
   return (
     <div className="PostShare">
-      <img src={avt} alt="" />
+      <img src={`data:${user.data.info.userAvatarContentType};base64, ${user.data.info.userAvatar}`} alt="avatar" />
       <div>
         <input
           type="text"

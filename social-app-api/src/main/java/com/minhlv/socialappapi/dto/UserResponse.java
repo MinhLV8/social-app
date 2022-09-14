@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 @Data
-public class UserResponseDTO {
+public class UserResponse {
 
     @ApiModelProperty(position = 3)
     private List<SystemRoleEntity> roles;

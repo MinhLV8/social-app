@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.minhlv.socialappapi.dto.UserDataDTO;
-import com.minhlv.socialappapi.dto.UserResponseDTO;
+import com.minhlv.socialappapi.dto.UserResponse;
 import com.minhlv.socialappapi.dto.requestdto.SigninDTO;
 import com.minhlv.socialappapi.service.UserService;
 import com.minhlv.socialappapi.utils.APIResult;
@@ -72,25 +72,25 @@ public class UserController {
 
     @GetMapping(value = "/{username}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @ApiOperation(value = "${UserController.search}", response = UserResponseDTO.class, authorizations = {
+    @ApiOperation(value = "${UserController.search}", response = UserResponse.class, authorizations = {
             @Authorization(value = "apiKey")})
     @ApiResponses(value = {@ApiResponse(code = 400, message = "Something went wrong"),
             @ApiResponse(code = 403, message = "Access denied"),
             @ApiResponse(code = 404, message = "The user doesn't exist"),
             @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
-    public UserResponseDTO search(@ApiParam("Username") @PathVariable String username) {
-        return modelMapper.map(userService.search(username), UserResponseDTO.class);
+    public UserResponse search(@ApiParam("Username") @PathVariable String username) {
+        return modelMapper.map(userService.search(username), UserResponse.class);
     }
 
     @GetMapping(value = "/me")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-    @ApiOperation(value = "${UserController.me}", response = UserResponseDTO.class, authorizations = {
+    @ApiOperation(value = "${UserController.me}", response = UserResponse.class, authorizations = {
             @Authorization(value = "apiKey")})
     @ApiResponses(value = {@ApiResponse(code = 400, message = "Something went wrong"),
             @ApiResponse(code = 403, message = "Access denied"),
             @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
-    public UserResponseDTO whoami(HttpServletRequest req) {
-        return modelMapper.map(userService.whoami(req), UserResponseDTO.class);
+    public UserResponse whoami(HttpServletRequest req) {
+        return modelMapper.map(userService.whoami(req), UserResponse.class);
     }
 
     @GetMapping("/refresh")

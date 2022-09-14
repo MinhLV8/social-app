@@ -13,6 +13,8 @@ import java.util.zip.Inflater;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileUploadUtil {
+    private FileUploadUtil() {
+    }
 
     public static String saveFile(String uploadDir, String fileName, MultipartFile multipartFile) throws IOException {
         Path uploadPath = Paths.get(uploadDir);
@@ -44,7 +46,7 @@ public class FileUploadUtil {
         try {
             outputStream.close();
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return outputStream.toByteArray();
     }
@@ -61,6 +63,7 @@ public class FileUploadUtil {
             }
             outputStream.close();
         } catch (Exception exception) {
+            exception.printStackTrace();
         }
         return outputStream.toByteArray();
     }

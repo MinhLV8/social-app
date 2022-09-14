@@ -6,6 +6,7 @@ import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 
+import com.minhlv.socialappapi.entity.ImageEntity;
 import com.minhlv.socialappapi.entity.SystemCommentsEntity;
 
 import lombok.AllArgsConstructor;
@@ -17,7 +18,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostReponseDTO {
+public class PostReponse {
 
     private long id;
 
@@ -38,7 +39,7 @@ public class PostReponseDTO {
     @NotNull
     private short isDelete;
 
-    // private Set<ImageEntity> images = new HashSet<>();
+    private Set<ImageEntity> images = new HashSet<>();
 
     private Set<SystemCommentsEntity> comments = new HashSet<>();
 }
