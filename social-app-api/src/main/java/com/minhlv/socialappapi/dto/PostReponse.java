@@ -1,12 +1,10 @@
 package com.minhlv.socialappapi.dto;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.validation.constraints.NotNull;
 
-import com.minhlv.socialappapi.entity.ImageEntity;
 import com.minhlv.socialappapi.entity.SystemCommentsEntity;
 
 import lombok.AllArgsConstructor;
@@ -39,7 +37,7 @@ public class PostReponse {
     @NotNull
     private short isDelete;
 
-    private Set<ImageEntity> images = new HashSet<>();
+    private Set<PhotoResponse> images;
 
-    private Set<SystemCommentsEntity> comments = new HashSet<>();
+    private Set<SystemCommentsEntity> comments;
 }

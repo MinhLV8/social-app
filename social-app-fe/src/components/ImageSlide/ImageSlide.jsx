@@ -19,7 +19,7 @@ export default function ImageSlide({ images, selectedImage, onClosePopup }) {
     const currentIndex = (state.currentIndex + 1) % images.length;
     setState({ ...state, currentIndex });
   };
-
+  console.log('images', images)
   return (
     <div className="popup">
       <div className="popup_inner">
@@ -29,7 +29,7 @@ export default function ImageSlide({ images, selectedImage, onClosePopup }) {
             if (index === state.currentIndex) className += " active";
             return (
               <img
-                src={img}
+                src={img.url}
                 className={className}
                 key={`img-${index}`}
                 alt=""

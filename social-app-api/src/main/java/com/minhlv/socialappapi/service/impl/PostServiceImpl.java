@@ -2,15 +2,19 @@ package com.minhlv.socialappapi.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.minhlv.socialappapi.dto.PhotoResponse;
 import com.minhlv.socialappapi.dto.PostReponse;
 import com.minhlv.socialappapi.dto.requestdto.LikePostDTO;
 import com.minhlv.socialappapi.dto.requestdto.UpdatePrivacyPostDTO;
@@ -23,9 +27,7 @@ import com.minhlv.socialappapi.utils.APIResult.MSG;
 import com.minhlv.socialappapi.utils.AuthContext;
 
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -47,11 +49,12 @@ public class PostServiceImpl implements PostService {
         APIResult re = new APIResult();
         Optional<PostEntity> getPost = postRepository.findById(id);
         if (!getPost.isPresent()) {
-
             re.setMessage(6, APIResult.MSG.NOT_EXISTS);
             return re;
         }
-        re.setData(getPost.get(), APIResult.MSG.SUCCESS);
+        PostEntity postEntity = getPost.get();
+        PostReponse postReponseDTO = this.toPhotoResponse(postEntity);
+        re.setData(postReponseDTO, APIResult.MSG.SUCCESS);
         return re;
     }
 
@@ -61,7 +64,7 @@ public class PostServiceImpl implements PostService {
         APIResult re = new APIResult();
         Iterable<PostEntity> getPosts = postRepository.findAllByAccount(authContext.getCurrentAccount());
         List<PostReponse> posts = new ArrayList<>();
-        getPosts.forEach(post -> posts.add(modelMapper.map(post, PostReponse.class)));
+        getPosts.forEach(post -> posts.add(this.toPhotoResponse(post)));
         re.setData(posts, APIResult.MSG.SUCCESS);
         return re;
     }
@@ -90,9 +93,10 @@ public class PostServiceImpl implements PostService {
             post.setAccount(authContext.getCurrentAccount());
             PostEntity newPost = postRepository.save(post);
             imageService.save(images, newPost, authContext);
-            // log.info("{}", find(newPost.getId(), authContext).getData());
+
             PostReponse postReponseDTO = modelMapper.map(find(newPost.getId(), authContext).getData(),
                     PostReponse.class);
+
             re.setData(postReponseDTO, MSG.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -151,6 +155,24 @@ public class PostServiceImpl implements PostService {
     public APIResult updatePrivacyPost(UpdatePrivacyPostDTO payload, AuthContext authContext) {
 
         return null;
+    }
+
+    private String genUrlPhoto(String fileName) {
+        final String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath().build().toUriString();
+        return baseUrl + "/api/photo/" + fileName;
+    }
+
+    private PostReponse toPhotoResponse(PostEntity entity) {
+        PostReponse postReponse = modelMapper.map(entity, PostReponse.class);
+        Set<PhotoResponse> photos = new HashSet<>();
+        entity.getImages().forEach(item -> {
+            PhotoResponse photoResponse = new PhotoResponse();
+            photoResponse.setId(item.getId());
+            photoResponse.setUrl(this.genUrlPhoto(item.getFileName()));
+            photos.add(photoResponse);
+        });
+        postReponse.setImages(photos);
+        return postReponse;
     }
 
 }

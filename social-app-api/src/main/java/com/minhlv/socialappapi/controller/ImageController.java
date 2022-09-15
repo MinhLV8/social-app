@@ -2,6 +2,8 @@ package com.minhlv.socialappapi.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -40,6 +42,15 @@ public class ImageController {
     public ImageController(ImageService imageService, AuthContext authContext) {
         this.imageService = imageService;
         this.authContext = authContext;
+    }
+
+    @SuppressWarnings("unused")
+    private void setDispositionHeader(HttpServletResponse response, String fileName, String fileType) {
+        response.setHeader("Content-Type", fileType);
+        response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+        response.setHeader("Access-Control-Expose-Headers", "Content-Disposition");
+        response.setHeader("accept-ranges", "bytes");
+        response.addHeader("fileName", fileName);
     }
 
     @GetMapping(value = "/get")

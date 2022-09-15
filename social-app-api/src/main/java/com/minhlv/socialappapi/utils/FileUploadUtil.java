@@ -3,6 +3,7 @@ package com.minhlv.socialappapi.utils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -10,7 +11,12 @@ import java.nio.file.StandardCopyOption;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.minhlv.socialappapi.exception.CustomException;
 
 public class FileUploadUtil {
     private FileUploadUtil() {
@@ -28,6 +34,21 @@ public class FileUploadUtil {
         } catch (IOException ioe) {
             throw new IOException("Could not save image file: " + fileName, ioe);
         }
+    }
+
+    public static Resource getFile(String filePath) {
+        try {
+            Path path = Paths.get(filePath).toAbsolutePath().normalize();
+            Resource resource = new UrlResource(path.toUri());
+            if (resource.exists()) {
+                return resource;
+            } else {
+                throw new CustomException("File not found " + filePath, HttpStatus.NOT_FOUND);
+            }
+        } catch (MalformedURLException ex) {
+            throw new CustomException("File not found " + filePath, HttpStatus.NOT_FOUND);
+        }
+
     }
 
     public static byte[] compressImage(byte[] data) {

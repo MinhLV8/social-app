@@ -24,6 +24,10 @@ const PostShare = () => {
       setImages(imgs);
     }
   };
+  const resetPost = () => {
+    setImages([]);
+    captionRef.current.value = ""
+  }
   const handelSubmit = (e) => {
     e.preventDefault();
     const newPost = {
@@ -34,12 +38,12 @@ const PostShare = () => {
     try {
       if (images) {
         Array.from(images).map((image) => data.append("images", image));
-        data.append("post", newPost);
-        console.log('object :>> ', data);
+        data.append("post", JSON.stringify(newPost));
         dispatch(uploadPost(data));
         // dispatch(uploadImage(data)).then((response) => {
         //   newPost.images = response.data;
         // });
+        resetPost()
       }
     } catch (error) {
       console.log(error);
@@ -77,14 +81,17 @@ const PostShare = () => {
             <MdOutlineSentimentVerySatisfied size={24} />
             Cảm xúc/Hoạt động
           </div>
-          <button
-            className="button ps-button"
-            onClick={handelSubmit}
-            disabled={loading}
-          >
-            {loading ? <Loading /> : "Chia sẻ"}
-            <RiShareForwardLine size={17} />
-          </button>
+          {(images.length !== 0) && (
+            <button
+              className="button ps-button"
+              onClick={handelSubmit}
+              disabled={loading}
+            >
+              {loading ? <Loading /> : "Chia sẻ"}
+              <RiShareForwardLine size={17} />
+            </button>
+          )}
+
           <div style={{ display: "none" }}>
             <input
               type="file"
@@ -96,9 +103,9 @@ const PostShare = () => {
             />
           </div>
         </div>
-        {images && (
+        {images.length !== 0 && (
           <div className="previewImage">
-            <FaTimes onClick={() => setImages(null)} />
+            <FaTimes onClick={() => setImages([])} />
             {Array.from(images).map((image, index) => (
               <img key={index} src={URL.createObjectURL(image)} alt="" />
             ))}

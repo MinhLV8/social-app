@@ -15,8 +15,8 @@ import {
   MdOutlineImage,
   MdSentimentVerySatisfied
 } from "react-icons/md";
+import { useSelector } from "react-redux";
 import doneTick from "../../assets/icons/1618816460_tich_xanh_facebook.png";
-import { Users } from "../../Data/PostsData";
 import { nFormatter, timeDiff } from "../../utils/Utils";
 import Comments from "../comments/Comments";
 import EmojiPicker from "../emoji/EmojiPicker";
@@ -29,9 +29,9 @@ import "./Post.css";
 const Post = ({ post, postComments }) => {
 
   console.log('re-rendering', post.id)
-
-  const username = Users.filter((u) => u.id === post.userId)[0].username;
-  const userAvatar = Users.filter((u) => u.id === post.userId)[0].userAvatar;
+  const user = useSelector((state) => state.authReducer.authData);
+  //const username = Users.filter((u) => u.id === post.userId)[0].username;
+  //const userAvatar = Users.filter((u) => u.id === post.userId)[0].userAvatar;
   const [isLiked, setIsLiked] = useState(false);
   const [likeAmount, setLikeAmount] = useState(post.likes);
   const [commentAmount, setCommentAmount] = useState(post.comments);
@@ -132,17 +132,14 @@ const Post = ({ post, postComments }) => {
       image && URL.revokeObjectURL(image.image)
     };
   }, [image]);
-
-
-
   return (
     <div className="Post">
       <div className="Post-user">
         <div>
-          <img src={userAvatar} alt="" />
+          <img src={`data:${user.data.info.userAvatarContentType};base64, ${user.data.info.userAvatar}`} alt="" />
           <div className="Post-user-detail">
             <span>
-              <b>{username}</b> <img src={doneTick} alt="" />{" "}
+              <b>{user.data.info.fullName}</b> <img src={doneTick} alt="" />{" "}
             </span>
             <span>
               {timeDiff(new Date().getTime(), post.times)}
@@ -169,22 +166,22 @@ const Post = ({ post, postComments }) => {
         {isActive.postOptions && <PopupOptions username={post.name} />}
       </div>
       <div className="detail">
-        <span> {post.desc}</span>
+        <span> {post.caption}</span>
       </div>
       <PostImage
         key={post.id}
-        images={post.img}
+        images={post.images}
         onImgClick={handelPostImageClick}
       />
       {imageSlide && (
         <ImageSlide
-          images={post.img}
+          images={post.images}
           selectedImage={selectedImage}
           onClosePopup={handelClosePopup}
         />
       )}
       <div className="postReact">
-        <img src={userAvatar} alt="" className="postReact-user" />
+        <img src={`data:${user.data.info.userAvatarContentType};base64, ${user.data.info.userAvatar}`} alt="" className="postReact-user" />
         {/* <InputComment /> */}
         <div className="postReact-comment">
           <input
