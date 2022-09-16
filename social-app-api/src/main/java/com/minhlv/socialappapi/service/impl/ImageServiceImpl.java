@@ -65,7 +65,7 @@ public class ImageServiceImpl implements ImageService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            result.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED);
+            result.setMessage(99, MSG.UNEXPECTED_ERROR_OCCURRED);
             return result;
         }
         return result;
@@ -82,7 +82,7 @@ public class ImageServiceImpl implements ImageService {
             return FileUploadUtil.getFile(image.getPathFile());
         } catch (Exception e) {
             e.printStackTrace();
-            result.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED);
+            result.setMessage(99, MSG.UNEXPECTED_ERROR_OCCURRED);
             return null;
         }
     }
@@ -97,10 +97,10 @@ public class ImageServiceImpl implements ImageService {
         APIResult result = new APIResult();
         try {
             ImageEntity newImage = imageRepository.save(payload);
-            result.setData(newImage, APIResult.MSG.SUCCESS);
+            result.setData(newImage, MSG.SUCCESS);
             return result;
         } catch (Exception e) {
-            result.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED);
+            result.setMessage(99, MSG.UNEXPECTED_ERROR_OCCURRED);
             return result;
         }
     }
@@ -122,6 +122,7 @@ public class ImageServiceImpl implements ImageService {
             List<ImageReponseDTO> newImages = new ArrayList<>();
             for (MultipartFile multipartFile : multipartFiles) {
                 String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
+                fileName = FileUploadUtil.replaceFileName(fileName);
                 String imgPost = FileUploadUtil.saveFile("uploads/photos/" + authContext.getUsername() + "/postImages/",
                         fileName, multipartFile);
                 ImageEntity newImage = imageRepository.save(ImageEntity.builder().fileName(fileName)
@@ -130,11 +131,11 @@ public class ImageServiceImpl implements ImageService {
                         .build());
                 newImages.add(modelMapper.map(newImage, ImageReponseDTO.class));
             }
-            result.setData(newImages, APIResult.MSG.SUCCESS);
+            result.setData(newImages, MSG.SUCCESS);
             return result;
         } catch (Exception e) {
             e.printStackTrace();
-            result.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED);
+            result.setMessage(99, MSG.UNEXPECTED_ERROR_OCCURRED);
             return result;
         }
     }
@@ -146,20 +147,39 @@ public class ImageServiceImpl implements ImageService {
             List<ImageReponseDTO> newImages = new ArrayList<>();
             for (MultipartFile multipartFile : multipartFiles) {
                 String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
-                String imgPost = FileUploadUtil.saveFile("uploads/photos/" + authContext.getUsername() + "/postImages/",
-                        fileName, multipartFile);
+                fileName = FileUploadUtil.replaceFileName(fileName);
+                String imgPost = FileUploadUtil.saveFile(
+                        "uploads/photos/" + authContext.getUsername() + "/post photos/", fileName, multipartFile);
                 ImageEntity newImage = imageRepository.save(ImageEntity.builder().fileName(fileName)
                         .typeFile(multipartFile.getContentType()).pathFile(imgPost).sizeFile(multipartFile.getSize())
                         .image(FileUploadUtil.compressImage(multipartFile.getBytes())).post(post).build());
                 newImages.add(modelMapper.map(newImage, ImageReponseDTO.class));
             }
-            result.setData(newImages, APIResult.MSG.SUCCESS);
+            result.setData(newImages, MSG.SUCCESS);
             return result;
         } catch (Exception e) {
             e.printStackTrace();
-            result.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED);
+            result.setMessage(99, MSG.UNEXPECTED_ERROR_OCCURRED);
             return result;
         }
     }
+
+    /*
+     * private void saveFile(String jsak, String username, MultipartFile
+     * multipartFile, PostEntity post) {
+     *
+     * String fileName =
+     * StringUtils.cleanPath(Objects.requireNonNull(multipartFile.
+     * getOriginalFilename())); fileName =
+     * FileUploadUtil.createFileName(fileName); String imgPost =
+     * FileUploadUtil.saveFile("uploads/photos/" + username + "/postImages/",
+     * fileName, multipartFile); ImageEntity newImage =
+     * imageRepository.save(ImageEntity.builder().fileName(fileName)
+     * .typeFile(multipartFile.getContentType()).pathFile(imgPost).sizeFile(
+     * multipartFile.getSize())
+     * .image(FileUploadUtil.compressImage(multipartFile.getBytes())).post(post)
+     * .build()); newImages.add(modelMapper.map(newImage,
+     * ImageReponseDTO.class)); }
+     */
 
 }

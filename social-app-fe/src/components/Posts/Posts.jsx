@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getTimelinePosts } from "../../actions/PostAction";
-import { PostComments } from "../../Data/PostsData";
 import Loading from "../Loading/Loading";
 import Post from "../Post/Post";
 import "./Posts.css";
@@ -15,12 +14,12 @@ const Posts = () => {
   useEffect(() => {
     dispatch(getTimelinePosts())
   }, []);
-  if (!posts) return 'No Posts';
+  if (!posts || posts.length === 0) return 'Chưa có bài viết nào.';
   return (
     <div className="Posts">
       {loading ? <Loading /> :
         posts.map((post, id) => {
-          postComments = PostComments.filter((u) => u.postId === post.id);
+          //postComments = PostComments.filter((u) => u.postId === post.id);
           return (
             <Post key={id} post={post} postComments={postComments} id={id} />
           );

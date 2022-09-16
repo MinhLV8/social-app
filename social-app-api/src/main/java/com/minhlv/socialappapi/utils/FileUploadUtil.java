@@ -1,6 +1,7 @@
 package com.minhlv.socialappapi.utils;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -8,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Calendar;
 import java.util.zip.Deflater;
 import java.util.zip.Inflater;
 
@@ -87,5 +89,19 @@ public class FileUploadUtil {
             exception.printStackTrace();
         }
         return outputStream.toByteArray();
+    }
+
+    public static String createFilePath() {
+        String storePathTemp = "/photos";
+        String storeName = "uploads";
+        Calendar currentYear = Calendar.getInstance();
+        return storePathTemp + File.separator + storeName + File.separator + currentYear.get(Calendar.YEAR)
+                + File.separator + (currentYear.get(Calendar.MONTH) + 1) + File.separator;
+    }
+
+    public static String replaceFileName(String fileName) {
+        String[] arrayNameFile = fileName.split("\\.");
+        fileName = fileName.replace(arrayNameFile[0], IDGenerator.get() + "_" + System.currentTimeMillis());
+        return fileName;
     }
 }

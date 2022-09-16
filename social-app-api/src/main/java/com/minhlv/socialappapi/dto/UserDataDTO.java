@@ -24,7 +24,6 @@ public class UserDataDTO {
     private String surName;
     private int sex;
     private String sdt;
-
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     @JsonFormat(pattern = "dd/MM/yyyy", shape = JsonFormat.Shape.STRING)
     private LocalDate dateOfBirth;

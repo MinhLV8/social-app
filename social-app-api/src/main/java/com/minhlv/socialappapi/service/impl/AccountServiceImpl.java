@@ -25,6 +25,7 @@ import com.minhlv.socialappapi.repository.PostRepository;
 import com.minhlv.socialappapi.repository.UserRepository;
 import com.minhlv.socialappapi.service.AccountService;
 import com.minhlv.socialappapi.utils.APIResult;
+import com.minhlv.socialappapi.utils.APIResult.MSG;
 import com.minhlv.socialappapi.utils.AuthContext;
 import com.minhlv.socialappapi.utils.FileUploadUtil;
 
@@ -59,7 +60,7 @@ public class AccountServiceImpl implements AccountService {
         APIResult re = new APIResult();
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         SystemUserEntity user = userRepository.findByUsername(username);
-        re.setData(user.getAccountEntity(), APIResult.MSG.SUCCESS);
+        re.setData(user.getAccountEntity(), MSG.SUCCESS);
         return re;
     }
 
@@ -67,8 +68,8 @@ public class AccountServiceImpl implements AccountService {
     @Transactional
     public APIResult updateAvatar(MultipartFile multipartFile) {
         APIResult re = new APIResult();
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        SystemUserEntity user = userRepository.findByUsername(username);
+        String username = authContext.getUsername();
+        SystemUserEntity user = authContext.getCurrentUser();
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(multipartFile.getOriginalFilename()));
         try {
             String avtPath = FileUploadUtil.saveFile("uploads/photos/" + username, fileName, multipartFile);
@@ -79,14 +80,14 @@ public class AccountServiceImpl implements AccountService {
 
             PostEntity postChangeAvatar = new PostEntity();
             postChangeAvatar.setCaption(user.getAccountEntity().getFullName() + " đã thay đổi ảnh đại diện.");
-            postChangeAvatar.setPrivacy((short) 1);
+            postChangeAvatar.setPrivacy((short) 2);
             postChangeAvatar.setAccount(user.getAccountEntity());
 
             imageRepository.save(ImageEntity.builder().fileName(fileName).typeFile(multipartFile.getContentType())
                     .pathFile(avtPath).sizeFile(multipartFile.getSize())
                     .image(FileUploadUtil.compressImage(multipartFile.getBytes()))
                     .post(postRepository.save(postChangeAvatar)).build());
-            re.setData(new String(Base64.encodeBase64(multipartFile.getBytes())), APIResult.MSG.SUCCESS);
+            re.setData(new String(Base64.encodeBase64(multipartFile.getBytes())), MSG.SUCCESS);
         } catch (IOException e) {
             re.setMessage(e);
         }
@@ -112,7 +113,7 @@ public class AccountServiceImpl implements AccountService {
 
             PostEntity postChangeCover = new PostEntity();
             postChangeCover.setCaption(user.getAccountEntity().getFullName() + "đã thay đổi ảnh bìa.");
-            postChangeCover.setPrivacy((short) 1);
+            postChangeCover.setPrivacy((short) 2);
             postChangeCover.setAccount(user.getAccountEntity());
             String avtPath = FileUploadUtil.saveFile("uploads/photos/" + username, fileName, multipartFile);
 
@@ -123,7 +124,7 @@ public class AccountServiceImpl implements AccountService {
         } catch (IOException e) {
             re.setMessage(e);
         }
-        re.setData(fileName, APIResult.MSG.SUCCESS);
+        re.setData(fileName, MSG.SUCCESS);
         return re;
     }
 
@@ -133,11 +134,11 @@ public class AccountServiceImpl implements AccountService {
         try {
             Optional<AccountEntity> accountUpdate = accountRepository.findById(account.getId());
             if (!accountUpdate.isPresent()) {
-                re.setMessage(500, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED.getMSG());
+                re.setMessage(500, MSG.UNEXPECTED_ERROR_OCCURRED.getMSG());
                 return re;
             }
             if (!Objects.equals(account.getId(), authContext.getCurrentAccount().getId())) {
-                re.setMessage(403, APIResult.MSG.ACTION_FORBIDDEN);
+                re.setMessage(403, MSG.ACTION_FORBIDDEN);
                 return re;
             }
             AccountEntity accountExist = accountUpdate.get();
@@ -151,7 +152,7 @@ public class AccountServiceImpl implements AccountService {
             accountExist.setRelationshipStatus(account.getRelationshipStatus());
             accountExist.setBio(account.getBio());
             accountRepository.save(accountExist);
-            re.setData(new ModelMapper().map(accountExist, AccountUpdateDTO.class), APIResult.MSG.SUCCESS);
+            re.setData(new ModelMapper().map(accountExist, AccountUpdateDTO.class), MSG.SUCCESS);
         } catch (Exception e) {
             re.setMessage(e);
         }
@@ -166,6 +167,10 @@ public class AccountServiceImpl implements AccountService {
     public PostEntity changeCoverPost() {
 
         return new PostEntity();
+    }
+
+    private void changePhotoProfile() {
+
     }
 
 }

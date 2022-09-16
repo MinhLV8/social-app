@@ -28,7 +28,7 @@ import "./Post.css";
 
 const Post = ({ post, postComments }) => {
 
-  console.log('re-rendering', post.id)
+  //console.log('re-rendering', post.id)
   const user = useSelector((state) => state.authReducer.authData);
   //const username = Users.filter((u) => u.id === post.userId)[0].username;
   //const userAvatar = Users.filter((u) => u.id === post.userId)[0].userAvatar;

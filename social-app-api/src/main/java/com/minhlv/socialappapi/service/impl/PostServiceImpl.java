@@ -27,7 +27,9 @@ import com.minhlv.socialappapi.utils.APIResult.MSG;
 import com.minhlv.socialappapi.utils.AuthContext;
 
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -49,12 +51,12 @@ public class PostServiceImpl implements PostService {
         APIResult re = new APIResult();
         Optional<PostEntity> getPost = postRepository.findById(id);
         if (!getPost.isPresent()) {
-            re.setMessage(6, APIResult.MSG.NOT_EXISTS);
+            re.setMessage(404, MSG.NOT_EXISTS);
             return re;
         }
         PostEntity postEntity = getPost.get();
-        PostReponse postReponseDTO = this.toPhotoResponse(postEntity);
-        re.setData(postReponseDTO, APIResult.MSG.SUCCESS);
+        PostReponse postReponse = this.toPhotoResponse(postEntity);
+        re.setData(postReponse, MSG.SUCCESS);
         return re;
     }
 
@@ -65,8 +67,22 @@ public class PostServiceImpl implements PostService {
         Iterable<PostEntity> getPosts = postRepository.findAllByAccount(authContext.getCurrentAccount());
         List<PostReponse> posts = new ArrayList<>();
         getPosts.forEach(post -> posts.add(this.toPhotoResponse(post)));
-        re.setData(posts, APIResult.MSG.SUCCESS);
+        re.setData(posts, MSG.SUCCESS);
         return re;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public APIResult timeLine(PostEntity post, List<MultipartFile> images, AuthContext authContext) {
+
+        return null;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public APIResult newFeel(PostEntity post, List<MultipartFile> images, AuthContext authContext) {
+
+        return null;
     }
 
     @Override
@@ -77,10 +93,10 @@ public class PostServiceImpl implements PostService {
             payload.setAccount(authContext.getCurrentAccount());
             payload.getImages().forEach(item -> item.setPost(payload));
             PostEntity newPost = postRepository.save(payload);
-            re.setData(newPost, APIResult.MSG.SUCCESS);
+            re.setData(newPost, MSG.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            re.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED);
+            re.setMessage(99, MSG.UNEXPECTED_ERROR_OCCURRED);
         }
         return re;
     }
@@ -93,14 +109,12 @@ public class PostServiceImpl implements PostService {
             post.setAccount(authContext.getCurrentAccount());
             PostEntity newPost = postRepository.save(post);
             imageService.save(images, newPost, authContext);
-
-            PostReponse postReponseDTO = modelMapper.map(find(newPost.getId(), authContext).getData(),
-                    PostReponse.class);
-
-            re.setData(postReponseDTO, MSG.SUCCESS);
+            log.info("{}", postRepository.findById(newPost.getId()).get());
+            PostReponse postReponse = this.toPhotoResponse(postRepository.findById(newPost.getId()).get());
+            re.setData(postReponse, MSG.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            re.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED);
+            re.setMessage(99, MSG.UNEXPECTED_ERROR_OCCURRED);
         }
         return re;
     }
@@ -120,7 +134,7 @@ public class PostServiceImpl implements PostService {
 
         } catch (Exception e) {
             e.printStackTrace();
-            re.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED);
+            re.setMessage(99, MSG.UNEXPECTED_ERROR_OCCURRED);
         }
         return re;
     }
@@ -137,10 +151,10 @@ public class PostServiceImpl implements PostService {
                 }
             });
             postRepository.deleteAll(listWillDel);
-            re.setMessage(0, APIResult.MSG.SUCCESS);
+            re.setMessage(0, MSG.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
-            re.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED);
+            re.setMessage(99, MSG.UNEXPECTED_ERROR_OCCURRED);
         }
         return re;
     }

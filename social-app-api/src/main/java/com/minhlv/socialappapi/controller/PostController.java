@@ -91,6 +91,28 @@ public class PostController {
         return postService.list(authContext);
     }
 
+    @GetMapping(value = "/timeline")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @ApiOperation(value = "${PostController.getListPost}", response = APIResult.class, authorizations = {
+            @Authorization(value = "jwt")})
+    @ApiResponses(value = {@ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    public APIResult getTimeLine(@RequestParam(name = "id", required = true) long id) {
+        return postService.list(authContext);
+    }
+
+    @GetMapping(value = "/newfeel")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @ApiOperation(value = "${PostController.getListPost}", response = APIResult.class, authorizations = {
+            @Authorization(value = "jwt")})
+    @ApiResponses(value = {@ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 403, message = "Access denied"),
+            @ApiResponse(code = 500, message = "Expired or invalid JWT token")})
+    public APIResult getNewFeel() {
+        return postService.list(authContext);
+    }
+
     @PutMapping(value = "/privacy")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @ApiOperation(value = "${PostController.updatePrivacyPost}", response = APIResult.class, authorizations = {

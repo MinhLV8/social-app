@@ -1,18 +1,20 @@
 package com.minhlv.socialappapi.service.impl;
 
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.ObjectUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.DisabledException;
@@ -24,20 +26,24 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.minhlv.socialappapi.dto.UserDataDTO;
 import com.minhlv.socialappapi.entity.AccountEntity;
 import com.minhlv.socialappapi.entity.SystemRoleEntity;
 import com.minhlv.socialappapi.entity.SystemUserEntity;
 import com.minhlv.socialappapi.exception.CustomException;
-import com.minhlv.socialappapi.exception.HandledException;
 import com.minhlv.socialappapi.repository.AccountRepository;
+import com.minhlv.socialappapi.repository.ImageRepository;
+import com.minhlv.socialappapi.repository.PostRepository;
 import com.minhlv.socialappapi.repository.RoleRepository;
 import com.minhlv.socialappapi.repository.UserRepository;
 import com.minhlv.socialappapi.security.JwtTokenProvider;
 import com.minhlv.socialappapi.service.UserService;
 import com.minhlv.socialappapi.utils.APIResult;
+import com.minhlv.socialappapi.utils.APIResult.MSG;
 import com.minhlv.socialappapi.utils.AuthContext;
+import com.minhlv.socialappapi.utils.FileUploadUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -58,6 +64,12 @@ public class SystemUserServiceImpl implements UserService {
     private final ModelMapper modelMapper = new ModelMapper();
 
     private final AuthContext authContext = new AuthContext();
+
+    @Autowired
+    private PostRepository postRepository;
+
+    @Autowired
+    private ImageRepository imageRepository;
 
     @Autowired
     public SystemUserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder,
@@ -83,14 +95,14 @@ public class SystemUserServiceImpl implements UserService {
             List<String> roles = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                     .collect(Collectors.toList());
             Map<String, Object> re = new HashMap<>();
-            result.setMessage(200, APIResult.MSG.SUCCESS);
+            result.setMessage(200, MSG.SUCCESS);
             re.put("token", jwt);
             re.put("info", ((CustomUserDetailsImpl) authentication.getPrincipal()).getAccountEntity());
             re.put("roles", roles);
             result.setData(re);
             return result;
         } catch (DisabledException ex) {
-            result.setMessage(403, APIResult.MSG.ACCESS_DENIED);
+            result.setMessage(403, MSG.ACCESS_DENIED);
             return result;
         } catch (AuthenticationException e) {
             result.setMessage(403, "Invalid username/password supplied");
@@ -117,6 +129,11 @@ public class SystemUserServiceImpl implements UserService {
                 user.setAccountEntity(account);
                 userRepository.save(user);
 
+                InputStream avtDf = new ClassPathResource("./avatar-default.png").getInputStream();
+
+                String avtPath = FileUploadUtil.saveFile("uploads/photos/" + user.getUsername(), "avatar-default.png",
+                        (MultipartFile) avtDf);
+
                 SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(appUser.getUsername(), appUser.getPassword())));
                 Map<String, Object> re = new HashMap<>();
@@ -126,7 +143,7 @@ public class SystemUserServiceImpl implements UserService {
                 CustomUserDetailsImpl userDetails = (CustomUserDetailsImpl) authentication.getPrincipal();
                 List<String> rolesStr = userDetails.getAuthorities().stream().map(GrantedAuthority::getAuthority)
                         .collect(Collectors.toList());
-                result.setMessage(200, APIResult.MSG.SUCCESS);
+                result.setMessage(200, MSG.SUCCESS);
                 re.put("token", jwt);
                 re.put("info", ((CustomUserDetailsImpl) authentication.getPrincipal()).getAccountEntity());
                 re.put("roles", rolesStr);
@@ -136,7 +153,7 @@ public class SystemUserServiceImpl implements UserService {
             }
             return result;
         } catch (Exception e) {
-            result.setMessage(500, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED);
+            result.setMessage(500, MSG.UNEXPECTED_ERROR_OCCURRED);
             return result;
         }
     }
@@ -146,17 +163,19 @@ public class SystemUserServiceImpl implements UserService {
         APIResult result = new APIResult();
         try {
             SystemUserEntity user = userRepository.findByUsername(username);
-
-            checkExist(user);
-            checkAllowed(user.getId(), authContext);
-
+            if (user == null) {
+                result.setMessage(404, MSG.UNEXPECTED_ERROR_OCCURRED);
+                return result;
+            }
+            if (!Objects.equals(user.getId(), authContext.getCurrentUser().getId())) {
+                result.setMessage(403, MSG.ACTION_FORBIDDEN);
+                return result;
+            }
             SystemUserEntity userDel = userRepository.deleteByUsername(username);
-
-            result.setData(userDel, APIResult.MSG.SUCCESS);
-
+            result.setData(userDel, MSG.SUCCESS);
             return result;
         } catch (Exception e) {
-            result.setMessage(99, APIResult.MSG.UNEXPECTED_ERROR_OCCURRED);
+            result.setMessage(99, MSG.UNEXPECTED_ERROR_OCCURRED);
             return result;
         }
 
@@ -201,23 +220,6 @@ public class SystemUserServiceImpl implements UserService {
     @Override
     public SystemUserEntity saveUser(SystemUserEntity userEntity) {
         return null;
-    }
-
-    private void checkExist(SystemUserEntity user) throws HandledException {
-        if (ObjectUtils.isNotEmpty(user)) {
-            return;
-        }
-        throw new HandledException(404, APIResult.MSG.NOT_EXISTS.getMSG());
-    }
-
-    private void checkAllowed(long targetId, AuthContext authContext) throws HandledException {
-        if (Boolean.TRUE.equals(authContext.getCurrentAccount().getIsRoot())) {
-            return;
-        }
-        if (targetId == authContext.getCurrentUser().getId()) {
-            return;
-        }
-        throw new HandledException(403, APIResult.MSG.ACTION_FORBIDDEN.getMSG());
     }
 
 }
