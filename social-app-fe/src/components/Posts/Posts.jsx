@@ -7,7 +7,7 @@ import "./Posts.css";
 const Posts = () => {
 
   const dispatch = useDispatch()
-  const user = useSelector((state) => state.authReducer.authData);
+  // const user = useSelector((state) => state.authReducer.authData);
   const { posts, loading } = useSelector((state) => state.postReducer);
   let postComments = [];
 
@@ -19,7 +19,6 @@ const Posts = () => {
     <div className="Posts">
       {loading ? <Loading /> :
         posts.map((post, id) => {
-          console.log(post)
           //postComments = PostComments.filter((u) => u.postId === post.id);
           return (
             <Post key={post.id} post={post} postComments={postComments} id={post.id} />
