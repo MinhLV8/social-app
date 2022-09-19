@@ -27,9 +27,7 @@ import com.minhlv.socialappapi.utils.APIResult.MSG;
 import com.minhlv.socialappapi.utils.AuthContext;
 
 import lombok.NonNull;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -49,7 +47,7 @@ public class PostServiceImpl implements PostService {
     @Transactional(readOnly = true)
     public @NonNull APIResult find(long id, AuthContext authContext) {
         APIResult re = new APIResult();
-        Optional<PostEntity> getPost = postRepository.findById(id);
+        final Optional<PostEntity> getPost = postRepository.findById(id);
         if (!getPost.isPresent()) {
             re.setMessage(404, MSG.NOT_EXISTS);
             return re;
@@ -107,10 +105,9 @@ public class PostServiceImpl implements PostService {
         APIResult re = new APIResult();
         try {
             post.setAccount(authContext.getCurrentAccount());
-            PostEntity newPost = postRepository.save(post);
-            imageService.save(images, newPost, authContext);
-            log.info("{}", postRepository.findById(newPost.getId()).get());
-            PostReponse postReponse = this.toPhotoResponse(postRepository.findById(newPost.getId()).get());
+            imageService.save(images, postRepository.save(post), authContext);
+
+            PostReponse postReponse = this.toPhotoResponse(postRepository.findById(post.getId()).get());
             re.setData(postReponse, MSG.SUCCESS);
         } catch (Exception e) {
             e.printStackTrace();
@@ -124,14 +121,12 @@ public class PostServiceImpl implements PostService {
     public @NonNull APIResult update(@NonNull PostEntity payload, @NonNull AuthContext authContext) {
         APIResult re = new APIResult();
         try {
-
-            Optional<PostEntity> post = postRepository.findById(payload.getId());
+            final Optional<PostEntity> post = postRepository.findById(payload.getId());
             if (!post.isPresent()) {
                 return re;
             }
             PostEntity postEntity = post.get();
             checkAllowedFor(postEntity.getAccount().getId(), authContext);
-
         } catch (Exception e) {
             e.printStackTrace();
             re.setMessage(99, MSG.UNEXPECTED_ERROR_OCCURRED);
@@ -145,7 +140,7 @@ public class PostServiceImpl implements PostService {
         try {
             List<PostEntity> listWillDel = new ArrayList<>();
             Arrays.stream(ids).forEach(id -> {
-                Optional<PostEntity> postDel = postRepository.findById(id);
+                final Optional<PostEntity> postDel = postRepository.findById(id);
                 if (!postDel.isPresent()) {
                     listWillDel.add(postDel.get());
                 }

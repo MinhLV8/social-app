@@ -164,22 +164,4 @@ public class ImageServiceImpl implements ImageService {
         }
     }
 
-    /*
-     * private void saveFile(String jsak, String username, MultipartFile
-     * multipartFile, PostEntity post) {
-     *
-     * String fileName =
-     * StringUtils.cleanPath(Objects.requireNonNull(multipartFile.
-     * getOriginalFilename())); fileName =
-     * FileUploadUtil.createFileName(fileName); String imgPost =
-     * FileUploadUtil.saveFile("uploads/photos/" + username + "/postImages/",
-     * fileName, multipartFile); ImageEntity newImage =
-     * imageRepository.save(ImageEntity.builder().fileName(fileName)
-     * .typeFile(multipartFile.getContentType()).pathFile(imgPost).sizeFile(
-     * multipartFile.getSize())
-     * .image(FileUploadUtil.compressImage(multipartFile.getBytes())).post(post)
-     * .build()); newImages.add(modelMapper.map(newImage,
-     * ImageReponseDTO.class)); }
-     */
-
 }

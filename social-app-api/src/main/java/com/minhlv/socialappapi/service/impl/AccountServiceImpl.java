@@ -29,9 +29,6 @@ import com.minhlv.socialappapi.utils.APIResult.MSG;
 import com.minhlv.socialappapi.utils.AuthContext;
 import com.minhlv.socialappapi.utils.FileUploadUtil;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 public class AccountServiceImpl implements AccountService {
 
@@ -167,10 +164,6 @@ public class AccountServiceImpl implements AccountService {
     public PostEntity changeCoverPost() {
 
         return new PostEntity();
-    }
-
-    private void changePhotoProfile() {
-
     }
 
 }

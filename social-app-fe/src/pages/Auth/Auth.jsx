@@ -47,7 +47,6 @@ const Auth = () => {
   });
   const dispatch = useDispatch();
   const loading = useSelector((state) => state.authReducer.loading);
-  console.log("loading", loading);
   const [confirmPass, setcomfirmPass] = useState(true);
   const handlerLogin = () => {
     setIsSignup(!isSignup);

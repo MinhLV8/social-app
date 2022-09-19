@@ -56,7 +56,6 @@
   border-radius: 50%;
   cursor: pointer;
   object-fit: cover;
-  /* border-radius: 10px 10px 10px 10px; */
 }
 .Post-user {
   position: relative;
@@ -74,7 +73,7 @@
 .Post-user > div > img {
   width: 3rem;
   height: 3rem;
-  border-radius: 10px 10px 10px 10px;
+  border-radius: 50%;
 }
 
 .Post-user > svg:hover {

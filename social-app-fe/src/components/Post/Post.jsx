@@ -28,13 +28,13 @@ import "./Post.css";
 
 const Post = ({ post, postComments }) => {
 
-  //console.log('re-rendering', post.id)
+  console.log('re-rendering', post)
   const user = useSelector((state) => state.authReducer.authData);
   //const username = Users.filter((u) => u.id === post.userId)[0].username;
   //const userAvatar = Users.filter((u) => u.id === post.userId)[0].userAvatar;
   const [isLiked, setIsLiked] = useState(false);
-  const [likeAmount, setLikeAmount] = useState(post.likes);
-  const [commentAmount, setCommentAmount] = useState(post.comments);
+  const [likeAmount, setLikeAmount] = useState(post?.likes);
+  const [commentAmount, setCommentAmount] = useState(post?.comments);
   const commentsButton = useRef();
   const [image, setImage] = useState();
   const imageRef = useRef();
@@ -142,10 +142,10 @@ const Post = ({ post, postComments }) => {
               <b>{user.data.info.fullName}</b> <img src={doneTick} alt="" />{" "}
             </span>
             <span>
-              {timeDiff(new Date().getTime(), post.times)}
+              {timeDiff(new Date().getTime(), post?.times)}
               <BsDot />
               {(() => {
-                switch (post.privacy) {
+                switch (post?.privacy) {
                   case 1:
                     return <FaUserFriends size={15} />;
                   case 2:

@@ -1,6 +1,10 @@
 package com.minhlv.socialappapi.service.impl;
 
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -12,10 +16,12 @@ import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -26,16 +32,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.minhlv.socialappapi.dto.UserDataDTO;
 import com.minhlv.socialappapi.entity.AccountEntity;
+import com.minhlv.socialappapi.entity.ImageEntity;
 import com.minhlv.socialappapi.entity.SystemRoleEntity;
 import com.minhlv.socialappapi.entity.SystemUserEntity;
 import com.minhlv.socialappapi.exception.CustomException;
 import com.minhlv.socialappapi.repository.AccountRepository;
 import com.minhlv.socialappapi.repository.ImageRepository;
-import com.minhlv.socialappapi.repository.PostRepository;
 import com.minhlv.socialappapi.repository.RoleRepository;
 import com.minhlv.socialappapi.repository.UserRepository;
 import com.minhlv.socialappapi.security.JwtTokenProvider;
@@ -45,9 +50,6 @@ import com.minhlv.socialappapi.utils.APIResult.MSG;
 import com.minhlv.socialappapi.utils.AuthContext;
 import com.minhlv.socialappapi.utils.FileUploadUtil;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 public class SystemUserServiceImpl implements UserService {
 
@@ -64,9 +66,6 @@ public class SystemUserServiceImpl implements UserService {
     private final ModelMapper modelMapper = new ModelMapper();
 
     private final AuthContext authContext = new AuthContext();
-
-    @Autowired
-    private PostRepository postRepository;
 
     @Autowired
     private ImageRepository imageRepository;
@@ -122,17 +121,30 @@ public class SystemUserServiceImpl implements UserService {
 
                 Set<SystemRoleEntity> roles = new HashSet<>(
                         Collections.singletonList(roleRepository.findByRole("ROLE_USER")));
+
+                InputStream avtDf = new ClassPathResource("static/avatar-default.png").getInputStream();
+                byte[] avatarDefauld = avtDf.readAllBytes();
+
+                Path uploadPath = Paths.get("uploads/photos/" + user.getUsername());
+                if (!Files.exists(uploadPath)) {
+                    Files.createDirectories(uploadPath);
+                }
+                Path filePath = uploadPath.resolve("avatar-default.png");
+                Files.copy(avtDf, filePath, StandardCopyOption.REPLACE_EXISTING);
+
+                account.setUserAvatar(new String(Base64.encodeBase64(avatarDefauld)));
+                account.setUserAvatarContentType(MediaType.IMAGE_PNG_VALUE);
+
+                imageRepository.save(ImageEntity.builder().fileName(filePath.getFileName().toString())
+                        .typeFile(MediaType.IMAGE_PNG_VALUE).pathFile(filePath.toAbsolutePath().toString())
+                        .sizeFile(filePath.toFile().length()).image(FileUploadUtil.compressImage(avatarDefauld))
+                        .post(null).build());
+
                 user.setPassword(passwordEncoder.encode(appUser.getPassword()));
                 user.setRoles(roles);
-
                 account.setUser(user);
                 user.setAccountEntity(account);
                 userRepository.save(user);
-
-                InputStream avtDf = new ClassPathResource("./avatar-default.png").getInputStream();
-
-                String avtPath = FileUploadUtil.saveFile("uploads/photos/" + user.getUsername(), "avatar-default.png",
-                        (MultipartFile) avtDf);
 
                 SecurityContextHolder.getContext().setAuthentication(authenticationManager.authenticate(
                         new UsernamePasswordAuthenticationToken(appUser.getUsername(), appUser.getPassword())));
@@ -153,6 +165,7 @@ public class SystemUserServiceImpl implements UserService {
             }
             return result;
         } catch (Exception e) {
+            e.printStackTrace();
             result.setMessage(500, MSG.UNEXPECTED_ERROR_OCCURRED);
             return result;
         }

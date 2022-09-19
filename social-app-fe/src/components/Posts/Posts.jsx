@@ -19,9 +19,10 @@ const Posts = () => {
     <div className="Posts">
       {loading ? <Loading /> :
         posts.map((post, id) => {
+          console.log(post)
           //postComments = PostComments.filter((u) => u.postId === post.id);
           return (
-            <Post key={id} post={post} postComments={postComments} id={id} />
+            <Post key={post.id} post={post} postComments={postComments} id={post.id} />
           );
         })}
 
