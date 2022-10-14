@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.validation.constraints.NotNull;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,8 +28,6 @@ import com.minhlv.socialappapi.utils.APIResult;
 import com.minhlv.socialappapi.utils.APIResult.MSG;
 import com.minhlv.socialappapi.utils.AuthContext;
 
-import lombok.NonNull;
-
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -45,7 +45,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional(readOnly = true)
-    public @NonNull APIResult find(long id, AuthContext authContext) {
+    public @NotNull APIResult find(long id, AuthContext authContext) {
         APIResult re = new APIResult();
         final Optional<PostEntity> getPost = postRepository.findById(id);
         if (!getPost.isPresent()) {
@@ -60,7 +60,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional(readOnly = true)
-    public @NonNull APIResult list(AuthContext authContext) {
+    public @NotNull APIResult list(AuthContext authContext) {
         APIResult re = new APIResult();
         Iterable<PostEntity> getPosts = postRepository.findAllByAccount(authContext.getCurrentAccount());
         List<PostReponse> posts = new ArrayList<>();
@@ -85,7 +85,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public @NonNull APIResult save(@NonNull PostEntity payload, @NonNull AuthContext authContext) {
+    public @NotNull APIResult save(@NotNull PostEntity payload, @NotNull AuthContext authContext) {
         APIResult re = new APIResult();
         try {
             payload.setAccount(authContext.getCurrentAccount());
@@ -118,7 +118,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     @Transactional
-    public @NonNull APIResult update(@NonNull PostEntity payload, @NonNull AuthContext authContext) {
+    public @NotNull APIResult update(@NotNull PostEntity payload, @NotNull AuthContext authContext) {
         APIResult re = new APIResult();
         try {
             final Optional<PostEntity> post = postRepository.findById(payload.getId());
@@ -135,7 +135,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public APIResult delete(@NonNull long[] ids, @NonNull AuthContext authContext) {
+    public APIResult delete(@NotNull long[] ids, @NotNull AuthContext authContext) {
         APIResult re = new APIResult();
         try {
             List<PostEntity> listWillDel = new ArrayList<>();

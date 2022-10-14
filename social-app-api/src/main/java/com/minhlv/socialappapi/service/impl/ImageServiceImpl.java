@@ -57,7 +57,7 @@ public class ImageServiceImpl implements ImageService {
     public APIResult find(@NotNull long id, @NonNull AuthContext authContext) {
         APIResult result = new APIResult();
         try {
-            Optional<ImageEntity> image = imageRepository.findById(id);
+            final Optional<ImageEntity> image = imageRepository.findById(id);
 
             if (image.isPresent()) {
                 result.setData(image.get(), MSG.SUCCESS);

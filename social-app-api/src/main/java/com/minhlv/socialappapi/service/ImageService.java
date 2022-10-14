@@ -18,4 +18,5 @@ public interface ImageService extends BaseService<APIResult, ImageEntity> {
     APIResult save(List<MultipartFile> multipartFiles, PostEntity post, AuthContext authContext);
 
     Resource loadFileAsResource(String filename);
+
 }

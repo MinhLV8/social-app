@@ -6,7 +6,7 @@ export default function PostImage({ images, onImgClick }) {
   if (imagesLength >= 5) {
     return (
       <div className="post-imgs-5">
-        {images.map((img, index) => (
+        {images.slice(0, 5).map((img, index) => (
           <div key={`img-item-${index}`} className="post-img-item">
             <img key={index} src={img.url} alt="" onClick={() => onImgClick(index)} loading="lazy" />
           </div>
