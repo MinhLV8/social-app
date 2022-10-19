@@ -3,8 +3,12 @@ package com.minhlv.socialappapi.utils;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -81,5 +85,68 @@ public final class Utils {
             e.printStackTrace();
             return null;
         }
+    }
+
+    /**
+     * Method will take Date in "MMMM, dd yyyy HH:mm:s" format and return time
+     * difference like added: 3 min ago
+     *
+     * @param date
+     *            : date in "MMMM, dd yyyy HH:mm:s" format
+     * @return : time difference
+     */
+    private String getDurationTimeStamp(String date) {
+        String timeDifference = "";
+
+        // date formatter as per the coder need
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:s");
+        TimeZone timeZone = TimeZone.getTimeZone("VN");
+        sdf.setTimeZone(timeZone);
+        Date startDate = null;
+        try {
+            startDate = sdf.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // end date will be the current system time to calculate the lapse time
+        // difference
+        Date endDate = new Date();
+
+        // get the time difference in milliseconds
+        long duration = endDate.getTime() - startDate.getTime();
+
+        long diffInSeconds = TimeUnit.MILLISECONDS.toSeconds(duration);
+        long diffInMinutes = TimeUnit.MILLISECONDS.toMinutes(duration);
+        long diffInHours = TimeUnit.MILLISECONDS.toHours(duration);
+        long diffInDays = TimeUnit.MILLISECONDS.toDays(duration);
+
+        if (diffInDays >= 365) {
+            int year = (int) (diffInDays / 365);
+            timeDifference = year + " năm trước.";
+        } else if (diffInDays >= 30) {
+            int month = (int) (diffInDays / 30);
+            timeDifference = month + " tháng trước.";
+        }
+        // if days are not enough to create year then get the days
+        else if (diffInDays >= 1) {
+            timeDifference = diffInDays + " ngày trước.";
+        }
+        // if days value<1 then get the hours
+        else if (diffInHours >= 1) {
+            timeDifference = diffInHours + " giờ trước.";
+        }
+        // if hours value<1 then get the minutes
+        else if (diffInMinutes >= 1) {
+            timeDifference = diffInMinutes + " phút trước.";
+        }
+        // if minutes value<1 then get the seconds
+        else if (diffInSeconds >= 1) {
+            timeDifference = diffInSeconds + " giây trước.";
+        } else if (timeDifference.isEmpty()) {
+            timeDifference = "Vừa xong.";
+        }
+
+        return timeDifference;
     }
 }
