@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { FiEdit } from "react-icons/fi";
+import { useSelector } from "react-redux";
 import { useNavigate } from 'react-router-dom';
 import briefcase from "../../assets/icons/icons8-briefcase-24.png";
 import home from "../../assets/icons/icons8-home-24.png";
@@ -7,11 +8,12 @@ import location from "../../assets/icons/icons8-location-24.png";
 import love from "../../assets/icons/icons8-love-24.png";
 import ProfileModal from "../ProfileModal.jsx/ProfileModal";
 import "./InfoCard.css";
-
 const InfoCard = () => {
   const [modalOpened, setModalOpened] = useState(false);
   const navigate = useNavigate();
   const handleOnClick = useCallback(() => navigate('/auth', { replace: true }), [navigate]);
+  const userInfo = useSelector((state) => state.authReducer.authData);
+  
   return (
     <div className="InfoCard">
       <div className="infoHead">
@@ -27,7 +29,7 @@ const InfoCard = () => {
         </div>
       </div>
       <div className="bio">
-        <span>The world is dull, but it has you 🍃</span>
+        <span>{userInfo.bio || "No bio"}</span>
       </div>
       <div className="info">
         <img src={briefcase} alt="work_at-icon" />

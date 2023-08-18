@@ -8,8 +8,8 @@ import {
 } from "react-icons/md";
 import { RiShareForwardLine } from "react-icons/ri";
 import { useDispatch, useSelector } from "react-redux";
-import { uploadPost } from "../../actions/UploadAction";
 import Loading from "../Loading/Loading";
+import { uploadPost } from "./../../actions/UploadAction";
 import "./PostShare.css";
 const PostShare = () => {
   const dispatch = useDispatch();
@@ -51,13 +51,13 @@ const PostShare = () => {
   };
   return (
     <div className="PostShare">
-      <img src={`data:${user.data.info.userAvatarContentType};base64, ${user.data.info.userAvatar}`} alt="avatar" />
+      <img src={`data:${user.info?.userAvatarContentType};base64, ${user.info?.userAvatar}`} alt="avatar" />
       <div>
         <input
           type="text"
           name="caption"
           ref={captionRef}
-          placeholder={`${user.data.info.firstName} ơi, bạn đang nghĩ gì thế?`}
+          placeholder={`${user.info?.firstname} ơi, bạn đang nghĩ gì thế?`}
           required
         />
         <div className="postOptions">

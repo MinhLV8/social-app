@@ -125,7 +125,7 @@ const Auth = () => {
       <div className="a-left">
         <img src={logo} alt="logo" />
         <div className="Webname">
-          <h1>Unitech Social Media</h1>
+          <h1>MinhLV Code Social Media</h1>
           <h6>Khám phá những ý tưởng trên khắp thế giới "động vật".</h6>
         </div>
       </div>
