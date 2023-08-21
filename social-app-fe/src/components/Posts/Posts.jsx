@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { PostsData } from '../../Data/PostsData';
 import { getTimelinePosts } from "../../actions/PostAction";
 import Loading from "../Loading/Loading";
 import Post from "../Post/Post";
@@ -7,7 +8,8 @@ import "./Posts.css";
 const Posts = () => {
   const dispatch = useDispatch();
   // const user = useSelector((state) => state.authReducer.authData);
-  const { posts, loading } = useSelector((state) => state.postReducer);
+  const { posts1, loading } = useSelector((state) => state.postReducer);
+  const posts = PostsData
   let postComments = [];
 
   useEffect(() => {

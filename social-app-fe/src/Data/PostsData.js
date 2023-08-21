@@ -41,7 +41,7 @@ export const Users = [
 export const PostsData = [
     {
         id: 1,
-        img: [img1, img2, img3, img4, img5],
+        images: [img1, img2, img3, img4, img5],
         userId: 1,
         privacy: 1,
         name: 'Minh Lê',
@@ -54,7 +54,7 @@ export const PostsData = [
     },
     {
         id: 2,
-        img: [img2, img3, img4, img5],
+        images: [img2, img3, img4, img5],
         userId: 2,
         privacy: 2,
         name: 'Ngọc Ánh',
@@ -69,7 +69,7 @@ export const PostsData = [
     {
         id: 3,
         userId: 3,
-        img: [img3, img4, img5],
+        images: [img3, img4, img5],
         privacy: 1,
         name: "Salena Gomez",
         desc: "Một chút bình yên miền biển 🍃 🌊",
@@ -82,7 +82,7 @@ export const PostsData = [
     {
         id: 4,
         userId: 4,
-        img: [img4, img5],
+        images: [img4, img5],
         privacy: 1,
         name: "Salena Gomez",
         desc: "Một chút bình yên miền biển 🍃 🌊",
@@ -95,7 +95,7 @@ export const PostsData = [
     {
         id: 5,
         userId: 5,
-        img: [img4],
+        images: [img4],
         privacy: 1,
         name: "Salena Gomez",
         desc: "Một chút bình yên miền biển 🍃 🌊",

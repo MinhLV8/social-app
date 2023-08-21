@@ -8,7 +8,7 @@ export default function PostImage({ images, onImgClick }) {
       <div className="post-imgs-5">
         {images.slice(0, 5).map((img, index) => (
           <div key={`img-item-${index}`} className="post-img-item">
-            <img key={index} src={img.url} alt="" onClick={() => onImgClick(index)} loading="lazy" />
+            <img key={index} src={img} alt="" onClick={() => onImgClick(index)} loading="lazy" />
           </div>
         ))}
       </div>
@@ -18,7 +18,7 @@ export default function PostImage({ images, onImgClick }) {
       <div className="post-imgs-4">
         {images.map((img, index) => (
           <div key={index} className="post-img-item--4">
-            <img key={index} src={img.url} alt="" onClick={() => onImgClick(index)} loading="lazy" />
+            <img key={index} src={img} alt="" onClick={() => onImgClick(index)} loading="lazy" />
           </div>
         ))}
       </div>
@@ -28,7 +28,7 @@ export default function PostImage({ images, onImgClick }) {
       <div className="post-imgs-3">
         {images.map((img, index) => (
           <div key={index} className="post-img-item--3">
-            <img key={index} src={img.url} alt="" onClick={() => onImgClick(index)} loading="lazy" />
+            <img key={index} src={img} alt="" onClick={() => onImgClick(index)} loading="lazy" />
           </div>
         ))}
       </div>
@@ -38,7 +38,7 @@ export default function PostImage({ images, onImgClick }) {
       <div className="post-imgs-2">
         {images.map((img, index) => (
           <div key={index} className="post-img-item--2">
-            <img key={index} src={img.url} alt="" onClick={() => onImgClick(index)} loading="lazy" />
+            <img key={index} src={img} alt="" onClick={() => onImgClick(index)} loading="lazy" />
           </div>
         ))}
       </div>
@@ -55,7 +55,7 @@ export default function PostImage({ images, onImgClick }) {
               cursor: "pointer"
             }}
             key={index}
-            src={img.url}
+            src={img}
             alt=""
             onClick={() => onImgClick(index)}
             loading="lazy"

@@ -18,9 +18,9 @@ import {
 import { useSelector } from "react-redux";
 import doneTick from "../../assets/icons/1618816460_tich_xanh_facebook.png";
 import { nFormatter, timeDiff } from "../../utils/Utils";
+import ImageSlide from "../ImageSlide/ImageSlide";
 import Comments from "../comments/Comments";
 import EmojiPicker from "../emoji/EmojiPicker";
-import ImageSlide from "../ImageSlide/ImageSlide";
 import PopupOptions from "../popupOptions/PopupOptions";
 import PopupShare from "../popupShares/PopupShare";
 import PostImage from "../postImage/PostImage";
@@ -135,10 +135,10 @@ const Post = ({ post, postComments }) => {
     <div className="Post">
       <div className="Post-user">
         <div>
-          <img src={`data:${user.data.info.userAvatarContentType};base64, ${user.data.info.userAvatar}`} alt="" />
+          <img src={`data:${user.info.userAvatarContentType};base64, ${user.info.userAvatar}`} alt="" />
           <div className="Post-user-detail">
             <span>
-              <b>{user.data.info.fullName}</b> <img src={doneTick} alt="" />{" "}
+              <b>{user.info.fullname}</b> <img src={doneTick} alt="" />{" "}
             </span>
             <span>
               {timeDiff(new Date().getTime(), post?.times)}
@@ -180,7 +180,7 @@ const Post = ({ post, postComments }) => {
         />
       )}
       <div className="postReact">
-        <img src={`data:${user.data.info.userAvatarContentType};base64, ${user.data.info.userAvatar}`} alt="" className="postReact-user" />
+        <img src={`data:${user.info.userAvatarContentType};base64, ${user.info.userAvatar}`} alt="" className="postReact-user" />
         {/* <InputComment /> */}
         <div className="postReact-comment">
           <input
