@@ -138,7 +138,9 @@ const Post = ({ post, postComments }) => {
           <img src={`data:${user.info.userAvatarContentType};base64, ${user.info.userAvatar}`} alt="" />
           <div className="Post-user-detail">
             <span>
-              <b>{user.info.fullname}</b> <img src={doneTick} alt="" />{" "}
+           {/*    <b>{user.info.fullname}</b> */} 
+           {post.fullname} 
+            <img src={doneTick} alt="" />{" "}
             </span>
             <span>
               {timeDiff(new Date().getTime(), post?.times)}
@@ -162,7 +164,7 @@ const Post = ({ post, postComments }) => {
           color={"#dadada"}
           onClick={handlePostOptionsClick}
         />
-        {isActive.postOptions && <PopupOptions username={post.name} />}
+        {isActive.postOptions && <PopupOptions username={post.fullname} />}
       </div>
       <div className="detail">
         <span> {post.caption}</span>

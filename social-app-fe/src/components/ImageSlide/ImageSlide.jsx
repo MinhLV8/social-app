@@ -28,7 +28,7 @@ export default function ImageSlide({ images, selectedImage, onClosePopup }) {
             if (index === state.currentIndex) className += " active";
             return (
               <img
-                src={img.url}
+                src={img}
                 className={className}
                 key={`img-${index}`}
                 alt=""
